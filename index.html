@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TDMK Systems — Panel de Trading Profesional</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #020917;
+      --bg2: #060e1f;
+      --surface: #0a1628;
+      --surface2: #0f1e35;
+      --border: rgba(255,255,255,0.06);
+      --border2: rgba(255,255,255,0.1);
+      --text: #e2e8f0;
+      --muted: #64748b;
+      --accent: #3b82f6;
+      --accent2: #60a5fa;
+      --green: #22c55e;
+      --green2: #4ade80;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 60px;
+      background: rgba(2,9,23,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800; font-size: 20px; color: white;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .nav-logo span { color: var(--accent2); }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links a { color: var(--muted); font-size: 14px; text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: white; }
+    .nav-cta {
+      background: var(--accent);
+      color: white; font-size: 13px; font-weight: 600;
+      padding: 9px 20px; border-radius: 8px;
+      text-decoration: none; transition: all 0.2s;
+    }
+    .nav-cta:hover { background: var(--accent2); transform: translateY(-1px); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 120px 24px 80px;
+      position: relative; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(59,130,246,0.12) 0%, transparent 70%);
+    }
+    .hero-grid {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 100%);
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.25);
+      border-radius: 999px; padding: 6px 16px;
+      font-size: 12px; font-weight: 600; color: var(--accent2);
+      margin-bottom: 28px; letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    .hero-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent2); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(36px, 6vw, 76px);
+      font-weight: 800; line-height: 1.05;
+      color: white; max-width: 900px;
+      margin-bottom: 24px;
+    }
+    h1 em { font-style: normal; color: var(--accent2); }
+    .hero-sub {
+      font-size: clamp(16px, 2vw, 20px);
+      color: var(--muted); max-width: 560px;
+      line-height: 1.6; margin-bottom: 40px;
+    }
+    .hero-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 64px; }
+    .btn-primary {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: white; font-size: 15px; font-weight: 600;
+      padding: 14px 32px; border-radius: 10px;
+      text-decoration: none; transition: all 0.2s;
+      box-shadow: 0 8px 24px rgba(37,99,235,0.35);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(37,99,235,0.5); }
+    .btn-secondary {
+      background: rgba(255,255,255,0.06); border: 1px solid var(--border2);
+      color: var(--text); font-size: 15px; font-weight: 500;
+      padding: 14px 32px; border-radius: 10px;
+      text-decoration: none; transition: all 0.2s;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+
+    /* PANEL MOCKUP */
+    .panel-mockup {
+      width: 100%; max-width: 1100px;
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: 16px; overflow: hidden;
+      box-shadow: 0 40px 120px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05);
+      position: relative;
+    }
+    .panel-topbar {
+      background: rgba(6,14,31,0.95);
+      padding: 12px 16px;
+      display: flex; align-items: center; gap: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    .dot { width: 12px; height: 12px; border-radius: 50%; }
+    .dot-r { background: #ef4444; }
+    .dot-y { background: #f59e0b; }
+    .dot-g { background: #22c55e; }
+    .panel-url {
+      flex: 1; background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      border-radius: 6px; padding: 4px 12px; font-size: 11px; color: var(--muted);
+      text-align: center; margin: 0 12px;
+    }
+    .panel-content {
+      display: grid; grid-template-columns: 200px 1fr;
+      min-height: 420px;
+    }
+    .panel-sidebar {
+      background: rgba(6,14,31,0.8);
+      border-right: 1px solid var(--border);
+      padding: 16px 12px;
+    }
+    .sidebar-logo {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: 14px; color: white; margin-bottom: 20px; padding: 0 8px;
+    }
+    .sidebar-section { font-size: 9px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; padding: 0 8px; margin-bottom: 6px; margin-top: 14px; }
+    .sidebar-item {
+      display: flex; align-items: center; gap: 8px;
+      padding: 7px 8px; border-radius: 6px; font-size: 12px;
+      color: var(--muted); margin-bottom: 2px; cursor: default;
+    }
+    .sidebar-item.active { background: rgba(59,130,246,0.15); color: var(--accent2); }
+    .panel-main { padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+    .panel-header { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; color: white; }
+    .panel-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+    .kpi {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 10px; padding: 12px;
+    }
+    .kpi-label { font-size: 10px; color: var(--muted); text-transform: uppercase; margin-bottom: 6px; }
+    .kpi-value { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; }
+    .kpi-green { color: var(--green2); }
+    .kpi-blue { color: var(--accent2); }
+    .kpi-purple { color: #c084fc; }
+    .kpi-yellow { color: #fbbf24; }
+    .panel-chart {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 10px; padding: 14px; flex: 1;
+    }
+    .chart-label { font-size: 11px; color: var(--muted); margin-bottom: 10px; }
+    .chart-svg { width: 100%; height: 100px; }
+
+    /* STATS */
+    .stats {
+      padding: 60px 24px;
+      display: flex; justify-content: center;
+    }
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
+      max-width: 700px; width: 100%;
+    }
+    .stat-item {
+      background: var(--surface); padding: 32px 24px; text-align: center;
+    }
+    .stat-num {
+      font-family: 'Syne', sans-serif; font-size: 36px; font-weight: 800;
+      color: white; margin-bottom: 6px;
+    }
+    .stat-num span { color: var(--accent2); }
+    .stat-desc { font-size: 13px; color: var(--muted); }
+
+    /* FEATURES */
+    .section { padding: 80px 24px; max-width: 1100px; margin: 0 auto; }
+    .section-tag {
+      display: inline-block; font-size: 11px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--accent2); margin-bottom: 14px;
+    }
+    .section-title {
+      font-family: 'Syne', sans-serif; font-size: clamp(28px, 4vw, 44px);
+      font-weight: 800; color: white; margin-bottom: 14px; line-height: 1.1;
+    }
+    .section-sub { font-size: 17px; color: var(--muted); max-width: 560px; line-height: 1.6; margin-bottom: 48px; }
+
+    .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .feature-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 24px;
+      transition: all 0.25s; position: relative; overflow: hidden;
+    }
+    .feature-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      opacity: 0; transition: opacity 0.25s;
+    }
+    .feature-card:hover { border-color: rgba(59,130,246,0.3); transform: translateY(-3px); }
+    .feature-card:hover::before { opacity: 1; }
+    .feature-icon { font-size: 28px; margin-bottom: 14px; }
+    .feature-title { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; color: white; margin-bottom: 8px; }
+    .feature-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    /* PLANS */
+    .plans-section { padding: 80px 24px; }
+    .plans-inner { max-width: 1000px; margin: 0 auto; }
+    .plans-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 48px; }
+    .plan-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 18px; padding: 28px; position: relative; overflow: hidden;
+      transition: all 0.25s;
+    }
+    .plan-card:hover { transform: translateY(-4px); }
+    .plan-card.featured {
+      background: linear-gradient(145deg, rgba(37,99,235,0.15), var(--surface));
+      border-color: rgba(59,130,246,0.4);
+      box-shadow: 0 0 40px rgba(37,99,235,0.15);
+    }
+    .plan-badge {
+      position: absolute; top: 16px; right: 16px;
+      background: var(--accent); color: white;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 3px 10px; border-radius: 999px;
+    }
+    .plan-icon { font-size: 28px; margin-bottom: 14px; }
+    .plan-name { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800; color: white; margin-bottom: 4px; }
+    .plan-price { margin: 14px 0; }
+    .plan-price .amount { font-family: 'Syne', sans-serif; font-size: 36px; font-weight: 800; color: white; }
+    .plan-price .period { font-size: 14px; color: var(--muted); }
+    .plan-price .free { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; color: var(--green2); }
+    .plan-desc { font-size: 13px; color: var(--muted); line-height: 1.5; margin-bottom: 20px; }
+    .plan-features { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+    .plan-features li { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text); }
+    .plan-features li::before { content: '✓'; color: var(--green2); font-weight: 700; font-size: 12px; flex-shrink: 0; }
+    .plan-btn {
+      display: block; text-align: center; text-decoration: none;
+      padding: 11px; border-radius: 10px; font-size: 13px; font-weight: 600;
+      transition: all 0.2s;
+    }
+    .plan-btn-primary { background: var(--accent); color: white; }
+    .plan-btn-primary:hover { background: var(--accent2); }
+    .plan-btn-secondary { background: rgba(255,255,255,0.06); border: 1px solid var(--border2); color: var(--text); }
+    .plan-btn-secondary:hover { background: rgba(255,255,255,0.1); }
+
+    /* CTA FINAL */
+    .cta-section {
+      padding: 80px 24px;
+      text-align: center;
+    }
+    .cta-box {
+      max-width: 700px; margin: 0 auto;
+      background: linear-gradient(135deg, rgba(37,99,235,0.12), rgba(15,23,42,0.9));
+      border: 1px solid rgba(59,130,246,0.25);
+      border-radius: 24px; padding: 56px 40px;
+      position: relative; overflow: hidden;
+    }
+    .cta-box::before {
+      content: ''; position: absolute; top: -80px; right: -80px;
+      width: 240px; height: 240px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(59,130,246,0.15), transparent 70%);
+    }
+    .cta-box h2 { font-family: 'Syne', sans-serif; font-size: 36px; font-weight: 800; color: white; margin-bottom: 14px; }
+    .cta-box p { color: var(--muted); font-size: 16px; line-height: 1.6; margin-bottom: 32px; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 60px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 16px; color: white; }
+    .footer-logo span { color: var(--accent2); }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { color: var(--muted); font-size: 13px; text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: white; }
+    .footer-copy { color: var(--muted); font-size: 12px; }
+
+    /* DIVIDER */
+    .divider { height: 1px; background: var(--border); max-width: 1100px; margin: 0 auto; }
+
+    /* ANIMATIONS */
+    .fade-in { opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      .features-grid, .plans-grid { grid-template-columns: 1fr; }
+      .panel-content { grid-template-columns: 1fr; }
+      .panel-sidebar { display: none; }
+      .panel-kpis { grid-template-columns: repeat(2,1fr); }
+      .stats-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 16px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">TDMK <span>Systems</span></div>
+    <div class="nav-links">
+      <a href="#features">Funcionalidades</a>
+      <a href="#planes">Planes</a>
+      <a href="https://app.tdmksystems.com">Panel</a>
+    </div>
+    <a href="https://app.tdmksystems.com/register" class="nav-cta">Empezar gratis</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-badge">Panel de trading profesional</div>
+    <h1>Gestiona tu trading<br>desde <em>un único lugar</em></h1>
+    <p class="hero-sub">Conecta tus cuentas de MT5, monitoriza en tiempo real, controla tus robots y supervisa tus resultados desde un panel diseñado para traders serios.</p>
+    <div class="hero-ctas">
+      <a href="https://app.tdmksystems.com/register" class="btn-primary">Empezar gratis →</a>
+      <a href="https://app.tdmksystems.com" class="btn-secondary">Ver el panel</a>
+    </div>
+
+    <!-- PANEL MOCKUP -->
+    <div class="panel-mockup fade-in">
+      <div class="panel-topbar">
+        <div class="dot dot-r"></div>
+        <div class="dot dot-y"></div>
+        <div class="dot dot-g"></div>
+        <div class="panel-url">app.tdmksystems.com</div>
+      </div>
+      <div class="panel-content">
+        <div class="panel-sidebar">
+          <div class="sidebar-logo">TDMK</div>
+          <div class="sidebar-section">Trading</div>
+          <div class="sidebar-item active">📊 Dashboard</div>
+          <div class="sidebar-item">📋 Cuentas</div>
+          <div class="sidebar-item">🎮 Control Center</div>
+          <div class="sidebar-item">📈 Métricas</div>
+          <div class="sidebar-item">🤖 Robots</div>
+          <div class="sidebar-section">Inversión</div>
+          <div class="sidebar-item">💰 PAMM</div>
+          <div class="sidebar-item">🤝 Afiliados</div>
+        </div>
+        <div class="panel-main">
+          <div class="panel-header">Dashboard</div>
+          <div class="panel-kpis">
+            <div class="kpi"><div class="kpi-label">Balance total</div><div class="kpi-value kpi-blue">$12.847</div></div>
+            <div class="kpi"><div class="kpi-label">PnL del día</div><div class="kpi-value kpi-green">+$342</div></div>
+            <div class="kpi"><div class="kpi-label">Win Rate</div><div class="kpi-value kpi-purple">79.3%</div></div>
+            <div class="kpi"><div class="kpi-label">Cuentas activas</div><div class="kpi-value kpi-yellow">4</div></div>
+          </div>
+          <div class="panel-chart">
+            <div class="chart-label">Curva de balance — últimos 30 días</div>
+            <svg class="chart-svg" viewBox="0 0 600 100" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.3"/>
+                  <stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <path d="M0,80 C30,75 60,70 90,65 C120,60 150,72 180,55 C210,38 240,45 270,30 C300,15 330,35 360,25 C390,15 420,20 450,12 C480,5 510,18 540,10 C560,5 580,8 600,5 L600,100 L0,100Z" fill="url(#g)"/>
+              <path d="M0,80 C30,75 60,70 90,65 C120,60 150,72 180,55 C210,38 240,45 270,30 C300,15 330,35 360,25 C390,15 420,20 450,12 C480,5 510,18 540,10 C560,5 580,8 600,5" fill="none" stroke="#3b82f6" stroke-width="2"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats fade-in">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-num">+<span>50</span></div>
+        <div class="stat-desc">Traders activos</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num"><span>5</span></div>
+        <div class="stat-desc">Robots disponibles</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num"><span>24</span>/7</div>
+        <div class="stat-desc">Monitorización en tiempo real</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- FEATURES -->
+  <section class="section fade-in" id="features">
+    <div class="section-tag">Funcionalidades</div>
+    <h2 class="section-title">Todo lo que necesitas<br>en un solo panel</h2>
+    <p class="section-sub">Diseñado para traders que gestionan múltiples cuentas y quieren tener el control total de su operativa.</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <div class="feature-title">Dashboard en tiempo real</div>
+        <div class="feature-desc">Visualiza el balance, PnL, win rate y métricas clave de todas tus cuentas de un vistazo.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎮</div>
+        <div class="feature-title">Control Center</div>
+        <div class="feature-desc">Gestiona todas tus cuentas desde un único lugar. Cierre de emergencia, break even y protección automática de DD.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🤖</div>
+        <div class="feature-title">Robots & Herramientas</div>
+        <div class="feature-desc">Accede a robots de trading exclusivos — Martingala, Grid, Gestor de Riesgo — y desplégalos en segundos.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📈</div>
+        <div class="feature-title">Métricas avanzadas</div>
+        <div class="feature-desc">Análisis profundo de tu operativa: ratio R/R, esperanza matemática, curva de balance y distribución de operaciones.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💰</div>
+        <div class="feature-title">PAMM Inversión</div>
+        <div class="feature-desc">Sigue la evolución de tu inversión en el fondo PAMM con estadísticas detalladas y historial completo.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🤝</div>
+        <div class="feature-title">Programa de Afiliados</div>
+        <div class="feature-desc">Gana comisiones recurrentes por cada trader que traigas al ecosistema. Niveles desde Semilla hasta Diamante.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PLANES -->
+  <section class="plans-section fade-in" id="planes">
+    <div class="plans-inner">
+      <div class="section-tag" style="text-align:center;display:block;">Planes</div>
+      <h2 class="section-title" style="text-align:center;">Elige tu plan</h2>
+      <p class="section-sub" style="text-align:center;margin:0 auto 0;">Sin permanencia. Cancela cuando quieras.</p>
+      <div class="plans-grid">
+
+        <!-- STARTER -->
+        <div class="plan-card">
+          <div class="plan-icon">⚡</div>
+          <div class="plan-name">Starter</div>
+          <div class="plan-price"><span class="free">Gratis</span></div>
+          <div class="plan-desc">Empieza a conectar tu MT5 y monitoriza tu cuenta sin coste.</div>
+          <ul class="plan-features">
+            <li>1 cuenta MT5</li>
+            <li>Dashboard en tiempo real</li>
+            <li>Control Center básico</li>
+            <li>Herramientas básicas</li>
+            <li>Módulo PAMM</li>
+          </ul>
+          <a href="https://app.tdmksystems.com/register" class="plan-btn plan-btn-secondary">Empezar gratis</a>
+        </div>
+
+        <!-- TRADER -->
+        <div class="plan-card featured">
+          <div class="plan-badge">Popular</div>
+          <div class="plan-icon">📈</div>
+          <div class="plan-name">Trader</div>
+          <div class="plan-price">
+            <span class="amount">19€</span>
+            <span class="period">/mes</span>
+          </div>
+          <div class="plan-desc">Para traders activos que gestionan múltiples cuentas y quieren acceso a todos los robots.</div>
+          <ul class="plan-features">
+            <li>Hasta 5 cuentas MT5</li>
+            <li>Todos los robots</li>
+            <li>Métricas avanzadas</li>
+            <li>Copiador de CFDs</li>
+            <li>Programa de afiliados</li>
+            <li>Soporte prioritario</li>
+          </ul>
+          <a href="https://app.tdmksystems.com/register" class="plan-btn plan-btn-primary">Empezar ahora →</a>
+        </div>
+
+        <!-- INSTITUCIONAL -->
+        <div class="plan-card">
+          <div class="plan-icon">🏢</div>
+          <div class="plan-name">Institucional</div>
+          <div class="plan-price">
+            <span class="amount">49€</span>
+            <span class="period">/mes</span>
+          </div>
+          <div class="plan-desc">Para estructuras profesionales con múltiples cuentas y granjas VPS.</div>
+          <ul class="plan-features">
+            <li>Hasta 25 cuentas MT5</li>
+            <li>Granjas VPS</li>
+            <li>Todo lo del plan Trader</li>
+            <li>Acceso anticipado</li>
+            <li>Soporte dedicado</li>
+          </ul>
+          <a href="https://app.tdmksystems.com/register" class="plan-btn plan-btn-secondary">Contactar</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="cta-section fade-in">
+    <div class="cta-box">
+      <h2>Empieza hoy, gratis</h2>
+      <p>Conecta tu primera cuenta de MT5 en menos de 5 minutos y empieza a tener el control total de tu operativa.</p>
+      <a href="https://app.tdmksystems.com/register" class="btn-primary" style="display:inline-block;">Crear cuenta gratis →</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">TDMK <span>Systems</span></div>
+    <div class="footer-links">
+      <a href="https://app.tdmksystems.com">Panel</a>
+      <a href="mailto:info@tdmksystems.com">Contacto</a>
+    </div>
+    <div class="footer-copy">© 2026 TDMK Systems</div>
+  </footer>
+
+  <script>
+    // Fade in on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

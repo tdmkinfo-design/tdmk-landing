@@ -3,548 +3,764 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TDMK Systems — Panel de Trading Profesional</title>
+  <title>TDMK Systems — Panel de Trading Profesional para MT5 y MT4</title>
+  <meta name="description" content="Conecta tus cuentas de MT5 y MT4, monitoriza en tiempo real, controla tus robots y gestiona tu operativa desde un panel profesional.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #020917;
-      --bg2: #060e1f;
+      --bg:      #020917;
+      --bg2:     #060e1f;
       --surface: #0a1628;
-      --surface2: #0f1e35;
-      --border: rgba(255,255,255,0.06);
+      --surface2:#0f1e35;
+      --border:  rgba(255,255,255,0.06);
       --border2: rgba(255,255,255,0.1);
-      --text: #e2e8f0;
-      --muted: #64748b;
-      --accent: #3b82f6;
+      --text:    #e2e8f0;
+      --muted:   #64748b;
+      --accent:  #3b82f6;
       --accent2: #60a5fa;
-      --green: #22c55e;
-      --green2: #4ade80;
+      --green:   #22c55e;
+      --green2:  #4ade80;
     }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Inter', sans-serif;
-      overflow-x: hidden;
-    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;overflow-x:hidden;}
 
-    /* NAV */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 18px 60px;
-      background: rgba(2,9,23,0.85);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
+    /* ── NAV ── */
+    nav{
+      position:fixed;top:0;left:0;right:0;z-index:100;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:16px 60px;
+      background:rgba(2,9,23,0.8);backdrop-filter:blur(24px);
+      border-bottom:1px solid var(--border);
+      transition:padding 0.3s;
     }
-    .nav-logo {
-      font-family: 'Syne', sans-serif;
-      font-weight: 800; font-size: 20px; color: white;
-      display: flex; align-items: center; gap: 10px;
-    }
-    .nav-logo span { color: var(--accent2); }
-    .nav-links { display: flex; gap: 32px; align-items: center; }
-    .nav-links a { color: var(--muted); font-size: 14px; text-decoration: none; transition: color 0.2s; }
-    .nav-links a:hover { color: white; }
-    .nav-cta {
-      background: var(--accent);
-      color: white; font-size: 13px; font-weight: 600;
-      padding: 9px 20px; border-radius: 8px;
-      text-decoration: none; transition: all 0.2s;
-    }
-    .nav-cta:hover { background: var(--accent2); transform: translateY(-1px); }
+    .nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:20px;color:white;display:flex;align-items:center;gap:8px;text-decoration:none;}
+    .nav-logo .dot-logo{width:8px;height:8px;border-radius:50%;background:var(--accent2);box-shadow:0 0 8px var(--accent2);}
+    .nav-links{display:flex;gap:28px;align-items:center;}
+    .nav-links a{color:var(--muted);font-size:14px;text-decoration:none;transition:color 0.2s;font-weight:500;}
+    .nav-links a:hover{color:white;}
+    .nav-cta{background:linear-gradient(135deg,#2563eb,#1d4ed8);color:white;font-size:13px;font-weight:600;padding:9px 20px;border-radius:8px;text-decoration:none;transition:all 0.2s;box-shadow:0 4px 14px rgba(37,99,235,0.3);}
+    .nav-cta:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(37,99,235,0.45);}
+    .nav-mobile-btn{display:none;background:none;border:none;color:white;font-size:22px;cursor:pointer;}
 
-    /* HERO */
-    .hero {
-      min-height: 100vh;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      text-align: center; padding: 120px 24px 80px;
-      position: relative; overflow: hidden;
+    /* ── HERO ── */
+    .hero{
+      min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+      text-align:center;padding:130px 24px 80px;position:relative;overflow:hidden;
     }
-    .hero-bg {
-      position: absolute; inset: 0; pointer-events: none;
-      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(59,130,246,0.12) 0%, transparent 70%);
+    .hero-orb{
+      position:absolute;pointer-events:none;border-radius:50%;filter:blur(80px);
     }
-    .hero-grid {
-      position: absolute; inset: 0; pointer-events: none;
-      background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
-      background-size: 60px 60px;
-      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 100%);
+    .hero-orb-1{width:600px;height:600px;background:rgba(37,99,235,0.15);top:-100px;left:50%;transform:translateX(-50%);}
+    .hero-orb-2{width:400px;height:400px;background:rgba(96,165,250,0.08);bottom:0;right:-100px;}
+    .hero-orb-3{width:300px;height:300px;background:rgba(34,197,94,0.06);bottom:100px;left:-50px;}
+    .hero-grid{
+      position:absolute;inset:0;pointer-events:none;
+      background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);
+      background-size:60px 60px;
+      mask-image:radial-gradient(ellipse 90% 80% at 50% 50%,black 0%,transparent 100%);
     }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.25);
-      border-radius: 999px; padding: 6px 16px;
-      font-size: 12px; font-weight: 600; color: var(--accent2);
-      margin-bottom: 28px; letter-spacing: 0.05em; text-transform: uppercase;
+    .hero-badge{
+      display:inline-flex;align-items:center;gap:8px;
+      background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);
+      border-radius:999px;padding:7px 18px;
+      font-size:11px;font-weight:700;color:var(--accent2);
+      margin-bottom:32px;letter-spacing:0.08em;text-transform:uppercase;
+      animation:fadeDown 0.6s ease both;
     }
-    .hero-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent2); animation: pulse 2s infinite; }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
-    h1 {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(36px, 6vw, 76px);
-      font-weight: 800; line-height: 1.05;
-      color: white; max-width: 900px;
-      margin-bottom: 24px;
-    }
-    h1 em { font-style: normal; color: var(--accent2); }
-    .hero-sub {
-      font-size: clamp(16px, 2vw, 20px);
-      color: var(--muted); max-width: 560px;
-      line-height: 1.6; margin-bottom: 40px;
-    }
-    .hero-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 64px; }
-    .btn-primary {
-      background: linear-gradient(135deg, #2563eb, #1d4ed8);
-      color: white; font-size: 15px; font-weight: 600;
-      padding: 14px 32px; border-radius: 10px;
-      text-decoration: none; transition: all 0.2s;
-      box-shadow: 0 8px 24px rgba(37,99,235,0.35);
-    }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(37,99,235,0.5); }
-    .btn-secondary {
-      background: rgba(255,255,255,0.06); border: 1px solid var(--border2);
-      color: var(--text); font-size: 15px; font-weight: 500;
-      padding: 14px 32px; border-radius: 10px;
-      text-decoration: none; transition: all 0.2s;
-    }
-    .btn-secondary:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+    .hero-badge .pulse{width:6px;height:6px;border-radius:50%;background:var(--green2);animation:pulse 2s infinite;}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.85)}}
+    @keyframes fadeDown{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 
-    /* PANEL MOCKUP */
-    .panel-mockup {
-      width: 100%; max-width: 1100px;
-      background: var(--surface);
-      border: 1px solid var(--border2);
-      border-radius: 16px; overflow: hidden;
-      box-shadow: 0 40px 120px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05);
-      position: relative;
+    h1{
+      font-family:'Syne',sans-serif;
+      font-size:clamp(38px,6vw,80px);font-weight:800;line-height:1.04;
+      color:white;max-width:950px;margin-bottom:26px;
+      animation:fadeUp 0.7s 0.1s ease both;
     }
-    .panel-topbar {
-      background: rgba(6,14,31,0.95);
-      padding: 12px 16px;
-      display: flex; align-items: center; gap: 8px;
-      border-bottom: 1px solid var(--border);
+    h1 em{font-style:normal;background:linear-gradient(135deg,var(--accent2),var(--green2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .hero-sub{
+      font-size:clamp(16px,2vw,19px);color:var(--muted);max-width:580px;
+      line-height:1.7;margin-bottom:44px;
+      animation:fadeUp 0.7s 0.2s ease both;
     }
-    .dot { width: 12px; height: 12px; border-radius: 50%; }
-    .dot-r { background: #ef4444; }
-    .dot-y { background: #f59e0b; }
-    .dot-g { background: #22c55e; }
-    .panel-url {
-      flex: 1; background: rgba(255,255,255,0.04); border: 1px solid var(--border);
-      border-radius: 6px; padding: 4px 12px; font-size: 11px; color: var(--muted);
-      text-align: center; margin: 0 12px;
+    .hero-ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:72px;animation:fadeUp 0.7s 0.3s ease both;}
+    .btn-primary{
+      background:linear-gradient(135deg,#2563eb,#1d4ed8);color:white;
+      font-size:15px;font-weight:600;padding:15px 34px;border-radius:10px;
+      text-decoration:none;transition:all 0.25s;
+      box-shadow:0 8px 24px rgba(37,99,235,0.35);display:inline-flex;align-items:center;gap:8px;
     }
-    .panel-content {
-      display: grid; grid-template-columns: 200px 1fr;
-      min-height: 420px;
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 36px rgba(37,99,235,0.5);}
+    .btn-secondary{
+      background:rgba(255,255,255,0.05);border:1px solid var(--border2);
+      color:var(--text);font-size:15px;font-weight:500;padding:15px 34px;border-radius:10px;
+      text-decoration:none;transition:all 0.25s;backdrop-filter:blur(8px);
     }
-    .panel-sidebar {
-      background: rgba(6,14,31,0.8);
-      border-right: 1px solid var(--border);
-      padding: 16px 12px;
-    }
-    .sidebar-logo {
-      font-family: 'Syne', sans-serif; font-weight: 800;
-      font-size: 14px; color: white; margin-bottom: 20px; padding: 0 8px;
-    }
-    .sidebar-section { font-size: 9px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; padding: 0 8px; margin-bottom: 6px; margin-top: 14px; }
-    .sidebar-item {
-      display: flex; align-items: center; gap: 8px;
-      padding: 7px 8px; border-radius: 6px; font-size: 12px;
-      color: var(--muted); margin-bottom: 2px; cursor: default;
-    }
-    .sidebar-item.active { background: rgba(59,130,246,0.15); color: var(--accent2); }
-    .panel-main { padding: 20px; display: flex; flex-direction: column; gap: 14px; }
-    .panel-header { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; color: white; }
-    .panel-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
-    .kpi {
-      background: var(--surface2); border: 1px solid var(--border);
-      border-radius: 10px; padding: 12px;
-    }
-    .kpi-label { font-size: 10px; color: var(--muted); text-transform: uppercase; margin-bottom: 6px; }
-    .kpi-value { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; }
-    .kpi-green { color: var(--green2); }
-    .kpi-blue { color: var(--accent2); }
-    .kpi-purple { color: #c084fc; }
-    .kpi-yellow { color: #fbbf24; }
-    .panel-chart {
-      background: var(--surface2); border: 1px solid var(--border);
-      border-radius: 10px; padding: 14px; flex: 1;
-    }
-    .chart-label { font-size: 11px; color: var(--muted); margin-bottom: 10px; }
-    .chart-svg { width: 100%; height: 100px; }
+    .btn-secondary:hover{background:rgba(255,255,255,0.1);transform:translateY(-2px);}
 
-    /* STATS */
-    .stats {
-      padding: 60px 24px;
-      display: flex; justify-content: center;
+    /* Panel mockup */
+    .mockup-wrap{
+      width:100%;max-width:1160px;position:relative;
+      animation:fadeUp 0.8s 0.4s ease both;
     }
-    .stats-grid {
-      display: grid; grid-template-columns: repeat(3,1fr);
-      gap: 1px; background: var(--border);
-      border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
-      max-width: 700px; width: 100%;
+    .mockup-glow{
+      position:absolute;inset:-20px;
+      background:radial-gradient(ellipse 80% 60% at 50% 100%,rgba(37,99,235,0.2),transparent 70%);
+      pointer-events:none;
     }
-    .stat-item {
-      background: var(--surface); padding: 32px 24px; text-align: center;
+    .panel-mockup{
+      width:100%;background:var(--surface);
+      border:1px solid var(--border2);border-radius:18px;overflow:hidden;
+      box-shadow:0 48px 140px rgba(0,0,0,0.7),0 0 0 1px rgba(255,255,255,0.05);
+      position:relative;
     }
-    .stat-num {
-      font-family: 'Syne', sans-serif; font-size: 36px; font-weight: 800;
-      color: white; margin-bottom: 6px;
+    .panel-topbar{
+      background:rgba(6,14,31,0.98);padding:12px 16px;
+      display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border);
     }
-    .stat-num span { color: var(--accent2); }
-    .stat-desc { font-size: 13px; color: var(--muted); }
+    .dot{width:12px;height:12px;border-radius:50%;}
+    .dot-r{background:#ef4444;}.dot-y{background:#f59e0b;}.dot-g{background:#22c55e;}
+    .panel-url{flex:1;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:6px;padding:4px 12px;font-size:11px;color:var(--muted);text-align:center;margin:0 12px;}
+    .panel-content{display:grid;grid-template-columns:220px 1fr;min-height:440px;}
+    .panel-sidebar{background:rgba(4,10,22,0.95);border-right:1px solid var(--border);padding:16px 10px;}
+    .sidebar-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:14px;color:white;margin-bottom:22px;padding:0 8px;display:flex;align-items:center;gap:6px;}
+    .sidebar-logo .dot-s{width:6px;height:6px;border-radius:50%;background:var(--accent2);}
+    .sb-sec{font-size:9px;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;padding:0 8px;margin:14px 0 5px;}
+    .sb-item{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:7px;font-size:12px;color:var(--muted);margin-bottom:2px;cursor:default;transition:all 0.15s;}
+    .sb-item.active{background:rgba(59,130,246,0.15);color:var(--accent2);font-weight:600;}
+    .sb-item.active .sb-dot{background:var(--accent2);box-shadow:0 0 6px var(--accent2);}
+    .sb-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,0.15);flex-shrink:0;}
+    .panel-main{padding:22px;display:flex;flex-direction:column;gap:16px;background:rgba(2,6,23,0.6);}
+    .pm-header{display:flex;justify-content:space-between;align-items:center;}
+    .pm-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:white;}
+    .pm-badge{background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.25);color:var(--green2);font-size:10px;font-weight:700;padding:3px 9px;border-radius:999px;}
+    .pm-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+    .kpi{background:rgba(15,23,42,0.8);border:1px solid var(--border);border-radius:10px;padding:13px;}
+    .kpi-label{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:7px;}
+    .kpi-value{font-family:'Syne',sans-serif;font-size:19px;font-weight:800;}
+    .kpi-green{color:var(--green2);}.kpi-blue{color:var(--accent2);}.kpi-purple{color:#c084fc;}.kpi-yellow{color:#fbbf24;}
+    .pm-chart{background:rgba(15,23,42,0.8);border:1px solid var(--border);border-radius:10px;padding:14px;flex:1;}
+    .chart-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+    .chart-title{font-size:11px;color:var(--muted);}
+    .chart-stats{display:flex;gap:14px;}
+    .cs-item{font-size:11px;color:var(--muted);}
+    .cs-item span{color:var(--green2);font-weight:700;}
+    .chart-svg{width:100%;height:110px;}
+    .pm-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+    .pm-mini{background:rgba(15,23,42,0.8);border:1px solid var(--border);border-radius:8px;padding:11px;display:flex;align-items:center;gap:10px;}
+    .pm-mini-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+    .pm-mini-label{font-size:10px;color:var(--muted);margin-bottom:2px;}
+    .pm-mini-val{font-size:13px;font-weight:700;color:white;}
 
-    /* FEATURES */
-    .section { padding: 80px 24px; max-width: 1100px; margin: 0 auto; }
-    .section-tag {
-      display: inline-block; font-size: 11px; font-weight: 700;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--accent2); margin-bottom: 14px;
-    }
-    .section-title {
-      font-family: 'Syne', sans-serif; font-size: clamp(28px, 4vw, 44px);
-      font-weight: 800; color: white; margin-bottom: 14px; line-height: 1.1;
-    }
-    .section-sub { font-size: 17px; color: var(--muted); max-width: 560px; line-height: 1.6; margin-bottom: 48px; }
+    /* ── TRUST STRIP ── */
+    .trust{padding:32px 24px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:rgba(6,14,31,0.6);}
+    .trust-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:48px;flex-wrap:wrap;}
+    .trust-item{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:13px;font-weight:500;}
+    .trust-item .ti-icon{font-size:18px;}
 
-    .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-    .feature-card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 14px; padding: 24px;
-      transition: all 0.25s; position: relative; overflow: hidden;
-    }
-    .feature-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, var(--accent), transparent);
-      opacity: 0; transition: opacity 0.25s;
-    }
-    .feature-card:hover { border-color: rgba(59,130,246,0.3); transform: translateY(-3px); }
-    .feature-card:hover::before { opacity: 1; }
-    .feature-icon { font-size: 28px; margin-bottom: 14px; }
-    .feature-title { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; color: white; margin-bottom: 8px; }
-    .feature-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    /* ── STATS ── */
+    .stats-section{padding:80px 24px;}
+    .stats-inner{max-width:960px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:20px;overflow:hidden;}
+    .stat-item{background:var(--surface);padding:36px 24px;text-align:center;}
+    .stat-num{font-family:'Syne',sans-serif;font-size:42px;font-weight:800;color:white;margin-bottom:6px;line-height:1;}
+    .stat-num span{background:linear-gradient(135deg,var(--accent2),var(--green2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .stat-desc{font-size:13px;color:var(--muted);}
 
-    /* PLANS */
-    .plans-section { padding: 80px 24px; }
-    .plans-inner { max-width: 1000px; margin: 0 auto; }
-    .plans-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 48px; }
-    .plan-card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 18px; padding: 28px; position: relative; overflow: hidden;
-      transition: all 0.25s;
+    /* ── FEATURES ── */
+    .section{padding:90px 24px;max-width:1140px;margin:0 auto;}
+    .section-tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent2);margin-bottom:14px;}
+    .section-title{font-family:'Syne',sans-serif;font-size:clamp(28px,4vw,46px);font-weight:800;color:white;margin-bottom:14px;line-height:1.1;}
+    .section-sub{font-size:17px;color:var(--muted);max-width:560px;line-height:1.65;margin-bottom:52px;}
+    .features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+    .feature-card{
+      background:var(--surface);border:1px solid var(--border);
+      border-radius:16px;padding:26px;position:relative;overflow:hidden;
+      transition:all 0.3s;cursor:default;
     }
-    .plan-card:hover { transform: translateY(-4px); }
-    .plan-card.featured {
-      background: linear-gradient(145deg, rgba(37,99,235,0.15), var(--surface));
-      border-color: rgba(59,130,246,0.4);
-      box-shadow: 0 0 40px rgba(37,99,235,0.15);
+    .feature-card::after{
+      content:'';position:absolute;inset:0;
+      background:linear-gradient(135deg,rgba(59,130,246,0.05),transparent);
+      opacity:0;transition:opacity 0.3s;
     }
-    .plan-badge {
-      position: absolute; top: 16px; right: 16px;
-      background: var(--accent); color: white;
-      font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
-      text-transform: uppercase; padding: 3px 10px; border-radius: 999px;
-    }
-    .plan-icon { font-size: 28px; margin-bottom: 14px; }
-    .plan-name { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800; color: white; margin-bottom: 4px; }
-    .plan-price { margin: 14px 0; }
-    .plan-price .amount { font-family: 'Syne', sans-serif; font-size: 36px; font-weight: 800; color: white; }
-    .plan-price .period { font-size: 14px; color: var(--muted); }
-    .plan-price .free { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; color: var(--green2); }
-    .plan-desc { font-size: 13px; color: var(--muted); line-height: 1.5; margin-bottom: 20px; }
-    .plan-features { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
-    .plan-features li { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text); }
-    .plan-features li::before { content: '✓'; color: var(--green2); font-weight: 700; font-size: 12px; flex-shrink: 0; }
-    .plan-btn {
-      display: block; text-align: center; text-decoration: none;
-      padding: 11px; border-radius: 10px; font-size: 13px; font-weight: 600;
-      transition: all 0.2s;
-    }
-    .plan-btn-primary { background: var(--accent); color: white; }
-    .plan-btn-primary:hover { background: var(--accent2); }
-    .plan-btn-secondary { background: rgba(255,255,255,0.06); border: 1px solid var(--border2); color: var(--text); }
-    .plan-btn-secondary:hover { background: rgba(255,255,255,0.1); }
+    .feature-card:hover{border-color:rgba(59,130,246,0.3);transform:translateY(-4px);box-shadow:0 20px 60px rgba(0,0,0,0.3);}
+    .feature-card:hover::after{opacity:1;}
+    .feature-card .fc-accent{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),transparent);transform:scaleX(0);transition:transform 0.3s;transform-origin:left;}
+    .feature-card:hover .fc-accent{transform:scaleX(1);}
+    .fi{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:16px;}
+    .fi-blue{background:rgba(59,130,246,0.12);border:1px solid rgba(59,130,246,0.2);}
+    .fi-green{background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.18);}
+    .fi-purple{background:rgba(168,85,247,0.1);border:1px solid rgba(168,85,247,0.18);}
+    .fi-yellow{background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.18);}
+    .fi-red{background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.18);}
+    .fi-teal{background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.18);}
+    .feature-title{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:white;margin-bottom:8px;}
+    .feature-desc{font-size:13px;color:var(--muted);line-height:1.65;}
 
-    /* CTA FINAL */
-    .cta-section {
-      padding: 80px 24px;
-      text-align: center;
-    }
-    .cta-box {
-      max-width: 700px; margin: 0 auto;
-      background: linear-gradient(135deg, rgba(37,99,235,0.12), rgba(15,23,42,0.9));
-      border: 1px solid rgba(59,130,246,0.25);
-      border-radius: 24px; padding: 56px 40px;
-      position: relative; overflow: hidden;
-    }
-    .cta-box::before {
-      content: ''; position: absolute; top: -80px; right: -80px;
-      width: 240px; height: 240px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(59,130,246,0.15), transparent 70%);
-    }
-    .cta-box h2 { font-family: 'Syne', sans-serif; font-size: 36px; font-weight: 800; color: white; margin-bottom: 14px; }
-    .cta-box p { color: var(--muted); font-size: 16px; line-height: 1.6; margin-bottom: 32px; }
+    /* ── BENTO ── */
+    .bento-section{padding:0 24px 90px;max-width:1140px;margin:0 auto;}
+    .bento-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:auto auto;gap:16px;}
+    .bento-card{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:28px;overflow:hidden;position:relative;transition:all 0.3s;}
+    .bento-card:hover{border-color:rgba(59,130,246,0.25);transform:translateY(-3px);}
+    .bento-card.span2{grid-column:span 2;}
+    .bento-card.tall{grid-row:span 2;}
+    .bc-tag{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent2);margin-bottom:12px;}
+    .bc-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:white;margin-bottom:8px;line-height:1.2;}
+    .bc-desc{font-size:13px;color:var(--muted);line-height:1.6;max-width:360px;}
+    .bc-visual{margin-top:20px;}
 
-    /* FOOTER */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 32px 60px;
-      display: flex; align-items: center; justify-content: space-between;
+    /* Mini calendar visual */
+    .mini-cal{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;}
+    .mc-day{width:100%;aspect-ratio:1;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:600;}
+    .mc-empty{background:transparent;}
+    .mc-normal{background:rgba(30,41,59,0.6);color:var(--muted);}
+    .mc-pos-sm{background:rgba(34,197,94,0.2);color:var(--green2);}
+    .mc-pos-md{background:rgba(34,197,94,0.4);color:var(--green2);}
+    .mc-pos-lg{background:rgba(34,197,94,0.7);color:white;}
+    .mc-neg{background:rgba(239,68,68,0.25);color:#fca5a5;}
+    .mc-today{border:1px solid rgba(59,130,246,0.5);}
+
+    /* Mini bar chart */
+    .mini-bars{display:flex;align-items:flex-end;gap:4px;height:80px;}
+    .mb-bar{flex:1;border-radius:4px 4px 0 0;min-width:0;transition:opacity 0.2s;}
+    .mb-bar:hover{opacity:0.8;}
+
+    /* Robot cards */
+    .robot-list{display:flex;flex-direction:column;gap:8px;margin-top:16px;}
+    .robot-item{display:flex;align-items:center;justify-content:space-between;background:rgba(15,23,42,0.8);border:1px solid var(--border);border-radius:10px;padding:10px 12px;}
+    .ri-left{display:flex;align-items:center;gap:8px;}
+    .ri-dot{width:8px;height:8px;border-radius:50%;}
+    .ri-name{font-size:12px;font-weight:600;color:white;}
+    .ri-sym{font-size:10px;color:var(--muted);}
+    .ri-pnl{font-size:12px;font-weight:700;}
+
+    /* Control panel visual */
+    .ctrl-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px;}
+    .ctrl-btn{padding:10px;border-radius:10px;font-size:11px;font-weight:700;text-align:center;border:1px solid;}
+    .ctrl-green{background:rgba(34,197,94,0.1);border-color:rgba(34,197,94,0.25);color:var(--green2);}
+    .ctrl-red{background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.25);color:#fca5a5;}
+    .ctrl-blue{background:rgba(59,130,246,0.1);border-color:rgba(59,130,246,0.25);color:var(--accent2);}
+    .ctrl-yellow{background:rgba(251,191,36,0.1);border-color:rgba(251,191,36,0.25);color:#fde68a;}
+
+    /* Account cards */
+    .acc-list{display:flex;flex-direction:column;gap:6px;margin-top:14px;}
+    .acc-item{display:flex;align-items:center;gap:10px;background:rgba(15,23,42,0.7);border:1px solid var(--border);border-radius:9px;padding:9px 11px;}
+    .acc-online{width:7px;height:7px;border-radius:50%;background:var(--green2);box-shadow:0 0 6px var(--green2);flex-shrink:0;}
+    .acc-offline{width:7px;height:7px;border-radius:50%;background:var(--muted);flex-shrink:0;}
+    .acc-name{font-size:12px;font-weight:600;color:white;flex:1;}
+    .acc-val{font-size:12px;font-weight:700;color:var(--green2);}
+
+    /* ── PLANS ── */
+    .plans-section{padding:90px 24px;background:linear-gradient(180deg,transparent,rgba(6,14,31,0.5),transparent);}
+    .plans-inner{max-width:1060px;margin:0 auto;}
+    .plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:52px;}
+    .plan-card{
+      background:var(--surface);border:1px solid var(--border);
+      border-radius:20px;padding:30px;position:relative;overflow:hidden;
+      transition:all 0.3s;
     }
-    .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 16px; color: white; }
-    .footer-logo span { color: var(--accent2); }
-    .footer-links { display: flex; gap: 24px; }
-    .footer-links a { color: var(--muted); font-size: 13px; text-decoration: none; transition: color 0.2s; }
-    .footer-links a:hover { color: white; }
-    .footer-copy { color: var(--muted); font-size: 12px; }
+    .plan-card:hover{transform:translateY(-5px);}
+    .plan-card.featured{
+      background:linear-gradient(145deg,rgba(37,99,235,0.1),var(--surface));
+      border-color:rgba(59,130,246,0.35);
+      box-shadow:0 0 60px rgba(37,99,235,0.12);
+    }
+    .plan-card.featured:hover{box-shadow:0 20px 80px rgba(37,99,235,0.2);}
+    .plan-badge{
+      position:absolute;top:-1px;left:50%;transform:translateX(-50%);
+      background:linear-gradient(135deg,#2563eb,#1d4ed8);color:white;
+      font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+      padding:4px 16px;border-radius:0 0 10px 10px;
+    }
+    .plan-icon{font-size:30px;margin-bottom:16px;}
+    .plan-name{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:white;margin-bottom:5px;}
+    .plan-price{margin:16px 0;}
+    .plan-price .amount{font-family:'Syne',sans-serif;font-size:40px;font-weight:800;color:white;}
+    .plan-price .period{font-size:15px;color:var(--muted);}
+    .plan-price .free{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:var(--green2);}
+    .plan-desc{font-size:13px;color:var(--muted);line-height:1.55;margin-bottom:22px;min-height:52px;}
+    .plan-divider{height:1px;background:var(--border);margin-bottom:20px;}
+    .plan-features{list-style:none;display:flex;flex-direction:column;gap:9px;margin-bottom:26px;}
+    .plan-features li{display:flex;align-items:flex-start;gap:9px;font-size:13px;color:var(--text);line-height:1.4;}
+    .plan-features li .check{color:var(--green2);font-weight:700;font-size:12px;flex-shrink:0;margin-top:1px;}
+    .plan-features li.highlight{color:var(--accent2);font-weight:600;}
+    .plan-features li.highlight .check{color:var(--accent2);}
+    .plan-btn{display:block;text-align:center;text-decoration:none;padding:13px;border-radius:12px;font-size:14px;font-weight:600;transition:all 0.25s;}
+    .plan-btn-primary{background:linear-gradient(135deg,#2563eb,#1d4ed8);color:white;box-shadow:0 4px 16px rgba(37,99,235,0.3);}
+    .plan-btn-primary:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(37,99,235,0.45);}
+    .plan-btn-secondary{background:rgba(255,255,255,0.05);border:1px solid var(--border2);color:var(--text);}
+    .plan-btn-secondary:hover{background:rgba(255,255,255,0.1);}
 
-    /* DIVIDER */
-    .divider { height: 1px; background: var(--border); max-width: 1100px; margin: 0 auto; }
+    /* ── HOW IT WORKS ── */
+    .how-section{padding:90px 24px;max-width:1000px;margin:0 auto;text-align:center;}
+    .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:56px;position:relative;}
+    .steps::before{content:'';position:absolute;top:24px;left:calc(16.67% + 24px);right:calc(16.67% + 24px);height:1px;background:linear-gradient(90deg,transparent,var(--border),var(--border),transparent);}
+    .step{position:relative;}
+    .step-num{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,rgba(37,99,235,0.2),rgba(37,99,235,0.1));border:1px solid rgba(59,130,246,0.3);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--accent2);margin:0 auto 20px;}
+    .step-title{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:white;margin-bottom:8px;}
+    .step-desc{font-size:13px;color:var(--muted);line-height:1.6;}
 
-    /* ANIMATIONS */
-    .fade-in { opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
-    .fade-in.visible { opacity: 1; transform: translateY(0); }
+    /* ── CTA FINAL ── */
+    .cta-section{padding:90px 24px;text-align:center;}
+    .cta-box{
+      max-width:760px;margin:0 auto;
+      background:linear-gradient(135deg,rgba(37,99,235,0.1),rgba(15,23,42,0.95));
+      border:1px solid rgba(59,130,246,0.2);border-radius:28px;padding:64px 48px;
+      position:relative;overflow:hidden;
+    }
+    .cta-box::before{content:'';position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(37,99,235,0.12),transparent 70%);pointer-events:none;}
+    .cta-box h2{font-family:'Syne',sans-serif;font-size:clamp(28px,4vw,44px);font-weight:800;color:white;margin-bottom:16px;position:relative;}
+    .cta-box p{color:var(--muted);font-size:17px;line-height:1.65;margin-bottom:36px;max-width:500px;margin-left:auto;margin-right:auto;position:relative;}
+    .cta-note{font-size:12px;color:var(--muted);margin-top:16px;}
 
-    @media (max-width: 768px) {
-      nav { padding: 16px 20px; }
-      .nav-links { display: none; }
-      .features-grid, .plans-grid { grid-template-columns: 1fr; }
-      .panel-content { grid-template-columns: 1fr; }
-      .panel-sidebar { display: none; }
-      .panel-kpis { grid-template-columns: repeat(2,1fr); }
-      .stats-grid { grid-template-columns: 1fr; }
-      footer { flex-direction: column; gap: 16px; text-align: center; }
+    /* ── FOOTER ── */
+    footer{border-top:1px solid var(--border);padding:36px 60px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+    .footer-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:16px;color:white;display:flex;align-items:center;gap:6px;}
+    .footer-links{display:flex;gap:24px;}
+    .footer-links a{color:var(--muted);font-size:13px;text-decoration:none;transition:color 0.2s;}
+    .footer-links a:hover{color:white;}
+    .footer-copy{color:var(--muted);font-size:12px;}
+
+    /* ── SCROLL ANIMATIONS ── */
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity 0.65s ease,transform 0.65s ease;}
+    .reveal.visible{opacity:1;transform:translateY(0);}
+    .reveal-delay-1{transition-delay:0.1s;}
+    .reveal-delay-2{transition-delay:0.2s;}
+    .reveal-delay-3{transition-delay:0.3s;}
+
+    /* ── MOBILE ── */
+    @media(max-width:768px){
+      nav{padding:14px 20px;}
+      .nav-links{display:none;}
+      h1{font-size:36px;}
+      .mockup-wrap{display:none;}
+      .hero{padding-bottom:40px;}
+      .stats-inner{grid-template-columns:repeat(2,1fr);}
+      .features-grid{grid-template-columns:1fr;}
+      .bento-grid{grid-template-columns:1fr;}
+      .bento-card.span2{grid-column:span 1;}
+      .plans-grid{grid-template-columns:1fr;}
+      .steps{grid-template-columns:1fr;gap:24px;}
+      .steps::before{display:none;}
+      footer{flex-direction:column;text-align:center;padding:24px;}
+      .trust-inner{gap:24px;}
+    }
+    @media(max-width:1024px){
+      .panel-content{grid-template-columns:180px 1fr;}
+      .pm-kpis{grid-template-columns:repeat(2,1fr);}
     }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav>
-    <div class="nav-logo">TDMK <span>Systems</span></div>
-    <div class="nav-links">
-      <a href="#features">Funcionalidades</a>
-      <a href="#planes">Planes</a>
-      <a href="https://app.tdmksystems.com">Panel</a>
-    </div>
-    <a href="https://app.tdmksystems.com/register" class="nav-cta">Empezar gratis</a>
-  </nav>
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo"><div class="dot-logo"></div>TDMK Systems</a>
+  <div class="nav-links">
+    <a href="#features">Funcionalidades</a>
+    <a href="#how">Cómo funciona</a>
+    <a href="#planes">Planes</a>
+    <a href="https://app.tdmksystems.com">Panel</a>
+  </div>
+  <a href="https://app.tdmksystems.com/register" class="nav-cta">Empezar gratis →</a>
+</nav>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-grid"></div>
-    <div class="hero-badge">Panel de trading profesional</div>
-    <h1>Gestiona tu trading<br>desde <em>un único lugar</em></h1>
-    <p class="hero-sub">Conecta tus cuentas de MT5, monitoriza en tiempo real, controla tus robots y supervisa tus resultados desde un panel diseñado para traders serios.</p>
-    <div class="hero-ctas">
-      <a href="https://app.tdmksystems.com/register" class="btn-primary">Empezar gratis →</a>
-      <a href="https://app.tdmksystems.com" class="btn-secondary">Ver el panel</a>
-    </div>
-
-    <!-- PANEL MOCKUP -->
-    <div class="panel-mockup fade-in">
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+  <div class="hero-orb hero-orb-3"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-badge"><div class="pulse"></div>Panel de trading profesional · MT5 & MT4</div>
+  <h1>Gestiona tu trading<br>desde <em>un único lugar</em></h1>
+  <p class="hero-sub">Conecta tus cuentas, monitoriza en tiempo real, controla tus robots y analiza tus estrategias. Diseñado para traders que quieren el control total de su operativa.</p>
+  <div class="hero-ctas">
+    <a href="https://app.tdmksystems.com/register" class="btn-primary">Empezar gratis <span>→</span></a>
+    <a href="https://app.tdmksystems.com" class="btn-secondary">Ver el panel</a>
+  </div>
+  <div class="mockup-wrap">
+    <div class="mockup-glow"></div>
+    <div class="panel-mockup">
       <div class="panel-topbar">
-        <div class="dot dot-r"></div>
-        <div class="dot dot-y"></div>
-        <div class="dot dot-g"></div>
+        <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
         <div class="panel-url">app.tdmksystems.com</div>
       </div>
       <div class="panel-content">
         <div class="panel-sidebar">
-          <div class="sidebar-logo">TDMK</div>
-          <div class="sidebar-section">Trading</div>
-          <div class="sidebar-item active">📊 Dashboard</div>
-          <div class="sidebar-item">📋 Cuentas</div>
-          <div class="sidebar-item">🎮 Control Center</div>
-          <div class="sidebar-item">📈 Métricas</div>
-          <div class="sidebar-item">🤖 Robots</div>
-          <div class="sidebar-section">Inversión</div>
-          <div class="sidebar-item">💰 PAMM</div>
-          <div class="sidebar-item">🤝 Afiliados</div>
+          <div class="sidebar-logo"><div class="dot-s"></div>TDMK Panel</div>
+          <div class="sb-sec">Trading</div>
+          <div class="sb-item active"><div class="sb-dot"></div>📊 Dashboard</div>
+          <div class="sb-item"><div class="sb-dot"></div>📋 Cuentas</div>
+          <div class="sb-item"><div class="sb-dot"></div>🎮 Control Center</div>
+          <div class="sb-item"><div class="sb-dot"></div>📈 Métricas</div>
+          <div class="sb-item"><div class="sb-dot"></div>📋 Estrategias</div>
+          <div class="sb-item"><div class="sb-dot"></div>🔄 Copiador CFDs</div>
+          <div class="sb-item"><div class="sb-dot"></div>🤖 Robots</div>
+          <div class="sb-sec">Inversión</div>
+          <div class="sb-item"><div class="sb-dot"></div>🏢 Granjas VPS</div>
+          <div class="sb-item"><div class="sb-dot"></div>💰 PAMM</div>
+          <div class="sb-sec">Comercial</div>
+          <div class="sb-item"><div class="sb-dot"></div>🤝 Afiliados</div>
+          <div class="sb-item"><div class="sb-dot"></div>💬 Mensajes</div>
         </div>
         <div class="panel-main">
-          <div class="panel-header">Dashboard</div>
-          <div class="panel-kpis">
-            <div class="kpi"><div class="kpi-label">Balance total</div><div class="kpi-value kpi-blue">$12.847</div></div>
-            <div class="kpi"><div class="kpi-label">PnL del día</div><div class="kpi-value kpi-green">+$342</div></div>
-            <div class="kpi"><div class="kpi-label">Win Rate</div><div class="kpi-value kpi-purple">79.3%</div></div>
-            <div class="kpi"><div class="kpi-label">Cuentas activas</div><div class="kpi-value kpi-yellow">4</div></div>
+          <div class="pm-header">
+            <div class="pm-title">Dashboard</div>
+            <div class="pm-badge">● 3 cuentas online</div>
           </div>
-          <div class="panel-chart">
-            <div class="chart-label">Curva de balance — últimos 30 días</div>
-            <svg class="chart-svg" viewBox="0 0 600 100" preserveAspectRatio="none">
+          <div class="pm-kpis">
+            <div class="kpi"><div class="kpi-label">Balance total</div><div class="kpi-value kpi-blue">€24.847</div></div>
+            <div class="kpi"><div class="kpi-label">PnL del día</div><div class="kpi-value kpi-green">+€342</div></div>
+            <div class="kpi"><div class="kpi-label">Win Rate</div><div class="kpi-value kpi-purple">79.3%</div></div>
+            <div class="kpi"><div class="kpi-label">Esp. Matemática</div><div class="kpi-value kpi-yellow">+1.84</div></div>
+          </div>
+          <div class="pm-chart">
+            <div class="chart-header">
+              <div class="chart-title">Curva de balance — últimos 30 días</div>
+              <div class="chart-stats">
+                <div class="cs-item">PnL mes: <span>+€1.247</span></div>
+                <div class="cs-item">Max DD: <span style="color:#f87171">-€312</span></div>
+              </div>
+            </div>
+            <svg class="chart-svg" viewBox="0 0 700 110" preserveAspectRatio="none">
               <defs>
-                <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.3"/>
+                <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.35"/>
                   <stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/>
                 </linearGradient>
               </defs>
-              <path d="M0,80 C30,75 60,70 90,65 C120,60 150,72 180,55 C210,38 240,45 270,30 C300,15 330,35 360,25 C390,15 420,20 450,12 C480,5 510,18 540,10 C560,5 580,8 600,5 L600,100 L0,100Z" fill="url(#g)"/>
-              <path d="M0,80 C30,75 60,70 90,65 C120,60 150,72 180,55 C210,38 240,45 270,30 C300,15 330,35 360,25 C390,15 420,20 450,12 C480,5 510,18 540,10 C560,5 580,8 600,5" fill="none" stroke="#3b82f6" stroke-width="2"/>
+              <path d="M0,90 C40,85 70,78 100,72 C130,66 155,80 185,62 C215,44 240,52 270,38 C300,24 325,42 355,30 C385,18 410,28 440,16 C465,8 490,22 520,12 C545,4 570,14 600,8 C625,3 660,10 700,6 L700,110 L0,110Z" fill="url(#g1)"/>
+              <path d="M0,90 C40,85 70,78 100,72 C130,66 155,80 185,62 C215,44 240,52 270,38 C300,24 325,42 355,30 C385,18 410,28 440,16 C465,8 490,22 520,12 C545,4 570,14 600,8 C625,3 660,10 700,6" fill="none" stroke="#3b82f6" stroke-width="2"/>
+              <circle cx="700" cy="6" r="4" fill="#3b82f6"/>
             </svg>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- STATS -->
-  <div class="stats fade-in">
-    <div class="stats-grid">
-      <div class="stat-item">
-        <div class="stat-num">+<span>50</span></div>
-        <div class="stat-desc">Traders activos</div>
+<!-- TRUST -->
+<div class="trust reveal">
+  <div class="trust-inner">
+    <div class="trust-item"><span class="ti-icon">🔒</span>Pago seguro con Stripe</div>
+    <div class="trust-item"><span class="ti-icon">⚡</span>Activación inmediata</div>
+    <div class="trust-item"><span class="ti-icon">🔄</span>Cancela cuando quieras</div>
+    <div class="trust-item"><span class="ti-icon">🤝</span>Soporte en español</div>
+    <div class="trust-item"><span class="ti-icon">🛡️</span>Sin permanencia</div>
+  </div>
+</div>
+
+<!-- STATS -->
+<section class="stats-section reveal">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <div class="stat-num"><span id="s1">0</span>+</div>
+      <div class="stat-desc">Traders activos</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num"><span id="s2">0</span></div>
+      <div class="stat-desc">Robots disponibles</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num"><span id="s3">0</span>/7</div>
+      <div class="stat-desc">Monitorización en tiempo real</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num"><span id="s4">0</span>s</div>
+      <div class="stat-desc">Para conectar tu primera cuenta</div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section" id="features">
+  <div class="reveal">
+    <div class="section-tag">Funcionalidades</div>
+    <h2 class="section-title">Todo lo que necesitas<br>en un solo panel</h2>
+    <p class="section-sub">Diseñado para traders que gestionan múltiples cuentas y quieren tener el control total de su operativa desde cualquier dispositivo.</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card reveal reveal-delay-1">
+      <div class="fc-accent"></div>
+      <div class="fi fi-blue">📊</div>
+      <div class="feature-title">Dashboard en tiempo real</div>
+      <div class="feature-desc">Balance, PnL, win rate, esperanza matemática y curva de equity. Todo actualizado al segundo desde tus cuentas MT5 y MT4.</div>
+    </div>
+    <div class="feature-card reveal reveal-delay-2">
+      <div class="fc-accent"></div>
+      <div class="fi fi-red">🎮</div>
+      <div class="feature-title">Control Center</div>
+      <div class="feature-desc">Cierre de emergencia, break even, protección automática de drawdown y gestión de riesgo desde un único panel centralizado.</div>
+    </div>
+    <div class="feature-card reveal reveal-delay-3">
+      <div class="fc-accent"></div>
+      <div class="fi fi-purple">📈</div>
+      <div class="feature-title">Gestión de Estrategias</div>
+      <div class="feature-desc">Análisis de cada Magic Number con calendar heatmap, métricas mensuales, expectancy y comparativa visual de rentabilidad.</div>
+    </div>
+    <div class="feature-card reveal reveal-delay-1">
+      <div class="fc-accent"></div>
+      <div class="fi fi-green">🤖</div>
+      <div class="feature-title">Robots & Herramientas</div>
+      <div class="feature-desc">Accede a robots exclusivos — Grid, Martingala, Gestor de Riesgo — y despliégalos en segundos en cualquier cuenta conectada.</div>
+    </div>
+    <div class="feature-card reveal reveal-delay-2">
+      <div class="fc-accent"></div>
+      <div class="fi fi-yellow">🔄</div>
+      <div class="feature-title">Copiador de CFDs</div>
+      <div class="feature-desc">Replica operaciones automáticamente entre cuentas. Ideal para gestionar varias cuentas con la misma estrategia de forma simultánea.</div>
+    </div>
+    <div class="feature-card reveal reveal-delay-3">
+      <div class="fc-accent"></div>
+      <div class="fi fi-teal">🏢</div>
+      <div class="feature-title">Granjas VPS</div>
+      <div class="feature-desc">Gestiona y supervisa tus servidores VPS con múltiples terminales MT5 desde el panel. Monitorización 24/7 con alertas automáticas.</div>
+    </div>
+  </div>
+</section>
+
+<!-- BENTO -->
+<section class="bento-section">
+  <div class="bento-grid">
+
+    <!-- Gestión de estrategias / calendario -->
+    <div class="bento-card span2 reveal">
+      <div class="bc-tag">Gestión de Estrategias</div>
+      <div class="bc-title">Calendario de rendimiento por Magic Number</div>
+      <div class="bc-desc">Visualiza cada día del mes con su PnL real. Filtra por estrategia y descubre qué Magic Number te genera más beneficio.</div>
+      <div class="bc-visual">
+        <div class="mini-cal">
+          <div class="mc-day" style="color:var(--muted);font-size:9px;">L</div><div class="mc-day" style="color:var(--muted);font-size:9px;">M</div><div class="mc-day" style="color:var(--muted);font-size:9px;">X</div><div class="mc-day" style="color:var(--muted);font-size:9px;">J</div><div class="mc-day" style="color:var(--muted);font-size:9px;">V</div><div class="mc-day" style="color:var(--muted);font-size:9px;">S</div><div class="mc-day" style="color:var(--muted);font-size:9px;">D</div>
+          <div class="mc-day mc-empty"></div><div class="mc-day mc-empty"></div><div class="mc-day mc-empty"></div><div class="mc-day mc-empty"></div><div class="mc-day mc-empty"></div><div class="mc-day mc-normal">1</div><div class="mc-day mc-normal">2</div>
+          <div class="mc-day mc-normal">3</div><div class="mc-day mc-normal">4</div><div class="mc-day mc-normal">5</div><div class="mc-day mc-normal">6</div><div class="mc-day mc-normal">7</div><div class="mc-day mc-normal">8</div><div class="mc-day mc-normal">9</div>
+          <div class="mc-day mc-pos-sm">+8</div><div class="mc-day mc-pos-md">+24</div><div class="mc-day mc-normal">11</div><div class="mc-day mc-pos-sm">+6</div><div class="mc-day mc-pos-lg" style="font-size:7px;">+234</div><div class="mc-day mc-normal">14</div><div class="mc-day mc-normal">15</div>
+          <div class="mc-day mc-pos-sm">+11</div><div class="mc-day mc-pos-md">+18</div><div class="mc-day mc-neg">-4</div><div class="mc-day mc-pos-sm">+9</div><div class="mc-day mc-pos-md">+22</div><div class="mc-day mc-normal">21</div><div class="mc-day mc-normal">22</div>
+          <div class="mc-day mc-pos-sm">+7</div><div class="mc-day mc-pos-lg" style="font-size:7px;">+41</div><div class="mc-day mc-pos-sm">+12</div><div class="mc-day mc-pos-md">+19</div><div class="mc-day mc-pos-sm today mc-today">+8</div><div class="mc-day mc-normal">28</div><div class="mc-day mc-normal">29</div>
+          <div class="mc-day mc-normal">30</div>
+        </div>
       </div>
-      <div class="stat-item">
-        <div class="stat-num"><span>5</span></div>
-        <div class="stat-desc">Robots disponibles</div>
+    </div>
+
+    <!-- Robots ranking -->
+    <div class="bento-card reveal">
+      <div class="bc-tag">Robots & Herramientas</div>
+      <div class="bc-title">Ranking de estrategias validadas</div>
+      <div class="bc-desc">Accede a presets reales con historial verificado.</div>
+      <div class="robot-list">
+        <div class="robot-item">
+          <div class="ri-left"><div class="ri-dot" style="background:#fbbf24;box-shadow:0 0 5px #fbbf24;"></div><div><div class="ri-name">Grid Compras M1 Oro</div><div class="ri-sym">XAUUSD · Magic 1</div></div></div>
+          <div class="ri-pnl" style="color:#fbbf24">+230€/mes</div>
+        </div>
+        <div class="robot-item">
+          <div class="ri-left"><div class="ri-dot" style="background:#60a5fa;box-shadow:0 0 5px #60a5fa;"></div><div><div class="ri-name">Martingala Ventas Euro</div><div class="ri-sym">EURUSD · Magic 6</div></div></div>
+          <div class="ri-pnl" style="color:var(--green2)">+4.58€/mes</div>
+        </div>
+        <div class="robot-item">
+          <div class="ri-left"><div class="ri-dot" style="background:#4ade80;box-shadow:0 0 5px #4ade80;"></div><div><div class="ri-name">Martingala USDCAD</div><div class="ri-sym">USDCAD · Magic 7</div></div></div>
+          <div class="ri-pnl" style="color:var(--green2)">+2.43€/mes</div>
+        </div>
       </div>
-      <div class="stat-item">
-        <div class="stat-num"><span>24</span>/7</div>
-        <div class="stat-desc">Monitorización en tiempo real</div>
+    </div>
+
+    <!-- Control Center -->
+    <div class="bento-card reveal reveal-delay-1">
+      <div class="bc-tag">Control Center</div>
+      <div class="bc-title">Gestión de riesgo en un clic</div>
+      <div class="bc-desc">Protege tu capital con acciones instantáneas desde cualquier dispositivo.</div>
+      <div class="ctrl-grid" style="margin-top:16px;">
+        <div class="ctrl-btn ctrl-red">🚨 Cierre total</div>
+        <div class="ctrl-btn ctrl-green">✅ Break Even</div>
+        <div class="ctrl-btn ctrl-blue">📊 Cerrar 50%</div>
+        <div class="ctrl-btn ctrl-yellow">🔒 Bloquear DD</div>
+      </div>
+    </div>
+
+    <!-- Cuentas activas -->
+    <div class="bento-card reveal reveal-delay-2">
+      <div class="bc-tag">Monitorización</div>
+      <div class="bc-title">Todas tus cuentas, en tiempo real</div>
+      <div class="bc-desc">Estado, balance y PnL de cada cuenta conectada.</div>
+      <div class="acc-list">
+        <div class="acc-item"><div class="acc-online"></div><div class="acc-name">#28297981 VT Markets</div><div class="acc-val">+€342</div></div>
+        <div class="acc-item"><div class="acc-online"></div><div class="acc-name">#11159529 IC Markets</div><div class="acc-val">+€87</div></div>
+        <div class="acc-item"><div class="acc-offline"></div><div class="acc-name">#44821033 Pepperstone</div><div class="acc-val" style="color:var(--muted)">Offline</div></div>
+      </div>
+    </div>
+
+    <!-- Métricas -->
+    <div class="bento-card reveal reveal-delay-3">
+      <div class="bc-tag">Métricas avanzadas</div>
+      <div class="bc-title">Profit mensual por estrategia</div>
+      <div class="bc-desc">Compara visualmente qué Magic te genera más.</div>
+      <div class="mini-bars" style="margin-top:20px;align-items:flex-end;">
+        <div class="mb-bar" style="height:20%;background:rgba(96,165,250,0.5);"></div>
+        <div class="mb-bar" style="height:35%;background:rgba(96,165,250,0.6);"></div>
+        <div class="mb-bar" style="height:25%;background:rgba(96,165,250,0.5);"></div>
+        <div class="mb-bar" style="height:45%;background:rgba(96,165,250,0.7);"></div>
+        <div class="mb-bar" style="height:30%;background:rgba(96,165,250,0.5);"></div>
+        <div class="mb-bar" style="height:95%;background:linear-gradient(180deg,#fbbf24,#d97706);box-shadow:0 0 12px rgba(251,191,36,0.4);"></div>
+        <div class="mb-bar" style="height:20%;background:rgba(96,165,250,0.5);"></div>
+        <div class="mb-bar" style="height:40%;background:rgba(96,165,250,0.6);"></div>
+        <div class="mb-bar" style="height:15%;background:rgba(96,165,250,0.4);"></div>
+        <div class="mb-bar" style="height:28%;background:rgba(96,165,250,0.5);"></div>
+        <div class="mb-bar" style="height:22%;background:rgba(96,165,250,0.5);"></div>
       </div>
     </div>
   </div>
+</section>
 
-  <div class="divider"></div>
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how">
+  <div class="reveal">
+    <div class="section-tag" style="display:block;text-align:center;">Cómo funciona</div>
+    <h2 class="section-title" style="text-align:center;">Conectado en menos de 5 minutos</h2>
+    <p class="section-sub" style="text-align:center;margin:0 auto 0;">Sin servidores propios ni configuración compleja. Solo descarga el EA, conéctalo y listo.</p>
+  </div>
+  <div class="steps">
+    <div class="step reveal reveal-delay-1">
+      <div class="step-num">1</div>
+      <div class="step-title">Crea tu cuenta gratis</div>
+      <div class="step-desc">Regístrate en segundos. Sin tarjeta de crédito para el plan Starter.</div>
+    </div>
+    <div class="step reveal reveal-delay-2">
+      <div class="step-num">2</div>
+      <div class="step-title">Descarga e instala el EA</div>
+      <div class="step-desc">Descarga el Expert Advisor para MT5 o MT4 e instálalo en tu terminal en 2 pasos.</div>
+    </div>
+    <div class="step reveal reveal-delay-3">
+      <div class="step-num">3</div>
+      <div class="step-title">Empieza a operar con control</div>
+      <div class="step-desc">Tu cuenta aparece online al instante. Monitoriza, controla y analiza desde el panel.</div>
+    </div>
+  </div>
+</section>
 
-  <!-- FEATURES -->
-  <section class="section fade-in" id="features">
-    <div class="section-tag">Funcionalidades</div>
-    <h2 class="section-title">Todo lo que necesitas<br>en un solo panel</h2>
-    <p class="section-sub">Diseñado para traders que gestionan múltiples cuentas y quieren tener el control total de su operativa.</p>
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon">📊</div>
-        <div class="feature-title">Dashboard en tiempo real</div>
-        <div class="feature-desc">Visualiza el balance, PnL, win rate y métricas clave de todas tus cuentas de un vistazo.</div>
+<!-- PLANES -->
+<section class="plans-section" id="planes">
+  <div class="plans-inner">
+    <div class="reveal" style="text-align:center;">
+      <div class="section-tag">Planes</div>
+      <h2 class="section-title">Elige tu plan</h2>
+      <p class="section-sub" style="margin:0 auto;">Sin permanencia. Cancela cuando quieras. Actívate al instante.</p>
+    </div>
+    <div class="plans-grid">
+      <div class="plan-card reveal reveal-delay-1">
+        <div class="plan-icon">⚡</div>
+        <div class="plan-name">Starter</div>
+        <div class="plan-price"><span class="free">Gratis</span></div>
+        <div class="plan-desc">Empieza a conectar tu MT5 o MT4 y monitoriza tu cuenta sin ningún coste.</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li class="highlight"><span class="check">✓</span>1 cuenta activa (MT5 o MT4)</li>
+          <li><span class="check">✓</span>Dashboard profesional con KPIs y curva de balance</li>
+          <li><span class="check">✓</span>Control Center — break even y cierre de emergencia</li>
+          <li><span class="check">✓</span>Gestor de Coberturas</li>
+          <li><span class="check">✓</span>Robots y herramientas Starter</li>
+          <li><span class="check">✓</span>Programa de Afiliados</li>
+          <li><span class="check">✓</span>Soporte estándar</li>
+        </ul>
+        <a href="https://app.tdmksystems.com/register" class="plan-btn plan-btn-secondary">Empezar gratis</a>
       </div>
-      <div class="feature-card">
-        <div class="feature-icon">🎮</div>
-        <div class="feature-title">Control Center</div>
-        <div class="feature-desc">Gestiona todas tus cuentas desde un único lugar. Cierre de emergencia, break even y protección automática de DD.</div>
+      <div class="plan-card featured reveal reveal-delay-2">
+        <div class="plan-badge">Popular</div>
+        <div class="plan-icon">📈</div>
+        <div class="plan-name">Trader</div>
+        <div class="plan-price"><span class="amount">19€</span><span class="period">/mes</span></div>
+        <div class="plan-desc">Para traders activos que quieren análisis avanzados, más cuentas y acceso completo a robots.</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li class="highlight"><span class="check">✓</span>Hasta 5 cuentas activas simultáneamente</li>
+          <li><span class="check">✓</span>Todo lo incluido en Starter</li>
+          <li><span class="check">✓</span>Gestión de Estrategias con calendario y métricas mensuales</li>
+          <li><span class="check">✓</span>Métricas avanzadas — ratio R/R, expectancy, distribución</li>
+          <li><span class="check">✓</span>Copiador de CFDs entre cuentas</li>
+          <li><span class="check">✓</span>Acceso completo a robots Trader</li>
+          <li><span class="check">✓</span>Alertas por Telegram y Email</li>
+          <li><span class="check">✓</span>Soporte prioritario</li>
+        </ul>
+        <a href="https://app.tdmksystems.com/register" class="plan-btn plan-btn-primary">Suscribirse ahora →</a>
       </div>
-      <div class="feature-card">
-        <div class="feature-icon">🤖</div>
-        <div class="feature-title">Robots & Herramientas</div>
-        <div class="feature-desc">Accede a robots de trading exclusivos — Martingala, Grid, Gestor de Riesgo — y desplégalos en segundos.</div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">📈</div>
-        <div class="feature-title">Métricas avanzadas</div>
-        <div class="feature-desc">Análisis profundo de tu operativa: ratio R/R, esperanza matemática, curva de balance y distribución de operaciones.</div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">💰</div>
-        <div class="feature-title">PAMM Inversión</div>
-        <div class="feature-desc">Sigue la evolución de tu inversión en el fondo PAMM con estadísticas detalladas y historial completo.</div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🤝</div>
-        <div class="feature-title">Programa de Afiliados</div>
-        <div class="feature-desc">Gana comisiones recurrentes por cada trader que traigas al ecosistema. Niveles desde Semilla hasta Diamante.</div>
+      <div class="plan-card reveal reveal-delay-3">
+        <div class="plan-icon">🏢</div>
+        <div class="plan-name">Institucional</div>
+        <div class="plan-price"><span class="amount">49€</span><span class="period">/mes</span></div>
+        <div class="plan-desc">Para estructuras profesionales con múltiples cuentas, granjas VPS y gestión multi-cuenta.</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li class="highlight"><span class="check">✓</span>Hasta 25 cuentas bajo una misma infraestructura</li>
+          <li><span class="check">✓</span>Todo lo incluido en Trader</li>
+          <li><span class="check">✓</span>Granjas VPS — gestión de múltiples terminales</li>
+          <li><span class="check">✓</span>Descarga de presets validados de las mejores estrategias</li>
+          <li><span class="check">✓</span>Supervisión automática 24/7 con alertas avanzadas</li>
+          <li><span class="check">✓</span>Preparado para fondeadas, PAMM y estructuras profesionales</li>
+          <li><span class="check">✓</span>Acompañamiento directo para acelerar tu crecimiento</li>
+        </ul>
+        <a href="https://app.tdmksystems.com/register" class="plan-btn plan-btn-secondary">Suscribirse ahora →</a>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <div class="divider"></div>
+<!-- CTA FINAL -->
+<section class="cta-section reveal">
+  <div class="cta-box">
+    <h2>Empieza hoy, gratis</h2>
+    <p>Conecta tu primera cuenta de MT5 o MT4 en menos de 5 minutos y empieza a tener el control total de tu operativa.</p>
+    <a href="https://app.tdmksystems.com/register" class="btn-primary" style="display:inline-flex;">Crear cuenta gratis <span>→</span></a>
+    <div class="cta-note">Sin tarjeta de crédito · Sin permanencia · Actívate al instante</div>
+  </div>
+</section>
 
-  <!-- PLANES -->
-  <section class="plans-section fade-in" id="planes">
-    <div class="plans-inner">
-      <div class="section-tag" style="text-align:center;display:block;">Planes</div>
-      <h2 class="section-title" style="text-align:center;">Elige tu plan</h2>
-      <p class="section-sub" style="text-align:center;margin:0 auto 0;">Sin permanencia. Cancela cuando quieras.</p>
-      <div class="plans-grid">
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo"><div class="dot-logo" style="width:6px;height:6px;border-radius:50%;background:var(--accent2);"></div>TDMK Systems</div>
+  <div class="footer-links">
+    <a href="https://app.tdmksystems.com">Panel</a>
+    <a href="#planes">Planes</a>
+    <a href="#features">Funcionalidades</a>
+    <a href="mailto:info@tdmksystems.com">Contacto</a>
+  </div>
+  <div class="footer-copy">© 2026 TDMK Systems · Todos los derechos reservados</div>
+</footer>
 
-        <!-- STARTER -->
-        <div class="plan-card">
-          <div class="plan-icon">⚡</div>
-          <div class="plan-name">Starter</div>
-          <div class="plan-price"><span class="free">Gratis</span></div>
-          <div class="plan-desc">Empieza a conectar tu MT5 y monitoriza tu cuenta sin coste.</div>
-          <ul class="plan-features">
-            <li>1 cuenta MT5</li>
-            <li>Dashboard en tiempo real</li>
-            <li>Control Center básico</li>
-            <li>Herramientas básicas</li>
-            <li>Módulo PAMM</li>
-          </ul>
-          <a href="https://app.tdmksystems.com/register" class="plan-btn plan-btn-secondary">Empezar gratis</a>
-        </div>
+<script>
+  // Reveal on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        <!-- TRADER -->
-        <div class="plan-card featured">
-          <div class="plan-badge">Popular</div>
-          <div class="plan-icon">📈</div>
-          <div class="plan-name">Trader</div>
-          <div class="plan-price">
-            <span class="amount">19€</span>
-            <span class="period">/mes</span>
-          </div>
-          <div class="plan-desc">Para traders activos que gestionan múltiples cuentas y quieren acceso a todos los robots.</div>
-          <ul class="plan-features">
-            <li>Hasta 5 cuentas MT5</li>
-            <li>Todos los robots</li>
-            <li>Métricas avanzadas</li>
-            <li>Copiador de CFDs</li>
-            <li>Programa de afiliados</li>
-            <li>Soporte prioritario</li>
-          </ul>
-          <a href="https://app.tdmksystems.com/register" class="plan-btn plan-btn-primary">Empezar ahora →</a>
-        </div>
+  // Counter animation
+  function animateCounter(el, target, duration = 1500) {
+    let start = 0;
+    const step = (timestamp) => {
+      if (!start) start = timestamp;
+      const progress = Math.min((timestamp - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.floor(eased * target);
+      if (progress < 1) requestAnimationFrame(step);
+      else el.textContent = target;
+    };
+    requestAnimationFrame(step);
+  }
 
-        <!-- INSTITUCIONAL -->
-        <div class="plan-card">
-          <div class="plan-icon">🏢</div>
-          <div class="plan-name">Institucional</div>
-          <div class="plan-price">
-            <span class="amount">49€</span>
-            <span class="period">/mes</span>
-          </div>
-          <div class="plan-desc">Para estructuras profesionales con múltiples cuentas y granjas VPS.</div>
-          <ul class="plan-features">
-            <li>Hasta 25 cuentas MT5</li>
-            <li>Granjas VPS</li>
-            <li>Todo lo del plan Trader</li>
-            <li>Acceso anticipado</li>
-            <li>Soporte dedicado</li>
-          </ul>
-          <a href="https://app.tdmksystems.com/register" class="plan-btn plan-btn-secondary">Contactar</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA FINAL -->
-  <section class="cta-section fade-in">
-    <div class="cta-box">
-      <h2>Empieza hoy, gratis</h2>
-      <p>Conecta tu primera cuenta de MT5 en menos de 5 minutos y empieza a tener el control total de tu operativa.</p>
-      <a href="https://app.tdmksystems.com/register" class="btn-primary" style="display:inline-block;">Crear cuenta gratis →</a>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-logo">TDMK <span>Systems</span></div>
-    <div class="footer-links">
-      <a href="https://app.tdmksystems.com">Panel</a>
-      <a href="mailto:info@tdmksystems.com">Contacto</a>
-    </div>
-    <div class="footer-copy">© 2026 TDMK Systems</div>
-  </footer>
-
-  <script>
-    // Fade in on scroll
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-  </script>
+  const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        animateCounter(document.getElementById('s1'), 50);
+        animateCounter(document.getElementById('s2'), 11);
+        animateCounter(document.getElementById('s3'), 24);
+        animateCounter(document.getElementById('s4'), 300);
+        statsObserver.disconnect();
+      }
+    });
+  }, { threshold: 0.3 });
+  const statsSection = document.querySelector('.stats-section');
+  if (statsSection) statsObserver.observe(statsSection);
+</script>
 </body>
 </html>

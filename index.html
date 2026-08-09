@@ -202,6 +202,7 @@
 
     /* ===== Mockup movil real del Journal (no es la de escritorio reducida) ===== */
     .mobile-only{display:none;}
+    .hero-mobile-preview{display:none;}
     .pwm-stats{display:flex; align-items:center; gap:14px; background:rgba(15,23,42,0.5); border:1px solid rgba(59,130,246,0.15); border-radius:12px; padding:12px 16px; margin-bottom:14px;}
     .pwm-stat{display:flex; flex-direction:column; gap:2px;}
     .pwm-label{font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:#64748b;}
@@ -824,11 +825,17 @@
       .wrap{width:min(calc(100% - 24px),var(--max))}
       .topbar-inner{height:64px}
       .nav-actions .link{display:none}
-      .hero{min-height:760px;align-items:flex-end}
-      .hero:before{background-position:68% 38%}
-      .hero:after{background:
-        linear-gradient(0deg, rgba(4,7,13,.90) 0%, rgba(4,7,13,.55) 30%, rgba(4,7,13,.15) 55%, rgba(4,7,13,.02) 75%)}
-      .hero-inner{padding:150px 0 58px}
+      .hero{min-height:auto; align-items:flex-start; padding-bottom:40px;}
+      .hero:before{display:none;}
+      .hero:after{background:radial-gradient(ellipse 90% 60% at 30% 0%, rgba(37,99,235,0.16), transparent), #05070d;}
+      .hero-mobile-preview{
+        display:block; margin-top:14px; text-align:center;
+      }
+      .hero-mobile-preview img{
+        width:78%; max-width:340px; margin:0 auto; display:block;
+        filter:drop-shadow(0 25px 45px rgba(0,0,0,0.5));
+      }
+      .hero-inner{padding:44px 0 30px}
       h1{font-size:58px}
       .statement,.founder,.closing{padding:88px 0}
       .feature{padding:56px 0}
@@ -2130,6 +2137,13 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
             <p class="hero-copy">Conecta MetaTrader 5 y descubre qué hay realmente detrás de tus resultados: comportamiento, métricas, exposición y patrones que normalmente pasan desapercibidos.</p>
             <div class="hero-actions">
               <a class="button button-blue" href="https://app.tdmksystems.com/?origen=landing_publica">Conectar mi MetaTrader gratis</a>
+            </div>
+            <!-- Prueba visual solo en movil: captura real del Journal en
+                 movil (con marco de telefono), no un mockup construido a
+                 mano ni la foto panoramica de escritorio, que no tenia
+                 ningun recorte que funcionase en pantalla estrecha. -->
+            <div class="hero-mobile-preview">
+              <img src="journal-mobile.png" alt="TDMK Systems — Journal en móvil" loading="lazy" decoding="async">
             </div>
           </div>
         </div>

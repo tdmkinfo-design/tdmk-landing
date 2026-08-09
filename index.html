@@ -3,18 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>TDMK Systems — Entiende tu trading</title>
-  <meta name="description" content="Conecta MetaTrader 5 y convierte tu operativa en datos que puedas entender." />
+  <title>TDMK Systems — Entiende cómo opera realmente tu estrategia</title>
+  <meta name="description" content="Conecta MetaTrader 5 y convierte tu operativa en datos que puedas entender, medir y mejorar." />
   <style>
     :root{
       --ink:#101114;
-      --paper:#f4f2ee;
-      --paper-2:#ebe8e1;
-      --muted:#66696f;
+      --paper:#f7f9fc;
+      --paper-2:#edf1f7;
+      --paper-warm:#f1efeb;
+      --muted:#626977;
       --blue:#155dfc;
+      --blue-deep:#082b6f;
+      --blue-electric:#2f7cff;
       --blue-soft:#dbe7ff;
-      --line:#d4d0c8;
-      --dark:#0b0d12;
+      --ice:#edf5ff;
+      --line:#d8dee8;
+      --dark:#07111f;
+      --dark-2:#0b1b31;
       --white:#fff;
       --max:1320px;
       --radius:22px;
@@ -310,12 +315,475 @@
     .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
     .reveal.visible{opacity:1;transform:none}
 
+
+    .problem{padding:120px 0;border-bottom:1px solid var(--line)}
+    .problem-head{display:grid;grid-template-columns:.8fr 1.2fr;gap:60px;align-items:start;margin-bottom:52px}
+    .question-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+    .question{background:var(--paper);padding:34px;min-height:210px;display:flex;flex-direction:column;justify-content:space-between}
+    .question small{color:var(--blue);font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+    .question strong{font-size:23px;letter-spacing:-.025em;line-height:1.15;max-width:300px}
+    .solution{padding:130px 0;background:var(--dark);color:#fff}
+    .solution-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:70px;align-items:center}
+    .solution-media{min-height:560px;border-radius:26px;background:radial-gradient(circle at 60% 30%,rgba(21,93,252,.24),transparent 35%),linear-gradient(160deg,#0d1525,#06080d);border:1px solid rgba(96,165,250,.18);display:grid;place-items:center;padding:28px;box-shadow:0 40px 80px rgba(0,0,0,.3)}
+    .solution-diagram{width:min(100%,540px);display:grid;gap:14px}
+    .node{border:1px solid rgba(96,165,250,.18);background:rgba(15,23,42,.72);border-radius:14px;padding:16px 18px;color:#dbeafe;display:flex;justify-content:space-between;gap:18px;align-items:center}
+    .node b{color:#fff}.node span{font-size:12px;color:#64748b}.node.primary{background:linear-gradient(135deg,rgba(37,99,235,.2),rgba(15,23,42,.86));border-color:rgba(96,165,250,.45)}
+    .arrow{text-align:center;color:#60a5fa;font-weight:800}
+
+
+    /* =========================================================
+       TDMK V4 — TRANSICIONES CINEMÁTICAS
+       Inspiración: ritmo editorial / hardware storytelling.
+       ========================================================= */
+
+    body{overflow-x:hidden}
+
+    .feature{
+      position:relative;
+      overflow:clip;
+      isolation:isolate;
+      border-bottom:0;
+    }
+
+    .feature.theme-white{background:#fff}
+    .feature.theme-gray{background:linear-gradient(180deg,#eef2f7,#e7ecf4)}
+    .feature.theme-blue{
+      color:#fff;
+      background:
+        radial-gradient(circle at 84% 18%,rgba(121,178,255,.34),transparent 26%),
+        radial-gradient(circle at 15% 80%,rgba(9,38,100,.28),transparent 28%),
+        linear-gradient(135deg,#0a3b99 0%,#155dfc 52%,#0b49c0 100%);
+    }
+    .feature.theme-ice{
+      background:
+        radial-gradient(circle at 8% 22%,rgba(21,93,252,.10),transparent 28%),
+        linear-gradient(180deg,#f8fbff 0%,#eaf2ff 100%);
+    }
+
+    .feature.theme-blue .feature-number,
+    .feature.theme-blue .feature-subtitle{color:#d0e2ff}
+    .feature.theme-blue .feature-title{color:#fff}
+    .feature.theme-blue .feature-copy{color:rgba(255,255,255,.78)}
+    .feature.theme-blue .feature-list{border-color:rgba(255,255,255,.18)}
+    .feature.theme-blue .feature-list li{border-color:rgba(255,255,255,.18)}
+    .feature.theme-blue .feature-list span:last-child{color:rgba(255,255,255,.62)}
+    .feature.theme-blue .check-list li{border-color:rgba(255,255,255,.18)}
+    .feature.theme-blue .check-head b{color:#fff}
+    .feature.theme-blue .check-list li p{color:rgba(255,255,255,.68)}
+
+    /* Alternancia editorial */
+    .feature.reverse .feature-grid > :first-child{order:2}
+    .feature.reverse .feature-grid > :last-child{order:1}
+
+    /* Las pantallas entran como objetos físicos */
+    .feature-media{
+      perspective:1400px;
+      transform-style:preserve-3d;
+    }
+    .product-window,
+    .feature-media .placeholder{
+      will-change:transform,opacity,filter;
+      transform-origin:center center;
+      transition:
+        transform 1.05s cubic-bezier(.16,1,.3,1),
+        opacity .8s ease,
+        filter .8s ease,
+        box-shadow .8s ease;
+    }
+    .cinematic-enter .product-window,
+    .cinematic-enter .feature-media .placeholder{
+      transform:translateY(70px) scale(.90) rotateX(7deg);
+      opacity:.18;
+      filter:blur(8px);
+    }
+    .cinematic-enter.visible .product-window,
+    .cinematic-enter.visible .feature-media .placeholder{
+      transform:translateY(0) scale(1) rotateX(0);
+      opacity:1;
+      filter:blur(0);
+    }
+
+    .feature.reverse .product-window{transform-origin:left center}
+    .feature:not(.reverse) .product-window{transform-origin:right center}
+
+    .feature-media:hover .product-window{
+      transform:translateY(-8px) scale(1.012);
+      box-shadow:0 48px 100px rgba(9,29,66,.25);
+    }
+
+    /* Halo luminoso vivo detrás de cada producto */
+    .feature::before{
+      content:"";
+      position:absolute;
+      width:min(46vw,650px);
+      aspect-ratio:1;
+      border-radius:50%;
+      filter:blur(80px);
+      opacity:.0;
+      pointer-events:none;
+      z-index:-1;
+      transition:opacity 1s ease,transform 1.4s cubic-bezier(.16,1,.3,1);
+    }
+    .feature:not(.reverse)::before{
+      right:-14%;
+      top:10%;
+      background:rgba(21,93,252,.16);
+      transform:scale(.7);
+    }
+    .feature.reverse::before{
+      left:-14%;
+      top:10%;
+      background:rgba(96,165,250,.18);
+      transform:scale(.7);
+    }
+    .feature.in-view::before{opacity:1;transform:scale(1)}
+
+    /* Separadores cinemáticos: el siguiente color "invade" al anterior */
+    .scene-wipe{
+      position:relative;
+      height:160px;
+      overflow:hidden;
+      background:var(--from,#fff);
+      margin:-1px 0;
+      isolation:isolate;
+    }
+    .scene-wipe::before{
+      content:"";
+      position:absolute;
+      left:-10vw;
+      right:-10vw;
+      bottom:-125px;
+      height:230px;
+      background:var(--to,#eef2f7);
+      border-radius:50% 50% 0 0 / 72% 72% 0 0;
+      transform:scaleX(1.08);
+      z-index:1;
+    }
+    .scene-wipe.wave::after{
+      content:"";
+      position:absolute;
+      width:360px;
+      height:360px;
+      left:50%;
+      top:30%;
+      transform:translate(-50%,-50%);
+      border-radius:50%;
+      background:var(--glow,rgba(47,124,255,.22));
+      filter:blur(72px);
+      opacity:.85;
+    }
+    .scene-wipe.diagonal::before{
+      border-radius:0;
+      bottom:-155px;
+      height:250px;
+      transform:rotate(-3deg) scaleX(1.1);
+      transform-origin:center;
+    }
+
+    /* Separador de texto grande, como capítulo */
+    .chapter-transition{
+      position:relative;
+      min-height:48vh;
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+      text-align:center;
+      padding:70px 20px;
+      background:linear-gradient(145deg,#07111f,#0c2142);
+      color:#fff;
+    }
+    .chapter-transition::before{
+      content:"";
+      position:absolute;
+      width:70vw;
+      height:70vw;
+      max-width:900px;
+      max-height:900px;
+      border-radius:50%;
+      background:radial-gradient(circle,rgba(47,124,255,.24),rgba(21,93,252,.06) 45%,transparent 70%);
+      transform:scale(.65);
+      opacity:.45;
+      transition:transform 1.5s cubic-bezier(.16,1,.3,1),opacity 1.2s ease;
+    }
+    .chapter-transition.visible::before{transform:scale(1);opacity:1}
+    .chapter-transition p{
+      position:relative;
+      z-index:1;
+      margin:0;
+      max-width:1050px;
+      font-size:clamp(38px,6.5vw,88px);
+      line-height:.96;
+      letter-spacing:-.055em;
+      font-weight:800;
+    }
+    .chapter-transition p span{color:#86b6ff}
+
+    /* Scroll reveal más premium */
+    .reveal,
+    .reveal-left,
+    .reveal-right{
+      will-change:transform,opacity,filter;
+      transition:
+        opacity .9s ease,
+        transform 1s cubic-bezier(.16,1,.3,1),
+        filter .9s ease;
+    }
+    .reveal{opacity:0;transform:translateY(42px);filter:blur(5px)}
+    .reveal-left{opacity:0;transform:translateX(-58px);filter:blur(5px)}
+    .reveal-right{opacity:0;transform:translateX(58px);filter:blur(5px)}
+    .reveal.visible,.reveal-left.visible,.reveal-right.visible{
+      opacity:1;
+      transform:none;
+      filter:blur(0);
+    }
+
+    /* Fondos generales */
+    .statement{background:linear-gradient(180deg,#f8fafc,#edf4ff)}
+    .problem{background:#fff}
+    .solution{
+      background:
+        radial-gradient(circle at 82% 18%,rgba(47,124,255,.22),transparent 30%),
+        linear-gradient(145deg,#06101e 0%,#0c1e39 58%,#0a2e6d 100%);
+    }
+    .dark-section{
+      background:
+        radial-gradient(circle at 80% 10%,rgba(47,124,255,.20),transparent 32%),
+        linear-gradient(145deg,#06101e,#0b1b31);
+    }
+    .brokers{background:linear-gradient(180deg,#f7f9fc,#edf1f7)}
+    .founder{background:linear-gradient(180deg,#edf4ff,#f8faff)}
+    .founder-card{
+      background:
+        radial-gradient(circle at 82% 12%,rgba(147,197,253,.34),transparent 28%),
+        linear-gradient(135deg,#0b3b98 0%,#155dfc 56%,#0b4cc4 100%);
+      box-shadow:0 40px 90px rgba(21,93,252,.25);
+    }
+    .proof{background:#fff}
+    .closing{
+      background:
+        radial-gradient(circle at 50% 0%,rgba(21,93,252,.12),transparent 28%),
+        linear-gradient(180deg,#f8fbff,#edf3f9);
+    }
+
+    /* Parallax ligero para hero */
+    .hero::before{
+      will-change:transform;
+      transform:scale(1.045) translate3d(0,var(--hero-shift,0px),0);
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      html{scroll-behavior:auto}
+      *,*::before,*::after{
+        animation-duration:.01ms!important;
+        animation-iteration-count:1!important;
+        transition-duration:.01ms!important;
+      }
+      .hero::before{transform:none!important}
+      .cinematic-enter .product-window,
+      .cinematic-enter .feature-media .placeholder{transform:none;opacity:1;filter:none}
+    }
+
+
+    /* =========================================================
+       V6 — DASHBOARD MINI-HERO FOTOGRÁFICO
+       ========================================================= */
+    #dashboard.dashboard-photo-section{
+      position:relative;
+      min-height:820px;
+      padding:0;
+      overflow:hidden;
+      background:
+        radial-gradient(circle at 18% 20%,rgba(21,93,252,.07),transparent 28%),
+        linear-gradient(180deg,#ffffff 0%,#f6f9fd 100%);
+    }
+
+    #dashboard .dashboard-photo-grid{
+      width:min(calc(100% - 40px),var(--max));
+      min-height:820px;
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:minmax(420px,.82fr) minmax(620px,1.18fr);
+      align-items:center;
+      gap:34px;
+      position:relative;
+      z-index:2;
+    }
+
+    #dashboard .dashboard-photo-copy{
+      position:relative;
+      z-index:4;
+      max-width:590px;
+      padding:92px 0;
+    }
+
+    #dashboard .dashboard-photo-title{
+      font-size:clamp(56px,6vw,92px);
+      line-height:.93;
+      letter-spacing:-.065em;
+      margin:10px 0 28px;
+      color:#101114;
+    }
+
+    #dashboard .dashboard-photo-description{
+      max-width:555px;
+      margin:0 0 34px;
+      color:#626977;
+      font-size:clamp(18px,1.55vw,22px);
+      line-height:1.42;
+    }
+
+    #dashboard .dashboard-photo-list{
+      list-style:none;
+      padding:0;
+      margin:0;
+      max-width:560px;
+      border-top:1px solid #d8dee8;
+    }
+
+    #dashboard .dashboard-photo-list li{
+      min-height:54px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:24px;
+      border-bottom:1px solid #d8dee8;
+      font-size:15px;
+    }
+
+    #dashboard .dashboard-photo-list li span:last-child{
+      color:#747b87;
+      text-align:right;
+    }
+
+    #dashboard .dashboard-photo-media{
+      position:relative;
+      height:820px;
+      min-width:0;
+      display:flex;
+      align-items:center;
+      justify-content:flex-end;
+      overflow:visible;
+      perspective:1600px;
+    }
+
+    #dashboard .dashboard-photo-shell{
+      position:relative;
+      width:min(850px,66vw);
+      transform:translateX(4%) translateY(10px) scale(.94) rotateY(-4deg);
+      transform-origin:center right;
+      opacity:0;
+      filter:blur(5px);
+      transition:
+        transform 1.15s cubic-bezier(.16,1,.3,1),
+        opacity .8s ease,
+        filter .9s ease;
+      will-change:transform,opacity,filter;
+    }
+
+    #dashboard.in-view .dashboard-photo-shell,
+    #dashboard .dashboard-photo-shell.visible{
+      transform:translateX(0) translateY(0) scale(1) rotateY(0deg);
+      opacity:1;
+      filter:blur(0);
+    }
+
+    #dashboard .dashboard-photo-shell::after{
+      content:"";
+      position:absolute;
+      left:14%;
+      right:5%;
+      bottom:-3%;
+      height:15%;
+      border-radius:50%;
+      background:rgba(25,77,160,.18);
+      filter:blur(42px);
+      z-index:-1;
+      opacity:.6;
+    }
+
+    #dashboard .dashboard-photo{
+      display:block;
+      width:100%;
+      height:auto;
+      object-fit:contain;
+      border-radius:24px;
+      box-shadow:0 38px 90px rgba(29,50,82,.14);
+    }
+
+    /* La fotografía se funde suavemente con la sección */
+    #dashboard .dashboard-photo-fade{
+      position:absolute;
+      inset:0 auto 0 -1px;
+      width:18%;
+      pointer-events:none;
+      background:linear-gradient(90deg,#f8faff 0%,rgba(248,250,255,.76) 30%,rgba(248,250,255,0) 100%);
+      z-index:3;
+    }
+
+    /* Efecto de aproximación sutil al pasar el ratón */
+    #dashboard .dashboard-photo-shell:hover{
+      transform:translateX(-8px) scale(1.015);
+    }
+
+    @media(max-width:1100px){
+      #dashboard.dashboard-photo-section{min-height:auto;padding:92px 0;}
+      #dashboard .dashboard-photo-grid{
+        min-height:0;
+        grid-template-columns:1fr;
+        gap:48px;
+      }
+      #dashboard .dashboard-photo-copy{
+        max-width:760px;
+        padding:0;
+      }
+      #dashboard .dashboard-photo-media{
+        height:auto;
+        justify-content:center;
+      }
+      #dashboard .dashboard-photo-shell{
+        width:min(100%,900px);
+        transform:translateY(44px) scale(.95);
+      }
+      #dashboard.in-view .dashboard-photo-shell,
+      #dashboard .dashboard-photo-shell.visible{
+        transform:none;
+      }
+      #dashboard .dashboard-photo-fade{display:none;}
+    }
+
+    @media(max-width:620px){
+      #dashboard.dashboard-photo-section{padding:74px 0 64px;}
+      #dashboard .dashboard-photo-grid{
+        width:min(calc(100% - 24px),var(--max));
+        gap:34px;
+      }
+      #dashboard .dashboard-photo-title{
+        font-size:48px;
+        margin-bottom:22px;
+      }
+      #dashboard .dashboard-photo-description{
+        font-size:17px;
+      }
+      #dashboard .dashboard-photo-list li{
+        font-size:13px;
+        min-height:50px;
+      }
+      #dashboard .dashboard-photo{
+        border-radius:16px;
+        box-shadow:0 24px 58px rgba(29,50,82,.15);
+      }
+    }
+
     @media(max-width:980px){
       .nav{display:none}
-      .feature-grid,.dark-grid,.founder-card{grid-template-columns:1fr}
+      .feature-grid,.dark-grid,.founder-card,.problem-head,.solution-grid{grid-template-columns:1fr}
       .feature-grid{gap:38px}
+      .feature.reverse .feature-grid > :first-child,
+      .feature.reverse .feature-grid > :last-child{order:initial}
+      .scene-wipe{height:88px}
       .founder-card{padding:48px}
       .proof-grid{grid-template-columns:1fr}
+      .question-grid{grid-template-columns:1fr 1fr}
       .placeholder{min-height:420px}
     }
     @media(max-width:640px){
@@ -331,6 +799,8 @@
       h1{font-size:58px}
       .statement,.feature,.founder,.closing{padding:88px 0}
       .statement p{font-size:45px}
+      .question-grid{grid-template-columns:1fr}
+      .question{min-height:170px}
       .feature-title{font-size:48px}
       .founder-card{padding:30px;border-radius:22px}
       .price{font-size:74px}
@@ -339,9 +809,1268 @@
       .button{width:100%}
       .hero-actions{display:grid}
     }
-  </style>
+  
+/* V7 — capítulo narrativo */
+.how-v7{padding:130px 0 145px;color:#fff;overflow:hidden;background:
+radial-gradient(circle at 78% 18%,rgba(47,126,255,.24),transparent 29%),
+linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
+.how-v7-inner{width:min(calc(100% - 40px),var(--max));margin:auto}
+.how-v7-head{max-width:850px;margin-bottom:76px}
+.how-v7 .eyebrow{font-size:13px;font-weight:800;letter-spacing:.18em;color:#65a4ff;margin-bottom:18px}
+.how-v7 h2{font-size:clamp(54px,6.4vw,96px);line-height:.92;letter-spacing:-.065em;margin:0 0 28px}
+.how-v7-head p{max-width:700px;color:#aab7cc;font-size:20px;line-height:1.5}
+.how-v7-steps{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid rgba(255,255,255,.14)}
+.how-v7-step{padding:34px 26px;min-height:245px;border-right:1px solid rgba(255,255,255,.12)}
+.how-v7-step:first-child{padding-left:0}.how-v7-step:last-child{border-right:0}
+.how-v7-step span{display:block;color:#5795ff;font:700 13px monospace;letter-spacing:.12em;margin-bottom:42px}
+.how-v7-step h3{font-size:25px;letter-spacing:-.035em;margin:0 0 14px}
+.how-v7-step p{font-size:14px;line-height:1.6;color:#94a3ba;margin:0}
+@media(max-width:980px){.how-v7{padding:90px 0}.how-v7-steps{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.how-v7-inner{width:min(calc(100% - 24px),var(--max))}.how-v7 h2{font-size:48px}.how-v7-head p{font-size:17px}.how-v7-steps{grid-template-columns:1fr}.how-v7-step,.how-v7-step:first-child{padding:26px 0;min-height:0;border-right:0;border-bottom:1px solid rgba(255,255,255,.12)}.how-v7-step span{margin-bottom:18px}}
+
+
+/* =========================================================
+   V8 — PRODUCT FIRST / MENOS TEXTO, MÁS PRODUCTO
+   ========================================================= */
+
+.product-chapter{
+  position:relative;
+  min-height:92vh;
+  display:grid;
+  align-items:center;
+  overflow:hidden;
+  padding:100px 0;
+}
+.product-chapter.light{background:#f8fafc;color:#0e1117;}
+.product-chapter.gray{background:linear-gradient(180deg,#eef2f6,#e8edf4);color:#0e1117;}
+.product-chapter.blue{
+  background:
+    radial-gradient(circle at 78% 18%,rgba(134,188,255,.30),transparent 28%),
+    linear-gradient(135deg,#0c3e9d,#155dfc 56%,#0b49bf);
+  color:#fff;
+}
+.product-chapter.dark{
+  background:
+    radial-gradient(circle at 78% 18%,rgba(47,126,255,.22),transparent 29%),
+    linear-gradient(145deg,#07101f,#0b1730 52%,#07111f);
+  color:#fff;
+}
+.product-chapter-inner{
+  width:min(calc(100% - 40px),var(--max));
+  margin:auto;
+  display:grid;
+  grid-template-columns:.78fr 1.22fr;
+  gap:72px;
+  align-items:center;
+}
+.product-chapter.reverse .product-chapter-copy{order:2;}
+.product-chapter.reverse .product-chapter-visual{order:1;}
+.product-kicker{
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:#155dfc;
+  margin-bottom:18px;
+}
+.product-chapter.blue .product-kicker,
+.product-chapter.dark .product-kicker{color:#9bc3ff;}
+.product-chapter h2{
+  font-size:clamp(52px,6vw,92px);
+  line-height:.92;
+  letter-spacing:-.065em;
+  margin:0 0 26px;
+  max-width:720px;
+}
+.product-chapter-copy>p{
+  max-width:610px;
+  font-size:19px;
+  line-height:1.48;
+  color:#69717d;
+  margin:0 0 30px;
+}
+.product-chapter.blue .product-chapter-copy>p,
+.product-chapter.dark .product-chapter-copy>p{color:rgba(255,255,255,.70);}
+.product-pills{display:flex;gap:10px;flex-wrap:wrap;}
+.product-pill{
+  display:inline-flex;
+  align-items:center;
+  min-height:42px;
+  padding:0 16px;
+  border-radius:999px;
+  border:1px solid #d4dae3;
+  background:rgba(255,255,255,.62);
+  font-size:13px;
+  font-weight:700;
+}
+.product-chapter.blue .product-pill,
+.product-chapter.dark .product-pill{
+  color:#fff;
+  border-color:rgba(255,255,255,.17);
+  background:rgba(255,255,255,.08);
+}
+.product-chapter-visual{
+  position:relative;
+  min-height:590px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.product-placeholder{
+  width:100%;
+  min-height:520px;
+  border-radius:32px;
+  position:relative;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid rgba(61,86,130,.15);
+  background:
+    radial-gradient(circle at 66% 32%,rgba(61,145,255,.18),transparent 32%),
+    linear-gradient(145deg,#eef3fa,#dfe7f3);
+  box-shadow:0 38px 90px rgba(32,52,80,.14);
+  color:#526076;
+}
+.product-chapter.blue .product-placeholder,
+.product-chapter.dark .product-placeholder{
+  border-color:rgba(255,255,255,.15);
+  background:
+    radial-gradient(circle at 65% 28%,rgba(80,164,255,.22),transparent 30%),
+    linear-gradient(145deg,#071426,#0d2341);
+  color:#91a5c3;
+  box-shadow:0 44px 100px rgba(0,0,0,.27);
+}
+.product-placeholder .ph-inner{text-align:center;max-width:440px;padding:30px;}
+.product-placeholder strong{display:block;font-size:22px;color:inherit;margin-bottom:9px;}
+.product-placeholder small{font-size:13px;line-height:1.5;opacity:.76;}
+.product-real-image{
+  width:100%;
+  display:block;
+  border-radius:30px;
+  box-shadow:0 42px 95px rgba(28,45,74,.18);
+}
+.visual-caption{
+  position:absolute;
+  left:24px;
+  bottom:24px;
+  z-index:3;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.visual-caption span{
+  font-size:11px;
+  font-weight:800;
+  padding:7px 11px;
+  border-radius:999px;
+  color:#e8f0ff;
+  background:rgba(5,13,28,.68);
+  border:1px solid rgba(255,255,255,.13);
+  backdrop-filter:blur(10px);
+}
+
+/* Founder block redesigned around belonging + reward */
+.founder-v8{
+  padding:120px 0;
+  background:linear-gradient(180deg,#edf4ff,#f7f9fc);
+}
+.founder-v8-card{
+  width:min(calc(100% - 40px),var(--max));
+  margin:auto;
+  min-height:760px;
+  border-radius:38px;
+  overflow:hidden;
+  display:grid;
+  grid-template-columns:.88fr 1.12fr;
+  align-items:center;
+  color:#fff;
+  background:
+    radial-gradient(circle at 82% 16%,rgba(111,183,255,.40),transparent 27%),
+    linear-gradient(135deg,#103d97 0%,#155dfc 50%,#0b49bf 100%);
+  box-shadow:0 38px 100px rgba(21,93,252,.24);
+}
+.founder-v8-copy{padding:74px 32px 74px 72px;position:relative;z-index:2;}
+.founder-v8-copy .product-kicker{color:#d6e5ff;}
+.founder-v8 h2{
+  margin:0 0 26px;
+  font-size:clamp(52px,5.7vw,86px);
+  line-height:.92;
+  letter-spacing:-.065em;
+}
+.founder-v8-copy>p{
+  font-size:18px;
+  line-height:1.52;
+  max-width:570px;
+  color:#dce8ff;
+  margin:0 0 26px;
+}
+.founder-benefit{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  padding:11px 15px;
+  margin:0 7px 9px 0;
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:999px;
+  background:rgba(255,255,255,.08);
+  font-size:13px;
+  font-weight:750;
+}
+.founder-price{font-size:92px;font-weight:900;letter-spacing:-.07em;line-height:.86;margin:30px 0 8px;}
+.founder-note{font-size:13px;color:#dce8ff;}
+.founder-btn{
+  margin-top:25px;
+  display:inline-flex;
+  min-height:50px;
+  padding:0 22px;
+  align-items:center;
+  justify-content:center;
+  border-radius:999px;
+  background:#fff;
+  color:#155dfc;
+  font-weight:850;
+}
+.founder-v8-visual{
+  position:relative;
+  min-height:760px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+.founder-v8-visual::before{
+  content:"";
+  position:absolute;
+  width:560px;height:560px;border-radius:50%;
+  background:rgba(110,185,255,.18);
+  filter:blur(45px);
+}
+.certificate-placeholder{
+  position:relative;
+  width:min(82%,650px);
+  aspect-ratio:1.35;
+  padding:28px;
+  border-radius:28px;
+  transform:rotate(-4deg);
+  background:
+    radial-gradient(circle at 75% 30%,rgba(29,110,255,.16),transparent 30%),
+    linear-gradient(145deg,#071426,#0b1930);
+  border:1px solid rgba(255,255,255,.14);
+  box-shadow:0 45px 100px rgba(0,0,0,.32);
+}
+.certificate-inner{
+  height:100%;
+  border:1px solid rgba(103,163,255,.28);
+  border-radius:18px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  padding:31px;
+}
+.certificate-top{display:flex;justify-content:space-between;color:#97b9ee;font-size:11px;letter-spacing:.12em;font-weight:850;}
+.diamond{
+  width:150px;height:150px;margin:auto;
+  transform:rotate(45deg);
+  background:
+    linear-gradient(135deg,#1649a5 0 22%,#2d7aff 22% 48%,#0a2e77 48% 68%,#76b8ff 68%);
+  clip-path:polygon(50% 0,100% 34%,76% 100%,24% 100%,0 34%);
+  filter:drop-shadow(0 18px 35px rgba(39,119,255,.28));
+}
+.certificate-bottom h3{font-size:29px;margin:0 0 5px;letter-spacing:-.03em;}
+.certificate-bottom p{margin:0;color:#7e9bc8;font-size:12px;}
+.founder-legal{
+  width:min(calc(100% - 40px),var(--max));
+  margin:17px auto 0;
+  color:#7c8592;
+  font-size:11px;
+  line-height:1.5;
+  padding:0 6px;
+}
+
+/* Tighter "how" section */
+.how-v7{padding:105px 0 115px!important;}
+.how-v7-head{margin-bottom:58px!important;}
+.how-v7-head p{max-width:610px!important;}
+.how-v7-step{min-height:205px!important;}
+.how-v7-step span{margin-bottom:26px!important;}
+
+/* Hide overly verbose legacy sections we replace in V8 */
+.founder{display:none!important;}
+
+@media(max-width:980px){
+  .product-chapter{min-height:auto;padding:88px 0}
+  .product-chapter-inner{grid-template-columns:1fr;gap:46px}
+  .product-chapter.reverse .product-chapter-copy,
+  .product-chapter.reverse .product-chapter-visual{order:initial}
+  .product-chapter-visual{min-height:auto}
+  .product-placeholder{min-height:440px}
+  .founder-v8-card{grid-template-columns:1fr}
+  .founder-v8-copy{padding:58px 44px 20px}
+  .founder-v8-visual{min-height:560px}
+}
+@media(max-width:620px){
+  .product-chapter-inner,
+  .founder-v8-card,
+  .founder-legal{width:min(calc(100% - 24px),var(--max))}
+  .product-chapter h2,.founder-v8 h2{font-size:48px}
+  .product-chapter-copy>p,.founder-v8-copy>p{font-size:16px}
+  .product-placeholder{min-height:330px;border-radius:20px}
+  .founder-v8-card{border-radius:26px}
+  .founder-v8-copy{padding:42px 26px 12px}
+  .founder-price{font-size:70px}
+  .founder-v8-visual{min-height:420px}
+  .certificate-placeholder{width:88%;padding:16px}
+  .certificate-inner{padding:20px}
+  .diamond{width:105px;height:105px}
+}
+
+
+/* =========================================================
+   V9 — FUNDADORES VISUAL TIPO PRODUCT FEATURE
+   ========================================================= */
+.founder-v8{
+  padding:118px 0 128px;
+  background:
+    radial-gradient(circle at 18% 18%,rgba(89,209,255,.24),transparent 26%),
+    radial-gradient(circle at 82% 76%,rgba(221,171,255,.20),transparent 25%),
+    linear-gradient(135deg,#eff9ff 0%,#dff7fb 35%,#e7f0ff 68%,#f8eefb 100%) !important;
+}
+.founder-v8-card{
+  width:min(calc(100% - 40px),var(--max));
+  min-height:720px;
+  margin:auto;
+  padding:0;
+  border-radius:36px;
+  display:grid;
+  grid-template-columns:.78fr 1.22fr;
+  overflow:hidden;
+  color:#082b68;
+  background:rgba(255,255,255,.30) !important;
+  border:1px solid rgba(116,162,214,.22);
+  box-shadow:0 34px 90px rgba(40,93,151,.12);
+  backdrop-filter:blur(10px);
+}
+.founder-v8-copy{
+  padding:72px 30px 72px 70px !important;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.founder-v8-copy .product-kicker{color:#155dfc !important;}
+.founder-v8 h2{
+  color:#082b68;
+  font-size:clamp(50px,5.4vw,82px);
+  line-height:.94;
+  max-width:600px;
+}
+.founder-v8-copy>p{
+  color:#37567d !important;
+  max-width:560px;
+  font-size:18px;
+}
+.founder-benefit{
+  color:#0c376f;
+  background:rgba(255,255,255,.72) !important;
+  border-color:rgba(68,118,175,.16) !important;
+  box-shadow:0 7px 18px rgba(45,93,150,.06);
+}
+.founder-price{
+  color:#082b68;
+  margin-top:28px;
+}
+.founder-note{color:#5c7697 !important;}
+.founder-btn{
+  align-self:flex-start;
+  background:#082b68 !important;
+  color:#fff !important;
+  box-shadow:0 10px 24px rgba(8,43,104,.18);
+}
+.founder-v8-visual{
+  min-height:720px;
+  position:relative;
+  padding:48px 42px 48px 10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:visible;
+}
+.founder-v8-visual::before{
+  content:"";
+  position:absolute;
+  inset:8% 3% 5% 8%;
+  border-radius:34px;
+  background:rgba(255,255,255,.46);
+  border:1px solid rgba(117,158,204,.14);
+  box-shadow:0 26px 70px rgba(33,79,133,.13);
+  transform:rotate(.7deg);
+}
+.founder-cert-stage{
+  position:relative;
+  width:min(100%,820px);
+  z-index:2;
+  transform:translateY(12px) rotate(-1.7deg) scale(.96);
+  transform-origin:center;
+  transition:transform .95s cubic-bezier(.16,1,.3,1), filter .8s ease;
+  filter:drop-shadow(0 34px 34px rgba(10,41,81,.18));
+}
+.founder-v8.in-view .founder-cert-stage,
+.founder-cert-stage.visible{
+  transform:translateY(0) rotate(-.6deg) scale(1);
+}
+.founder-cert-stage:hover{
+  transform:translateY(-8px) rotate(0deg) scale(1.015);
+}
+.founder-cert-image{
+  width:100%;
+  display:block;
+  border-radius:18px;
+}
+.founder-cert-caption{
+  position:absolute;
+  left:22px;
+  bottom:18px;
+  display:inline-flex;
+  gap:8px;
+  align-items:center;
+  padding:8px 12px;
+  border-radius:999px;
+  background:rgba(5,14,28,.72);
+  color:#eaf2ff;
+  border:1px solid rgba(255,255,255,.12);
+  backdrop-filter:blur(10px);
+  font-size:11px;
+  font-weight:800;
+}
+.founder-cert-caption::before{
+  content:"";
+  width:7px;height:7px;border-radius:50%;
+  background:#2f7cff;
+  box-shadow:0 0 12px rgba(47,124,255,.8);
+}
+.founder-legal{
+  width:min(calc(100% - 40px),var(--max));
+  color:#6f7f93 !important;
+  margin-top:18px !important;
+}
+
+@media(max-width:980px){
+  .founder-v8-card{grid-template-columns:1fr;}
+  .founder-v8-copy{padding:56px 46px 16px !important;}
+  .founder-v8-visual{min-height:520px;padding:30px 34px 50px;}
+  .founder-v8-visual::before{inset:5% 3% 8%;}
+}
+@media(max-width:620px){
+  .founder-v8{padding:78px 0 88px;}
+  .founder-v8-card{width:min(calc(100% - 24px),var(--max));border-radius:24px;}
+  .founder-v8-copy{padding:38px 24px 8px !important;}
+  .founder-v8 h2{font-size:46px;}
+  .founder-v8-visual{min-height:330px;padding:18px 14px 34px;}
+  .founder-cert-image{border-radius:10px;}
+  .founder-cert-caption{left:12px;bottom:9px;font-size:9px;padding:6px 9px;}
+}
+
+
+/* =========================================================
+   V10 — MÓDULOS REALES + ROADMAP VOTABLE + PRUEBA DE VALOR
+   ========================================================= */
+.module-shot{
+  width:100%;
+  display:block;
+  border-radius:28px;
+  box-shadow:0 44px 110px rgba(10,28,58,.22);
+  border:1px solid rgba(116,155,205,.18);
+  transition:transform .9s cubic-bezier(.16,1,.3,1),box-shadow .9s ease;
+}
+.product-chapter.dark .module-shot,
+.product-chapter.blue .module-shot{
+  border-color:rgba(255,255,255,.12);
+  box-shadow:0 52px 125px rgba(0,0,0,.35);
+}
+.product-chapter-visual:hover .module-shot{
+  transform:translateY(-7px) scale(1.01);
+}
+.module-shot-wrap{
+  position:relative;
+  width:100%;
+}
+.module-shot-wrap::after{
+  content:"";
+  position:absolute;
+  left:8%;
+  right:8%;
+  bottom:-4%;
+  height:16%;
+  border-radius:50%;
+  background:rgba(21,93,252,.20);
+  filter:blur(46px);
+  z-index:-1;
+}
+
+/* Roadmap no revela lo que estamos construyendo: solo votación de ideas públicas */
+.roadmap-v10{
+  padding:120px 0 130px;
+  color:#fff;
+  background:
+    radial-gradient(circle at 85% 12%,rgba(47,124,255,.22),transparent 28%),
+    linear-gradient(145deg,#07101f,#0b1730 55%,#07111f);
+}
+.roadmap-v10-inner{width:min(calc(100% - 40px),var(--max));margin:auto}
+.roadmap-v10-head{
+  display:grid;
+  grid-template-columns:.92fr 1.08fr;
+  gap:70px;
+  align-items:end;
+  margin-bottom:54px;
+}
+.roadmap-v10 h2{
+  margin:0;
+  font-size:clamp(54px,6.2vw,92px);
+  line-height:.92;
+  letter-spacing:-.065em;
+}
+.roadmap-v10-head p{
+  margin:0;
+  max-width:600px;
+  color:#9aa9bf;
+  font-size:18px;
+  line-height:1.55;
+}
+.vote-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.vote-card{
+  min-height:170px;
+  padding:24px 24px 20px;
+  border-radius:18px;
+  background:linear-gradient(135deg,rgba(37,99,235,.07),rgba(4,8,15,.86));
+  border:1px solid rgba(96,165,250,.17);
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:22px;
+  align-items:center;
+}
+.vote-card h3{margin:0 0 8px;font-size:20px;letter-spacing:-.025em}
+.vote-card p{margin:0;color:#7f8fa8;font-size:13px;line-height:1.5}
+.vote-button{
+  min-width:92px;
+  min-height:66px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  border-radius:14px;
+  background:rgba(37,99,235,.12);
+  border:1px solid rgba(96,165,250,.24);
+  color:#93c5fd;
+  cursor:pointer;
+  user-select:none;
+}
+.vote-button strong{font-size:18px}
+.vote-button span{font-size:10px;color:#6f87a8;margin-top:3px}
+.vote-note{margin-top:16px;color:#5f718c;font-size:11px}
+
+/* Sustituye los antiguos contadores débiles por una promesa de producto */
+.proof-v10{
+  padding:105px 0 115px;
+  background:#fff;
+}
+.proof-v10-inner{width:min(calc(100% - 40px),var(--max));margin:auto}
+.proof-v10-head{max-width:850px;margin-bottom:48px}
+.proof-v10-head .product-kicker{margin-bottom:14px}
+.proof-v10-head h2{
+  margin:0;
+  color:#101114;
+  font-size:clamp(50px,5.6vw,82px);
+  line-height:.94;
+  letter-spacing:-.06em;
+}
+.proof-v10-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1px;
+  background:#dce2eb;
+  border:1px solid #dce2eb;
+  border-radius:24px;
+  overflow:hidden;
+}
+.proof-v10-item{
+  min-height:240px;
+  background:#f8fafc;
+  padding:36px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+.proof-v10-item strong{
+  display:block;
+  color:#0d1b31;
+  font-size:clamp(48px,5vw,76px);
+  line-height:.92;
+  letter-spacing:-.065em;
+}
+.proof-v10-item p{
+  margin:18px 0 0;
+  max-width:300px;
+  color:#667080;
+  font-size:15px;
+  line-height:1.45;
+}
+.proof-v10-item small{
+  color:#155dfc;
+  font-weight:800;
+  font-size:11px;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+}
+
+@media(max-width:980px){
+  .roadmap-v10-head{grid-template-columns:1fr;gap:26px}
+  .vote-grid{grid-template-columns:1fr}
+  .proof-v10-grid{grid-template-columns:1fr}
+  .proof-v10-item{min-height:185px}
+}
+@media(max-width:620px){
+  .roadmap-v10-inner,.proof-v10-inner{width:min(calc(100% - 24px),var(--max))}
+  .roadmap-v10{padding:86px 0 94px}
+  .roadmap-v10 h2,.proof-v10-head h2{font-size:47px}
+  .vote-card{grid-template-columns:1fr auto;padding:19px;min-height:145px}
+  .proof-v10{padding:80px 0}
+}
+
+
+/* =========================================================
+   V11 — CONTADORES + 3 PASOS + ECOSISTEMA METATRADER
+   ========================================================= */
+.activity-v11{
+  padding:72px 0 86px;
+  background:#050a13;
+  color:#fff;
+  border-top:1px solid rgba(255,255,255,.06);
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.activity-v11-inner{
+  width:min(calc(100% - 40px),var(--max));
+  margin:auto;
+}
+.activity-v11-head{
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  gap:30px;
+  margin-bottom:34px;
+}
+.activity-v11-head h2{
+  margin:0;
+  font-size:clamp(32px,3.5vw,52px);
+  letter-spacing:-.045em;
+}
+.activity-v11-head p{
+  margin:0;
+  max-width:470px;
+  color:#7f8da3;
+  font-size:14px;
+  line-height:1.5;
+}
+.activity-v11-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  border-top:1px solid rgba(255,255,255,.12);
+  border-bottom:1px solid rgba(255,255,255,.12);
+}
+.activity-v11-item{
+  min-height:150px;
+  padding:30px 28px;
+  border-right:1px solid rgba(255,255,255,.10);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.activity-v11-item:last-child{border-right:0}
+.activity-v11-number{
+  font-size:clamp(40px,4vw,62px);
+  line-height:.9;
+  font-weight:900;
+  letter-spacing:-.055em;
+  color:#fff;
+  font-variant-numeric:tabular-nums;
+}
+.activity-v11-label{
+  margin-top:13px;
+  color:#6ea9ff;
+  font-size:10px;
+  font-weight:850;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+}
+.activity-v11-note{
+  margin-top:12px;
+  color:#6c7a90;
+  font-size:11px;
+}
+
+/* Pasos */
+.steps-v11{
+  padding:118px 0 126px;
+  color:#fff;
+  background:
+    radial-gradient(circle at 50% 0%,rgba(38,110,255,.12),transparent 30%),
+    #050a13;
+}
+.steps-v11-inner{
+  width:min(calc(100% - 40px),var(--max));
+  margin:auto;
+}
+.steps-v11-head{
+  text-align:center;
+  margin-bottom:68px;
+}
+.steps-v11-head .product-kicker{
+  color:#4aa4ff;
+  margin-bottom:12px;
+}
+.steps-v11-head h2{
+  margin:0;
+  font-size:clamp(48px,5.4vw,78px);
+  line-height:.95;
+  letter-spacing:-.06em;
+}
+.steps-v11-grid{
+  position:relative;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:38px;
+}
+.steps-v11-grid::before{
+  content:"";
+  position:absolute;
+  top:37px;
+  left:16%;
+  right:16%;
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(74,164,255,.45),rgba(74,164,255,.45),transparent);
+  z-index:0;
+}
+.step-v11{
+  position:relative;
+  z-index:1;
+  text-align:center;
+  padding:0 20px;
+}
+.step-v11-num{
+  width:74px;
+  height:74px;
+  margin:0 auto 28px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:18px;
+  background:#071426;
+  border:1px solid rgba(74,164,255,.35);
+  color:#43a4ff;
+  font-size:17px;
+  font-weight:900;
+  box-shadow:0 16px 45px rgba(20,80,170,.16);
+}
+.step-v11 h3{
+  margin:0 0 11px;
+  font-size:22px;
+  letter-spacing:-.03em;
+}
+.step-v11 p{
+  margin:0 auto;
+  max-width:330px;
+  color:#90a0b8;
+  font-size:14px;
+  line-height:1.6;
+}
+
+/* Ecosistema MetaTrader */
+.mt-v11{
+  padding:86px 0;
+  background:#f5f8fc;
+  color:#0e1117;
+}
+.mt-v11-inner{
+  width:min(calc(100% - 40px),var(--max));
+  margin:auto;
+  display:grid;
+  grid-template-columns:.85fr 1.15fr;
+  align-items:center;
+  gap:70px;
+}
+.mt-v11 h2{
+  margin:0 0 16px;
+  font-size:clamp(42px,4.8vw,68px);
+  line-height:.96;
+  letter-spacing:-.055em;
+}
+.mt-v11 p{
+  margin:0;
+  max-width:560px;
+  color:#687487;
+  font-size:17px;
+  line-height:1.55;
+}
+.mt-v11-badges{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+.mt-badge-v11{
+  min-height:190px;
+  border-radius:24px;
+  background:#fff;
+  border:1px solid #dce4ef;
+  box-shadow:0 25px 65px rgba(35,68,111,.10);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  gap:14px;
+}
+.mt-badge-v11 strong{
+  font-size:58px;
+  letter-spacing:-.06em;
+  color:#0a2e72;
+}
+.mt-badge-v11 span{
+  font-size:11px;
+  font-weight:850;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:#5379b7;
+}
+.mt-badge-v11.mt4 strong{color:#506a95}
+.mt-badge-v11.mt4{opacity:.86}
+
+@media(max-width:980px){
+  .activity-v11-head{display:block}
+  .activity-v11-head p{margin-top:14px}
+  .activity-v11-grid{grid-template-columns:1fr 1fr}
+  .activity-v11-item:nth-child(2){border-right:0}
+  .activity-v11-item:nth-child(-n+2){border-bottom:1px solid rgba(255,255,255,.10)}
+  .steps-v11-grid{grid-template-columns:1fr;gap:42px}
+  .steps-v11-grid::before{display:none}
+  .mt-v11-inner{grid-template-columns:1fr;gap:40px}
+}
+@media(max-width:620px){
+  .activity-v11-inner,.steps-v11-inner,.mt-v11-inner{
+    width:min(calc(100% - 24px),var(--max));
+  }
+  .activity-v11{padding:56px 0 68px}
+  .activity-v11-grid{grid-template-columns:1fr}
+  .activity-v11-item{
+    border-right:0;
+    border-bottom:1px solid rgba(255,255,255,.10);
+    min-height:118px;
+    padding:24px 8px;
+  }
+  .activity-v11-item:last-child{border-bottom:0}
+  .steps-v11{padding:84px 0 92px}
+  .steps-v11-head{margin-bottom:46px}
+  .steps-v11-head h2{font-size:46px}
+  .mt-v11{padding:72px 0}
+  .mt-v11-badges{grid-template-columns:1fr 1fr}
+  .mt-badge-v11{min-height:145px;border-radius:18px}
+  .mt-badge-v11 strong{font-size:42px}
+}
+
+
+/* =========================================================
+   V12 — LOGOS DE PLATAFORMAS + VISUALES REALES + PLANES
+   ========================================================= */
+
+/* Ecosistema de plataformas: preparado para crecer añadiendo logos */
+.mt-v11-inner{grid-template-columns:.78fr 1.22fr!important}
+.platform-grid-v12{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+}
+.platform-card-v12{
+  min-height:180px;
+  position:relative;
+  border-radius:24px;
+  background:#fff;
+  border:1px solid #dce4ef;
+  box-shadow:0 24px 60px rgba(35,68,111,.09);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  padding:24px;
+  overflow:hidden;
+}
+.platform-card-v12 img{
+  width:84px;
+  height:84px;
+  object-fit:contain;
+  margin-bottom:15px;
+}
+.platform-card-v12 strong{
+  font-size:18px;
+  color:#0a2e72;
+}
+.platform-card-v12 span{
+  margin-top:5px;
+  font-size:10px;
+  color:#71819a;
+  font-weight:800;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+.platform-card-v12 .logo-fallback{
+  width:84px;height:84px;border-radius:22px;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:15px;
+  background:linear-gradient(145deg,#14396f,#2563eb);
+  color:white;font-size:27px;font-weight:900;
+  box-shadow:0 16px 35px rgba(37,99,235,.2);
+}
+.platform-card-v12[data-status="next"]{opacity:.62}
+.platform-add-note{
+  grid-column:1/-1;
+  padding-top:5px;
+  color:#8a96a8;
+  font-size:11px;
+  text-align:center;
+}
+
+/* Imágenes de producto: más grandes */
+#control-v8 .product-chapter-inner,
+#metrics-v8 .product-chapter-inner,
+#hedge-v8 .product-chapter-inner{
+  grid-template-columns:.68fr 1.32fr!important;
+}
+#metrics-v8 .product-chapter-inner{grid-template-columns:1.36fr .64fr!important}
+#metrics-v8 .product-chapter-visual{order:1!important}
+#metrics-v8 .product-chapter-copy{order:2!important}
+#metrics-v8 .module-shot-wrap{width:112%;margin-left:-8%}
+.module-shot{border-radius:22px!important}
+
+/* Control Center: etiqueta disciplina */
+.discipline-chip-v12{
+  margin-top:14px;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  min-height:38px;
+  padding:0 13px;
+  border-radius:999px;
+  color:#86efac;
+  background:rgba(34,197,94,.08);
+  border:1px solid rgba(34,197,94,.22);
+  font-size:11px;
+  font-weight:800;
+}
+.discipline-chip-v12 i{
+  width:7px;height:7px;border-radius:50%;background:#22c55e;
+  box-shadow:0 0 10px #22c55e;
+}
+
+/* Founder: el 1€ solo vive en el CTA */
+.founder-price{display:none!important}
+.founder-note{margin-top:22px}
+.founder-btn{min-width:230px}
+.founder-wait-v12{
+  margin-top:14px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.founder-secondary-v12{
+  display:inline-flex;
+  min-height:50px;
+  padding:0 20px;
+  align-items:center;
+  justify-content:center;
+  border-radius:999px;
+  color:#fff;
+  border:1px solid rgba(255,255,255,.24);
+  background:rgba(255,255,255,.08);
+  font-weight:800;
+  font-size:13px;
+}
+
+/* Planes: orientación, no catálogo de funcionalidades */
+.plans-v12{
+  padding:118px 0 128px;
+  background:#f5f8fc;
+  color:#0d1524;
+}
+.plans-v12-inner{
+  width:min(calc(100% - 40px),var(--max));
+  margin:auto;
+}
+.plans-v12-head{
+  max-width:850px;
+  margin-bottom:52px;
+}
+.plans-v12 h2{
+  margin:0 0 18px;
+  font-size:clamp(52px,5.7vw,84px);
+  line-height:.93;
+  letter-spacing:-.06em;
+}
+.plans-v12-head p{
+  margin:0;
+  max-width:650px;
+  color:#697487;
+  font-size:17px;
+  line-height:1.55;
+}
+.plans-v12-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+.plan-v12{
+  min-height:390px;
+  border-radius:24px;
+  background:#fff;
+  border:1px solid #dce4ee;
+  padding:32px;
+  display:flex;
+  flex-direction:column;
+  box-shadow:0 20px 50px rgba(35,68,111,.07);
+}
+.plan-v12.featured{
+  color:#fff;
+  background:linear-gradient(145deg,#071426,#0b2344);
+  border-color:rgba(59,130,246,.35);
+  box-shadow:0 32px 75px rgba(18,68,145,.18);
+}
+.plan-v12 .tag{
+  align-self:flex-start;
+  font-size:10px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;
+  color:#155dfc;
+  margin-bottom:28px;
+}
+.plan-v12.featured .tag{color:#79b5ff}
+.plan-v12 h3{
+  margin:0;
+  font-size:34px;
+  letter-spacing:-.045em;
+}
+.plan-v12 .plan-line{
+  margin:9px 0 26px;
+  font-size:22px;
+  font-weight:850;
+  color:#155dfc;
+}
+.plan-v12.featured .plan-line{color:#79b5ff}
+.plan-v12 p{
+  margin:0 0 24px;
+  color:#6d788a;
+  font-size:14px;
+  line-height:1.55;
+}
+.plan-v12.featured p{color:#91a2bb}
+.plan-v12 ul{
+  list-style:none;padding:0;margin:auto 0 0;
+  border-top:1px solid #e3e8ef;
+}
+.plan-v12.featured ul{border-color:rgba(255,255,255,.1)}
+.plan-v12 li{
+  padding:12px 0;
+  border-bottom:1px solid #e8edf3;
+  font-size:12px;
+  color:#485568;
+}
+.plan-v12.featured li{color:#afbdd0;border-color:rgba(255,255,255,.08)}
+.plans-v12-actions{
+  margin-top:28px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.plan-cta-v12{
+  min-height:48px;padding:0 20px;border-radius:999px;
+  display:inline-flex;align-items:center;justify-content:center;
+  background:#155dfc;color:#fff;font-weight:850;font-size:13px;
+}
+.plan-link-v12{
+  min-height:48px;padding:0 20px;border-radius:999px;
+  display:inline-flex;align-items:center;justify-content:center;
+  border:1px solid #d1dae6;color:#36506f;font-weight:800;font-size:13px;
+  background:#fff;
+}
+@media(max-width:980px){
+  #control-v8 .product-chapter-inner,
+  #metrics-v8 .product-chapter-inner,
+  #hedge-v8 .product-chapter-inner{grid-template-columns:1fr!important}
+  #metrics-v8 .product-chapter-visual,#metrics-v8 .product-chapter-copy{order:initial!important}
+  #metrics-v8 .module-shot-wrap{width:100%;margin-left:0}
+  .plans-v12-grid{grid-template-columns:1fr}
+}
+@media(max-width:620px){
+  .platform-grid-v12{grid-template-columns:1fr 1fr}
+  .platform-card-v12{min-height:145px;padding:16px}
+  .platform-card-v12 img,.platform-card-v12 .logo-fallback{width:62px;height:62px}
+  .plans-v12-inner{width:min(calc(100% - 24px),var(--max))}
+  .plans-v12{padding:84px 0 92px}
+  .plans-v12 h2{font-size:47px}
+}
+
+
+/* =========================================================
+   V13 — AJUSTES DE LONGITUD, PLANES Y COMPATIBILIDAD
+   ========================================================= */
+
+/* Compatibilidad unificada */
+.compat-stack{
+  display:flex;
+  flex-direction:column;
+  gap:34px;
+  max-width:880px;
+  margin:0 auto;
+}
+
+.platform-marquee{
+  padding:4px 0 10px;
+}
+
+.platform-track{
+  gap:18px;
+  animation-duration:18s;
+}
+
+.reverse-marquee{
+  animation-direction:reverse;
+  animation-duration:19s;
+}
+
+.platform-logo-pill{
+  min-width:230px;
+  min-height:108px;
+  padding:16px 22px;
+  border-radius:20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:14px;
+  background:#fff;
+  border:1px solid var(--line);
+  box-shadow:0 14px 34px rgba(28,47,78,.06);
+  flex:0 0 auto;
+}
+
+.platform-logo-pill img{
+  width:54px;
+  height:54px;
+  object-fit:contain;
+  flex:0 0 auto;
+}
+
+.platform-logo-pill strong{
+  font-size:15px;
+  color:#26364e;
+  white-space:nowrap;
+}
+
+.platform-logo-fallback{
+  width:54px;
+  height:54px;
+  border-radius:14px;
+  align-items:center;
+  justify-content:center;
+  flex:0 0 auto;
+  color:#fff;
+  font-weight:900;
+  font-size:16px;
+  background:linear-gradient(145deg,#0d326f,#2468d8);
+}
+
+.brokers .marquee-track{
+  will-change:transform;
+}
+
+.brokers .broker-pill{
+  flex:0 0 auto;
+}
+
+/* CTA independiente en cada plan */
+.plan-card-cta{
+  width:100%;
+  min-height:50px;
+  margin-top:28px;
+  padding:0 18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:999px;
+  background:#155dfc;
+  color:#fff;
+  font-size:13px;
+  font-weight:850;
+  text-align:center;
+  transition:transform .2s ease,box-shadow .2s ease,background .2s ease;
+  box-shadow:0 10px 24px rgba(21,93,252,.16);
+}
+
+.plan-card-cta:hover{
+  transform:translateY(-2px);
+  box-shadow:0 14px 30px rgba(21,93,252,.22);
+}
+
+.plan-card-cta.starter{
+  background:#155dfc;
+}
+
+.plan-v12.featured .plan-card-cta{
+  background:#fff;
+  color:#0b326f;
+  box-shadow:0 12px 26px rgba(0,0,0,.16);
+}
+
+.plan-v12 ul{
+  margin-bottom:0;
+}
+
+@media(max-width:620px){
+  .platform-logo-pill{
+    min-width:200px;
+    min-height:94px;
+    padding:14px 18px;
+    border-radius:17px;
+  }
+
+  .platform-logo-pill img,
+  .platform-logo-fallback{
+    width:46px;
+    height:46px;
+  }
+
+  .platform-logo-pill strong{
+    font-size:14px;
+  }
+}
+
+</style>
 </head>
 <body>
+
+<!-- =========================================================
+     MAPA DE LA LANDING
+     01. Hero
+     02. Actividad / contadores
+     03. Mensaje clave
+     04. Journal Automático
+     05. Empieza en 3 pasos
+     06. Problema / preguntas
+     07. Solución TDMK
+     08. Dashboard
+     09. Métricas Avanzadas
+     10. Control Center
+     11. Gestor de Coberturas
+     12. Infraestructura VPS
+     13. Compatibilidad
+     14. Roadmap
+     15. Planes
+     16. Programa Fundador
+     17. Cierre
+     ========================================================= -->
+
+<!-- TDMK Landing V14 · Reordenada y separada por secciones -->
   <header class="topbar">
     <div class="wrap topbar-inner">
       <a href="#inicio" class="logo"><img src="tdmk-logo.png" alt="TDMK Systems" class="logo-img"></a>
@@ -353,45 +2082,81 @@
   </header>
 
   <main id="inicio">
-    <section class="hero" aria-label="Presentación de TDMK Systems">
+
+    <!-- =====================================================
+         SECCIÓN 01 — HERO — Puede que tu estrategia gane dinero
+         ===================================================== -->
+<section class="hero" aria-label="Presentación de TDMK Systems">
       <div class="hero-inner">
         <div class="wrap">
           <div class="hero-content reveal">
-            <h1>Entiende tu trading<br><em>con datos.</em></h1>
-            <p class="hero-copy">Conecta MetaTrader 5 y convierte tu operativa en una fotografía que puedas leer, comparar y entender.</p>
+            <h1>Puede que tu estrategia gane dinero.<br><em>Eso no demuestra que funcione.</em></h1>
+            <p class="hero-copy">Conecta MetaTrader 5 y descubre qué hay realmente detrás de tus resultados: comportamiento, métricas, exposición y patrones que normalmente pasan desapercibidos.</p>
             <div class="hero-actions">
-              <a class="button button-blue" href="https://app.tdmksystems.com/?origen=landing_publica">Empezar gratis</a>
+              <a class="button button-blue" href="https://app.tdmksystems.com/?origen=landing_publica">Conectar mi MetaTrader gratis</a>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="trustbar">
-      <div class="wrap trustbar-inner">
-        <div class="trust-counter" id="trustCounterUsers">
-          <span class="counter-num" id="userCounter">0</span>
-          <span class="counter-label">traders ya usan TDMK Systems</span>
-        </div>
-        <div class="trust-counter" id="trustCounterOps">
-          <span class="counter-num" id="opsCounter">0</span>
-          <span class="counter-label">operaciones ejecutadas y registradas</span>
-        </div>
-      </div>
-    </section>
 
-    <section class="statement">
+    <!-- =====================================================
+         SECCIÓN 02 — ACTIVIDAD — Lo que pasa dentro de TDMK Systems
+         ===================================================== -->
+<section class="activity-v11" id="actividad">
+  <div class="activity-v11-inner">
+    <div class="activity-v11-head reveal">
+      <h2>Lo que pasa dentro de TDMK.</h2>
+      <p>
+        Cada operación registrada y cada cuenta conectada deja de ser información dispersa
+        y empieza a formar parte de una única estructura.
+      </p>
+    </div>
+
+    <!--
+      Datos reales — se rellenan desde /api/public/stats al cargar la pagina.
+      Si la peticion falla, cada bloque se oculta solo (ver script al final).
+    -->
+    <div class="activity-v11-grid reveal">
+      <div class="activity-v11-item" id="statTrades">
+        <div class="activity-v11-number" data-count="0" data-prefix="+">0</div>
+        <div class="activity-v11-label">Trades registrados</div>
+      </div>
+
+      <div class="activity-v11-item" id="statAccounts">
+        <div class="activity-v11-number" data-count="0" data-prefix="+">0</div>
+        <div class="activity-v11-label">Cuentas conectadas</div>
+      </div>
+
+      <div class="activity-v11-item" id="statUsers">
+        <div class="activity-v11-number" data-count="0" data-prefix="+">0</div>
+        <div class="activity-v11-label">Usuarios activos</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+    <!-- =====================================================
+         SECCIÓN 03 — MENSAJE CLAVE — El problema no es perder una operación
+         ===================================================== -->
+<section class="statement">
       <div class="wrap reveal">
-        <p>Una estrategia puede ganar dinero y seguir estando mal construida. <em>El beneficio no lo demuestra todo.</em></p>
+        <p>El problema no es perder una operación. <em>El problema es repetir el mismo error sin saber que existe.</em></p>
       </div>
     </section>
 
-    <section class="feature featured" id="journal">
+
+    <!-- =====================================================
+         SECCIÓN 04 — JOURNAL AUTOMÁTICO
+         ===================================================== -->
+<section class="feature theme-gray cinematic-enter" id="journal">
       <div class="wrap feature-grid">
-        <div class="reveal">
+        <div class="reveal-left">
           <div class="feature-number">Journal Automático</div>
-          <h2 class="feature-title">Cada operación cuenta su historia.</h2>
-          <p class="feature-subtitle">Sin que tengas que escribir una sola línea.</p>
+          <h2 class="feature-title">Deja de rellenar operaciones. Empieza a leer tu trading.</h2>
+          <p class="feature-subtitle">Cada operación deja una huella.</p>
           <p class="feature-copy">Conecta MetaTrader una vez. A partir de ese momento cada operación queda registrada automáticamente para que puedas analizar tu operativa cuando realmente importa.</p>
           <p class="feature-copy" style="margin-top:14px;">Olvídate de Excels, fórmulas y domingos por la noche intentando recordar qué hiciste hace tres días.</p>
           <ul class="check-list">
@@ -409,7 +2174,7 @@
             </li>
           </ul>
         </div>
-        <div class="feature-media reveal">
+        <div class="feature-media reveal-right">
           <div class="product-window">
             <div class="pw-topbar">
               <div class="pw-title">Journal<span>Registro automático de tus operaciones</span></div>
@@ -455,244 +2220,531 @@
       </div>
     </section>
 
-    <section class="feature" id="dashboard">
-      <div class="wrap feature-grid">
+
+    <!-- =====================================================
+         SECCIÓN 05 — CÓMO FUNCIONA — Empieza en 3 pasos
+         ===================================================== -->
+<section class="steps-v11" id="empezar">
+  <div class="steps-v11-inner">
+    <div class="steps-v11-head reveal">
+      <div class="product-kicker">CÓMO FUNCIONA</div>
+      <h2>Empieza en 3 pasos.</h2>
+    </div>
+
+    <div class="steps-v11-grid">
+      <article class="step-v11 reveal">
+        <div class="step-v11-num">01</div>
+        <h3>Conecta tu cuenta</h3>
+        <p>Vincula MetaTrader y deja que TDMK empiece a leer tu operativa automáticamente.</p>
+      </article>
+
+      <article class="step-v11 reveal">
+        <div class="step-v11-num">02</div>
+        <h3>Opera como siempre</h3>
+        <p>No cambies tu forma de trabajar. Tus operaciones alimentan el Journal y las métricas en segundo plano.</p>
+      </article>
+
+      <article class="step-v11 reveal">
+        <div class="step-v11-num">03</div>
+        <h3>Mide y controla</h3>
+        <p>Analiza resultados, vigila el riesgo y actúa sobre tus cuentas desde un único panel.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+
+    <!-- =====================================================
+         SECCIÓN 06 — PROBLEMA — Preguntas que obligan a mirar más allá del balance
+         ===================================================== -->
+<section class="problem" id="problema">
+      <div class="wrap">
+        <div class="problem-head reveal">
+          <div class="feature-number">Antes de buscar otra estrategia</div>
+          <div>
+            <h2 class="feature-title" style="margin-top:0">¿Sabes realmente cómo opera la que ya tienes?</h2>
+            <p class="feature-copy">Ver el balance final no es analizar una estrategia. Una cuenta puede estar ganando mientras deteriora su esperanza matemática, concentra demasiado riesgo o depende de unas pocas operaciones.</p>
+          </div>
+        </div>
+        <div class="question-grid reveal">
+          <div class="question"><small>Sesiones</small><strong>¿Sabes en qué sesión ganas más y en cuál destruyes rentabilidad?</strong></div>
+          <div class="question"><small>Ventaja</small><strong>¿Tu estrategia tiene edge real o simplemente atraviesa una buena racha?</strong></div>
+          <div class="question"><small>Muestra</small><strong>¿Si cambiase la frecuencia de tu espacio muestral, ganarías lo mismo?</strong></div>
+          <div class="question"><small>Riesgo</small><strong>¿Cuánto capital tienes realmente expuesto cuando varias cuentas operan a la vez?</strong></div>
+          <div class="question"><small>Comportamiento</small><strong>¿Tus pérdidas vienen de la estrategia o de cómo la estás ejecutando?</strong></div>
+          <div class="question"><small>Robustez</small><strong>¿Podrías defender tu estrategia sin utilizar el beneficio como argumento?</strong></div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         SECCIÓN 07 — SOLUCIÓN — Por eso existe TDMK
+         ===================================================== -->
+<section class="solution">
+      <div class="wrap solution-grid">
         <div class="reveal">
+          <div class="feature-number" style="color:#7fb0ff">Por eso existe TDMK</div>
+          <h2 class="dark-title" style="font-size:clamp(42px,6vw,78px)">No para decirte cuándo comprar. Para enseñarte cómo estás operando de verdad.</h2>
+          <p class="dark-copy">TDMK convierte la actividad de MetaTrader en información útil. Tú operas. La plataforma registra, organiza y presenta los datos para que puedas tomar decisiones con más criterio.</p>
+        </div>
+        <div class="solution-media reveal">
+          <div class="solution-diagram">
+            <div class="node primary"><b>MetaTrader 5</b><span>Datos reales</span></div>
+            <div class="arrow">↓</div>
+            <div class="node"><b>Journal Automático</b><span>Registro y contexto</span></div>
+            <div class="node"><b>Dashboard</b><span>Fotografía inmediata</span></div>
+            <div class="node"><b>Deja de calcular coberturas mientras el mercado se mueve.</b><span>Exposición real</span></div>
+            <div class="node"><b>Control & Automatización</b><span>infraestructura</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         SECCIÓN 08 — DASHBOARD — Una fotografía de tu trading
+         ===================================================== -->
+<section class="dashboard-photo-section" id="dashboard">
+      <div class="dashboard-photo-grid">
+
+        <div class="dashboard-photo-copy reveal-left">
           <div class="feature-number">Dashboard</div>
-          <h2 class="feature-title">Mira tu cuenta. Entiéndela en segundos.</h2>
-          <p class="feature-copy">Una vista limpia para saber cómo va tu operativa sin perderte entre decenas de pantallas.</p>
-          <ul class="feature-list">
-            <li><span>Patrimonio y rendimiento</span><span>En tiempo real</span></li>
-            <li><span>Curva de balance</span><span>Lectura visual</span></li>
-            <li><span>KPIs principales</span><span>Sin ruido</span></li>
+
+          <h2 class="dashboard-photo-title">
+            Todo tu trading.<br>Una sola fotografía.
+          </h2>
+
+          <p class="dashboard-photo-description">
+            Abre TDMK y entiende en segundos qué está pasando realmente con tu operativa.
+          </p>
+
+          <ul class="dashboard-photo-list">
+            <li>
+              <span>Patrimonio y rendimiento</span>
+              <span>En tiempo real</span>
+            </li>
+            <li>
+              <span>Curva de balance</span>
+              <span>Tu evolución de un vistazo</span>
+            </li>
+            <li>
+              <span>KPIs principales</span>
+              <span>Sin ruido</span>
+            </li>
           </ul>
         </div>
-        <div class="feature-media reveal">
-          <div class="product-window">
-            <div class="pw-topbar">
-              <div class="pw-title">Dashboard<span>Visión general de tu operativa</span></div>
-              <div class="pw-live"><span class="pw-dot"></span>En vivo</div>
-            </div>
 
-            <div class="dash-row1">
-              <div class="dash-patrimonio">
-                <label>Patrimonio Total</label>
-                <div class="dash-currency-rows">
-                  <div class="curr-row">
-                    <span class="curr-code">EUR</span>
-                    <div class="curr-track"><div class="curr-fill eur" style="width:64%;">€ 8.240,50</div></div>
-                    <span class="curr-pct">64.0%</span>
-                  </div>
-                  <div class="curr-row">
-                    <span class="curr-code">USD</span>
-                    <div class="curr-track"><div class="curr-fill usd" style="width:36%;">$ 4.630,00</div></div>
-                    <span class="curr-pct">36.0%</span>
-                  </div>
-                </div>
-                <div class="dash-equity-big">12.480,50 €</div>
-              </div>
-              <div class="dash-gauge-card">
-                <label>Win Rate</label>
-                <div class="dash-gauge" style="--pct:64.2%;"><span>64.2%</span></div>
-              </div>
-            </div>
+        <div class="dashboard-photo-media">
+          <div class="dashboard-photo-fade"></div>
 
-            <div class="dash-row2">
-              <div class="dash-chart-card">
-                <div class="dash-chart-head">
-                  <span>Curva de balance</span>
-                  <div class="dash-range-pills"><span class="on">Total</span><span>Año</span><span>Mes</span><span>Semana</span><span>Día</span></div>
-                </div>
-                <svg viewBox="0 0 400 70" preserveAspectRatio="none" class="pw-curve-svg" style="height:60px;">
-                  <defs><linearGradient id="dg" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="#4ade80" stop-opacity="0.45"/>
-                    <stop offset="100%" stop-color="#4ade80" stop-opacity="0"/>
-                  </linearGradient></defs>
-                  <path d="M0,55 L40,50 L80,53 L120,38 L160,42 L200,28 L240,33 L280,18 L320,22 L360,8 L400,12 L400,70 L0,70 Z" fill="url(#dg)"/>
-                  <path d="M0,55 L40,50 L80,53 L120,38 L160,42 L200,28 L240,33 L280,18 L320,22 L360,8 L400,12" fill="none" stroke="#4ade80" stroke-width="2"/>
-                </svg>
-                <div class="dash-buysell">
-                  <div class="dash-bs-title">Equilibrio Buy / Sell</div>
-                  <div class="bs-row"><span class="bs-label buy">Buy 58.0%</span><div class="bs-track"><div class="bs-fill buy" style="width:58%"></div></div><span class="bs-count">29</span></div>
-                  <div class="bs-row"><span class="bs-label sell">Sell 42.0%</span><div class="bs-track"><div class="bs-fill sell" style="width:42%"></div></div><span class="bs-count">21</span></div>
-                </div>
-              </div>
-              <div class="dash-kpis-side">
-                <div class="dash-kpi-card"><label>Ratio R/R</label><b>1.62</b></div>
-                <div class="dash-kpi-card"><label>Esp. Mat.</label><b class="win">+4,20€</b></div>
-                <div class="dash-kpi-card"><label>PnL del día</label><b class="win">+284,10€</b></div>
-                <div class="dash-kpi-card"><label>% Rend. día</label><b class="win">+2,3%</b></div>
-              </div>
-            </div>
+          <div class="dashboard-photo-shell">
+            <img
+              class="dashboard-photo"
+              src="Dashboard Blanco.png"
+              alt="Dashboard TDMK Systems mostrado en un iPhone naranja dentro de un entorno fotográfico de estudio"
+              loading="lazy"
+              decoding="async"
+            >
           </div>
         </div>
+
       </div>
     </section>
 
-    <section class="feature" id="excel">
-      <div class="wrap feature-grid">
-        <div class="reveal">
-          <div class="feature-number">Gestor de Coberturas</div>
-          <h2 class="feature-title">Sabe cuántos lotes tienes en juego de verdad.</h2>
-          <p class="feature-copy">Cuando operas con coberturas es fácil perder de vista tu exposición real. El Gestor de Coberturas calcula al segundo cuántos lotes tienes abiertos de verdad en cada símbolo, para que nunca operes a ciegas.</p>
-          <ul class="feature-list">
-            <li><span>Exposición neta por símbolo</span><span>En tiempo real</span></li>
-            <li><span>Detecta coberturas cruzadas</span><span>Automático</span></li>
-            <li><span>Todas tus cuentas</span><span>Una sola vista</span></li>
-          </ul>
-        </div>
-        <div class="feature-media reveal">
-          <div class="product-window">
-            <div class="pw-topbar">
-              <div class="pw-title">Gestor de Coberturas<span>Exposición real, compras y ventas</span></div>
-              <div class="pw-live"><span class="pw-dot"></span>En vivo</div>
+
+    <!-- =====================================================
+         SECCIÓN 09 — ANÁLISIS — Métricas Avanzadas
+         ===================================================== -->
+<section class="product-chapter light reverse" id="metrics-v8">
+  <div class="product-chapter-inner">
+    <div class="product-chapter-copy reveal-right">
+      <div class="product-kicker">ANÁLISIS</div>
+      <h2>¿Tu estrategia funciona…<br>o simplemente es suerte?</h2>
+      <p>Curva, drawdown, Sharpe, consistencia, sesiones, activos y una valoración cuantitativa que te obliga a mirar más allá del beneficio.</p>
+      <div class="product-pills">
+        <span class="product-pill">Esperanza</span>
+        <span class="product-pill">R/R</span>
+        <span class="product-pill">Drawdown</span>
+        <span class="product-pill">Robustez</span>
+      </div>
+    </div>
+    <div class="product-chapter-visual reveal-left"><div class="module-shot-wrap"><img src="Metricas Avanzadas Realista.png" class="module-shot" alt="Métricas Avanzadas de TDMK con curva orgánica, drawdown y análisis cuantitativo" loading="lazy" decoding="async"></div></div>
+  </div>
+</section>
+
+
+    <!-- =====================================================
+         SECCIÓN 10 — CONTROL CENTER — Control y disciplina
+         ===================================================== -->
+<section class="product-chapter dark" id="control-v8">
+  <div class="product-chapter-inner">
+    <div class="product-chapter-copy reveal-left">
+      <div class="product-kicker">CONTROL CENTER</div>
+      <h2>Si algo pasa,<br>actúa.</h2>
+      <p>Balance, equity, floating, drawdown, PnL y acciones críticas sobre todas tus cuentas desde una sola pantalla.</p>
+      <div class="discipline-chip-v12"><i></i> Control de disciplina · Bloqueo automático por límites de riesgo</div>
+      <div class="product-pills">
+        <span class="product-pill">Break Even</span>
+        <span class="product-pill">Cerrar Todo</span>
+        <span class="product-pill">Bloquear cuenta</span>
+      </div>
+    </div>
+    <div class="product-chapter-visual reveal-right"><div class="module-shot-wrap"><img src="Control Center Realista.png" class="module-shot" alt="Control Center realista de TDMK con cuentas, KPIs, acciones y protección automática" loading="lazy" decoding="async"></div></div>
+  </div>
+</section>
+
+
+    <!-- =====================================================
+         SECCIÓN 11 — GESTOR DE COBERTURAS
+         ===================================================== -->
+<section class="product-chapter blue" id="hedge-v8">
+  <div class="product-chapter-inner">
+    <div class="product-chapter-copy reveal-left">
+      <div class="product-kicker">COBERTURAS</div>
+      <h2>Calcula tu punto de equilibrio<br>antes de que el precio decida por ti.</h2>
+      <p>El mercado no te da tiempo para anotar datos a mano. Encuentra tu Break Even dinamico al instante y ejecuta tu cobertura con precision.</p>
+      <div class="product-pills">
+        <span class="product-pill">Exposición real</span>
+        <span class="product-pill">Match entre posiciones</span>
+        <span class="product-pill">Break Even Dinámico</span>
+        <span class="product-pill">Target Neto </span>
+      </div>
+    </div>
+    <div class="product-chapter-visual reveal-right"><div class="module-shot-wrap"><img src="Gestor Coberturas Realista.png" class="module-shot" alt="Gestor de Coberturas TDMK con posiciones de compra y venta, match, break even y resultado estimado" loading="lazy" decoding="async"></div></div>
+  </div>
+</section>
+
+
+    <!-- =====================================================
+         SECCIÓN 12 — INFRAESTRUCTURA — Granjas VPS y Watchdog
+         ===================================================== -->
+<section class="product-chapter dark" id="infra-v8">
+  <div class="product-chapter-inner">
+    <div class="product-chapter-copy reveal-left">
+      <div class="product-kicker">INFRAESTRUCTURA</div>
+      <h2>Sigue funcionando<br>aunque cierres el portátil.</h2>
+      <p>Supervisa servidores, recursos, cuentas conectadas y Watchdog desde el mismo panel, incluso cuando tú no estás delante.</p>
+      <div class="product-pills">
+        <span class="product-pill">VPS</span>
+        <span class="product-pill">Watchdog</span>
+        <span class="product-pill">Alertas</span>
+        <span class="product-pill">Protección</span>
+      </div>
+    </div>
+    <div class="product-chapter-visual reveal-right">
+      <div class="module-shot-wrap">
+        <img src="Granjas VPS Demo.png" class="module-shot" alt="Gestor de Granjas VPS de TDMK con servidores, recursos, cuentas y estado Watchdog" loading="lazy" decoding="async">
+      </div>
+    </div>
+  </div>
+</section>
+
+
+    <!-- =====================================================
+         SECCIÓN 13 — COMPATIBILIDAD — Plataformas, fondeo y capital real
+         ===================================================== -->
+<section class="brokers" id="compatibilidad">
+  <div class="wrap">
+    <div class="brokers-head reveal">
+      <span class="feature-number">Compatibilidad</span>
+      <h2 style="font-size:clamp(30px,4vw,46px);">Conecta TDMK con tu entorno de trading.</h2>
+      <p class="feature-copy" style="max-width:680px;">
+        Compatible con cuentas de fondeo y capital real. Empieza con MetaTrader
+        y amplía tu infraestructura sin cambiar la forma en la que analizas y controlas tu operativa.
+      </p>
+    </div>
+
+    <div class="compat-stack reveal">
+
+      <div class="brokers-row">
+        <span class="brokers-group-label">Plataformas</span>
+        <div class="marquee platform-marquee">
+          <div class="marquee-track platform-track">
+
+            <div class="platform-logo-pill">
+              <img src="mt4-logo.png" alt="MetaTrader 4"
+                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <span class="platform-logo-fallback" style="display:none">MT4</span>
+              <strong>MetaTrader 4</strong>
             </div>
-            <div class="hedge-cols">
-              <div class="hedge-col">
-                <div class="hedge-col-head buy">Compras <span class="hedge-count">4</span></div>
-                <div class="hedge-pos"><span>EURUSD</span><span>1.20 lotes</span></div>
-                <div class="hedge-pos"><span>EURUSD</span><span>1.20 lotes</span></div>
-                <div class="hedge-pos"><span>XAUUSD</span><span>0.50 lotes</span></div>
-                <div class="hedge-pos"><span>XAUUSD</span><span>0.30 lotes</span></div>
-              </div>
-              <div class="hedge-col">
-                <div class="hedge-col-head sell">Ventas <span class="hedge-count">3</span></div>
-                <div class="hedge-pos"><span>EURUSD</span><span>1.10 lotes</span></div>
-                <div class="hedge-pos"><span>XAUUSD</span><span>0.80 lotes</span></div>
-                <div class="hedge-pos"><span>US30</span><span>1.50 lotes</span></div>
-              </div>
+
+            <div class="platform-logo-pill">
+              <img src="mt5-logo.png" alt="MetaTrader 5"
+                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <span class="platform-logo-fallback" style="display:none">MT5</span>
+              <strong>MetaTrader 5</strong>
             </div>
-            <div class="dash-sidekpis" style="margin-top:14px;">
-              <div><label>Exposición neta</label><b class="win">+1.30 compra</b></div>
-              <div><label>Símbolos activos</label><b>3</b></div>
-              <div><label>Total en juego</label><b>4.70 lotes</b></div>
+
+            <!-- Duplicados para que el carrusel sea infinito -->
+            <div class="platform-logo-pill">
+              <img src="mt4-logo.png" alt="MetaTrader 4"
+                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <span class="platform-logo-fallback" style="display:none">MT4</span>
+              <strong>MetaTrader 4</strong>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <section class="feature">
-      <div class="wrap feature-grid">
-        <div class="reveal">
-          <div class="feature-number">Robots & Herramientas</div>
-          <h2 class="feature-title">Convierte tu operativa en infraestructura automatizada.</h2>
-          <p class="feature-copy">Tus reglas de gestión de riesgo funcionando solas, 24 horas, sin que tengas que estar delante de la pantalla. Empieza con el Gestor de Riesgo TP/SL — el primero de varios robots que irán llegando.</p>
-          <ul class="feature-list">
-            <li><span>Robots que operan por ti</span><span>Sin estar delante</span></li>
-            <li><span>TP y SL según tu propio riesgo</span><span>Automático</span></li>
-            <li><span>Más robots en camino</span><span>Infraestructura creciendo</span></li>
-          </ul>
-        </div>
-        <div class="feature-media reveal">
-          <div class="placeholder"><div><strong>IMAGEN DE ROBOTS & HERRAMIENTAS</strong><small>Captura del catálogo de robots, o del gráfico MT5 con TP/SL colocados por el robot.</small></div></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="dark-section" id="roadmap">
-      <div class="wrap dark-grid">
-        <div class="reveal">
-          <div class="feature-number">Roadmap</div>
-          <h2 class="dark-title">Esto es solo el principio.</h2>
-          <p class="dark-copy">TDMK Systems crece cada semana delante de sus propios usuarios. Esto es lo que ya tienes disponible hoy — y lo que está a punto de llegar.</p>
-          <div class="roadmap">
-            <div class="roadmap-row"><div><b>Journal Automático</b><small>Estadísticas y seguimiento sin escribir nada</small></div><span class="tag live">Disponible</span></div>
-            <div class="roadmap-row"><div><b>Dashboard</b><small>Fotografía general de la operativa</small></div><span class="tag live">Disponible</span></div>
-            <div class="roadmap-row"><div><b>Gestor de Coberturas</b><small>Exposición real por símbolo</small></div><span class="tag live">Disponible</span></div>
-            <div class="roadmap-row"><div><b>Control Center</b><small>Protección y bloqueo automático de cuentas</small></div><span class="tag">Próximamente</span></div>
-            <div class="roadmap-row"><div><b>Copiador de CFDs</b><small>Replica tu operativa entre cuentas</small></div><span class="tag">Próximamente</span></div>
-            <div class="roadmap-row"><div><b>Traders Verificados</b><small>Ranking con datos auditados</small></div><span class="tag">Próximamente</span></div>
-          </div>
-        </div>
-        <div class="dark-media reveal">
-          <div class="placeholder"><div><strong>IMAGEN DEL ROADMAP</strong><small>Captura del módulo Roadmap real, con estados y votaciones.</small></div></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="brokers">
-      <div class="wrap">
-        <div class="brokers-head reveal">
-          <span class="feature-number">Compatibilidad</span>
-          <h2 style="font-size:clamp(30px,4vw,46px);">Conecta con tu bróker, sea cual sea.</h2>
-          <p class="feature-copy" style="max-width:640px;">Compatible con <b>MetaTrader 4</b> y <b>MetaTrader 5</b>. Funciona igual con cuentas de fondeo que con capital real.</p>
-        </div>
-        <div class="mt-badges reveal">
-          <span class="mt-badge">MT4</span>
-          <span class="mt-badge">MT5</span>
-        </div>
-        <div class="brokers-stack reveal">
-          <div class="brokers-row">
-            <span class="brokers-group-label">Cuentas de fondeo</span>
-            <div class="marquee">
-              <div class="marquee-track">
-                <span class="broker-pill">FTMO</span>
-                <span class="broker-pill">The5ers</span>
-                <span class="broker-pill">Noctorial</span>
-                <span class="broker-pill">Orion</span>
-                <span class="broker-pill">FTMO</span>
-                <span class="broker-pill">The5ers</span>
-                <span class="broker-pill">Noctorial</span>
-                <span class="broker-pill">Orion</span>
-              </div>
+            <div class="platform-logo-pill">
+              <img src="mt5-logo.png" alt="MetaTrader 5"
+                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <span class="platform-logo-fallback" style="display:none">MT5</span>
+              <strong>MetaTrader 5</strong>
             </div>
-          </div>
-          <div class="brokers-row">
-            <span class="brokers-group-label">Capital real</span>
-            <div class="broker-pills">
-              <span class="broker-pill">VT Markets</span>
-              <span class="broker-pill">IC Markets</span>
-              <span class="broker-pill">BlackBull</span>
-              <span class="broker-pill">Pepperstone</span>
-              <span class="broker-pill">FP Markets</span>
-            </div>
+
           </div>
         </div>
       </div>
-    </section>
 
-    <section class="founder" id="fundadores">
-      <div class="wrap">
-        <div class="founder-card reveal">
-          <div>
-            <div class="hero-kicker" style="color:#dce8ff">Programa Fundador</div>
-            <h2>Quedan <span id="founderRemaining">100</span> plazas fundadoras.</h2>
-            <p>Reserva tu acceso a los módulos avanzados antes de su apertura. No pagarás ningún plan hasta que estén disponibles y decidas activarlo.</p>
-            <div class="price">1€</div>
-            <div style="color:#dce8ff">Verificación reembolsable · Sin suscripción activa</div>
-            <a class="button" href="https://app.tdmksystems.com/?origen=landing_fundadores">Reservar plaza</a>
-          </div>
-          <div>
-            <div class="placeholder"><div><strong>IMAGEN PROGRAMA FUNDADOR</strong><small>Tarjeta o pieza visual premium del Club Fundadores.</small></div></div>
+      <div class="brokers-row">
+        <span class="brokers-group-label">Cuentas de fondeo</span>
+        <div class="marquee">
+          <div class="marquee-track">
+            <span class="broker-pill">FTMO</span>
+            <span class="broker-pill">The5ers</span>
+            <span class="broker-pill">Noctorial</span>
+            <span class="broker-pill">Neomaaa</span>
+            <span class="broker-pill">Fundednext</span>
+            <span class="broker-pill">Fundingpips</span>
+            <span class="broker-pill">WSF</span>
+            <span class="broker-pill">Orion</span>
+
+            <span class="broker-pill">FTMO</span>
+            <span class="broker-pill">The5ers</span>
+            <span class="broker-pill">Noctorial</span>
+            <span class="broker-pill">Neomaaa</span>
+            <span class="broker-pill">Fundednext</span>
+            <span class="broker-pill">Fundingpips</span>
+            <span class="broker-pill">WSF</span>
+            <span class="broker-pill">Orion</span>
           </div>
         </div>
       </div>
-    </section>
 
-    <section class="proof">
-      <div class="wrap">
-        <div class="proof-grid reveal">
-          <div class="proof-item"><strong>1</strong><p>Cuenta MT5 para empezar a medir.</p></div>
-          <div class="proof-item"><strong>0€</strong><p>Para utilizar la versión gratuita.</p></div>
-          <div class="proof-item"><strong>24/7</strong><p>Acceso a tus datos desde el panel.</p></div>
+      <div class="brokers-row">
+        <span class="brokers-group-label">Capital real</span>
+        <div class="marquee">
+          <div class="marquee-track reverse-marquee">
+            <span class="broker-pill">VT Markets</span>
+            <span class="broker-pill">IC Markets</span>
+            <span class="broker-pill">BlackBull</span>
+            <span class="broker-pill">Axi</span>
+            <span class="broker-pill">Oanda</span>
+            <span class="broker-pill">Pepperstone</span>
+            <span class="broker-pill">FP Markets</span>
+            <span class="broker-pill">Eightcap</span>
+
+            <span class="broker-pill">VT Markets</span>
+            <span class="broker-pill">IC Markets</span>
+            <span class="broker-pill">BlackBull</span>
+            <span class="broker-pill">Axi</span>
+            <span class="broker-pill">Oanda</span>
+            <span class="broker-pill">Pepperstone</span>
+            <span class="broker-pill">FP Markets</span>
+            <span class="broker-pill">Eightcap</span>
+          </div>
         </div>
       </div>
-    </section>
 
-    <section class="closing">
+    </div>
+  </div>
+</section>
+
+
+    <!-- =====================================================
+         SECCIÓN 14 — ROADMAP PARTICIPATIVO
+         ===================================================== -->
+<section class="roadmap-v10" id="roadmap">
+  <div class="roadmap-v10-inner">
+    <div class="roadmap-v10-head">
+      <div class="reveal-left">
+        <div class="product-kicker">ROADMAP PARTICIPATIVO</div>
+        <h2>Vota lo que más valor te aportaría.</h2>
+      </div>
+      <p class="reveal-right">
+        Aquí no publicamos lo que estamos construyendo internamente. Abrimos propuestas públicas
+        para que la comunidad nos ayude a priorizar mejoras sin convertir el Roadmap en un escaparate
+        para la competencia.
+      </p>
+    </div>
+
+    <div class="vote-grid">
+      <article class="vote-card reveal">
+        <div><h3>Informes de rendimiento exportables</h3><p>Generar un informe visual y compartible de una cuenta o estrategia con un solo clic.</p></div>
+        <button class="vote-button" type="button"><strong>▲ 184</strong><span>Votar</span></button>
+      </article>
+
+      <article class="vote-card reveal">
+        <div><h3>Dashboard personalizable</h3><p>Elegir qué KPIs y bloques quieres ver primero según tu forma de operar.</p></div>
+        <button class="vote-button" type="button"><strong>▲ 161</strong><span>Votar</span></button>
+      </article>
+
+      <article class="vote-card reveal">
+        <div><h3>Comparador de periodos</h3><p>Contrastar dos ventanas temporales de una estrategia para detectar cambios de comportamiento.</p></div>
+        <button class="vote-button" type="button"><strong>▲ 139</strong><span>Votar</span></button>
+      </article>
+
+      <article class="vote-card reveal">
+        <div><h3>Alertas configurables por usuario</h3><p>Decidir qué eventos merecen una notificación y por qué canal quieres recibirla.</p></div>
+        <button class="vote-button" type="button"><strong>▲ 127</strong><span>Votar</span></button>
+      </article>
+    </div>
+
+    <div class="vote-note">Los votos mostrados son datos de demostración para visualizar el diseño del módulo.</div>
+  </div>
+</section>
+
+
+    <!-- =====================================================
+         SECCIÓN 15 — PLANES — Starter / Trader / Institucional
+         ===================================================== -->
+<section class="plans-v12" id="planes">
+  <div class="plans-v12-inner">
+    <div class="plans-v12-head reveal">
+      <div class="product-kicker">UNA PLATAFORMA. TRES FORMAS DE UTILIZARLA.</div>
+      <h2>Empieza mirando.<br>Termina escalando.</h2>
+      <p>
+        Elige el nivel que encaja con el momento en el que se encuentra tu operativa.
+      </p>
+    </div>
+
+    <div class="plans-v12-grid">
+
+      <article class="plan-v12 reveal">
+        <div class="tag">Starter</div>
+        <h3>Empieza a ver.</h3>
+        <div class="plan-line">Entiende qué está pasando.</div>
+        <p>
+          Para empezar a centralizar una cuenta y dejar de analizar tu trading a ciegas.
+        </p>
+        <ul>
+          <li>Una primera fotografía de tu operativa</li>
+          <li>Journal y visión centralizada</li>
+          <li>Punto de entrada al ecosistema TDMK</li>
+        </ul>
+
+        <a
+          class="plan-card-cta starter"
+          href="https://app.tdmksystems.com/?origen=landing_plan_starter"
+        >
+          Empieza gratis
+        </a>
+      </article>
+
+      <article class="plan-v12 featured reveal">
+        <div class="tag">Trader</div>
+        <h3>Analiza.</h3>
+        <div class="plan-line">Pasa del resultado al contexto.</div>
+        <p>
+          Para traders que necesitan comparar, medir riesgo y entender de verdad el comportamiento de sus sistemas.
+        </p>
+        <ul>
+          <li>Más cuentas bajo una misma lectura</li>
+          <li>Análisis y métricas cuantitativas</li>
+          <li>Protección y herramientas de control</li>
+        </ul>
+
+        <a
+          class="plan-card-cta featured"
+          href="https://app.tdmksystems.com/?origen=landing_plan_trader&accion=lista_espera"
+        >
+          Apúntate a la lista de espera
+        </a>
+      </article>
+
+      <article class="plan-v12 reveal">
+        <div class="tag">Institucional</div>
+        <h3>Escala.</h3>
+        <div class="plan-line">Convierte trading en infraestructura.</div>
+        <p>
+          Para estructuras con múltiples cuentas, servidores, automatizaciones y necesidad de supervisión continua.
+        </p>
+        <ul>
+          <li>Infraestructura multi-cuenta</li>
+          <li>Granjas VPS y supervisión</li>
+          <li>Automatización y control operativo</li>
+        </ul>
+
+        <a
+          class="plan-card-cta"
+          href="https://app.tdmksystems.com/?origen=landing_plan_institucional&accion=lista_espera"
+        >
+          Apúntate a la lista de espera
+        </a>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+
+    <!-- =====================================================
+         SECCIÓN 16 — PROGRAMA FUNDADOR
+         ===================================================== -->
+<section class="founder-v8" id="fundadores">
+  <div class="founder-v8-card">
+    <div class="founder-v8-copy reveal-left">
+      <div class="product-kicker">PROGRAMA FUNDADOR · <span id="founderRemaining">100</span> PLAZAS</div>
+
+      <h2>Estar desde el principio también tiene recompensa.</h2>
+
+      <p>
+        El Club Fundador reúne a los primeros usuarios que apuestan por TDMK.
+        Cuando se cubran las 100 plazas, se activará el reparto mensual destinado
+        al Club conforme a las condiciones del programa.
+      </p>
+
+      <div>
+        <span class="founder-benefit">◆ Certificado verificable</span>
+        <span class="founder-benefit">◆ Club privado</span>
+        <span class="founder-benefit">◆ Reparto mensual</span>
+      </div>
+
+      <div class="founder-price">1€</div>
+      <div class="founder-note">Sin suscripción activa ahora · El euro se utiliza únicamente para verificar la reserva.</div>
+
+      <a class="founder-btn" href="https://app.tdmksystems.com/?origen=landing_fundadores">
+        Reservar mi plaza
+      </a>
+    </div>
+
+    <div class="founder-v8-visual reveal-right">
+      <div class="founder-cert-stage">
+        <img
+          src="Certificado Fundadores Oficial.png"
+          alt="Certificado oficial del Programa Fundador de TDMK Systems"
+          class="founder-cert-image"
+          loading="lazy"
+          decoding="async"
+        >
+        <div class="founder-cert-caption">Certificado real del Club Fundador</div>
+      </div>
+    </div>
+  </div>
+
+  <p class="founder-legal">
+    El funcionamiento, cálculo, requisitos y continuidad del reparto del Club Fundador
+    quedarán definidos en las condiciones específicas del programa antes de su activación.
+  </p>
+</section>
+
+
+    <!-- =====================================================
+         SECCIÓN 17 — CIERRE — CTA final
+         ===================================================== -->
+<section class="closing">
       <div class="wrap reveal">
-        <h2>Lo que no se mide, no se puede mejorar.</h2>
-        <p>Conecta una demo, trastea con el panel y empieza a mirar tu operativa desde otro punto de vista.</p>
+        <h2>No se puede cambiar aquello que no se mide</h2>
+        <p>Conecta una demo, deja que TDMK empiece a registrar tu operativa y descubre qué hay realmente detrás de tus resultados.</p>
         <a class="button button-blue" href="https://app.tdmksystems.com/?origen=landing_publica">Crear cuenta gratuita</a>
       </div>
     </section>
+
   </main>
 
   <footer>
     <div class="wrap footer-inner">
       <div>© 2026 TDMK Systems</div>
-      <div class="footer-links"><a href="#journal">Journal</a><a href="#dashboard">Dashboard</a><a href="#roadmap">Roadmap</a><a href="#fundadores">Fundadores</a><a href="#">Privacidad</a><a href="#">Términos</a></div>
+      <div class="footer-links"><a href="#journal">Journal</a><a href="#dashboard">Dashboard</a><a href="#compatibilidad">Compatibilidad</a><a href="#planes">Planes</a><a href="#roadmap">Roadmap</a><a href="#fundadores">Fundadores</a><a href="#">Privacidad</a><a href="#">Términos</a></div>
     </div>
   </footer>
 
@@ -702,48 +2754,130 @@
         if (entry.isIntersecting) entry.target.classList.add('visible');
       });
     }, { threshold: 0.12 });
-    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .cinematic-enter, .dashboard-photo-shell, .founder-cert-stage').forEach((el) => observer.observe(el));
 
-    // Contadores en vivo — datos reales desde /api/public/stats, no inventados.
-    // Si falla la peticion (CORS, red, etc.) cada bloque se oculta solo,
-    // nunca se muestra un 0 falso.
-    (function(){
-      function animate(el, target, duration){
-        const start = performance.now();
-        function tick(now){
-          const p = Math.min((now - start) / duration, 1);
-          el.textContent = Math.floor(p * target).toLocaleString('es-ES');
-          if (p < 1) requestAnimationFrame(tick);
-          else el.textContent = target.toLocaleString('es-ES');
-        }
-        requestAnimationFrame(tick);
+    // Parallax muy ligero en el hero y activación de halos de sección.
+    const hero = document.querySelector('.hero');
+    const cinematicSections = document.querySelectorAll('.feature');
+
+    function updateScrollEffects(){
+      const y = window.scrollY || 0;
+      if(hero && y < window.innerHeight * 1.2){
+        hero.style.setProperty('--hero-shift', `${Math.min(y * .08, 42)}px`);
       }
 
-      const usersWrap = document.getElementById('trustCounterUsers');
-      const opsWrap    = document.getElementById('trustCounterOps');
-      const usersEl    = document.getElementById('userCounter');
-      const opsEl      = document.getElementById('opsCounter');
-      const founderEl  = document.getElementById('founderRemaining');
+      const dashboardSection = document.querySelector('#dashboard');
+      if(dashboardSection){
+        const r = dashboardSection.getBoundingClientRect();
+        dashboardSection.classList.toggle('in-view', r.top < window.innerHeight * .82 && r.bottom > window.innerHeight * .15);
+      }
 
-      fetch('https://api.tdmksystems.com/api/public/stats')
-        .then(r => r.json())
-        .then(data => {
-          if (!data || data.ok !== true) throw new Error('respuesta invalida');
+      cinematicSections.forEach(section => {
+        const r = section.getBoundingClientRect();
+        const visible = r.top < window.innerHeight * .82 && r.bottom > window.innerHeight * .15;
+        section.classList.toggle('in-view', visible);
+      });
+    }
 
-          if (typeof data.users_total === 'number') animate(usersEl, data.users_total, 1200);
-          else usersWrap.style.display = 'none';
-
-          if (typeof data.operations_total === 'number') animate(opsEl, data.operations_total, 1600);
-          else opsWrap.style.display = 'none';
-
-          if (typeof data.founder_remaining === 'number') founderEl.textContent = data.founder_remaining;
-        })
-        .catch(() => {
-          usersWrap.style.display = 'none';
-          opsWrap.style.display = 'none';
-          // El titular de fundadores se queda con el "100" fijo por defecto si falla.
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if(!ticking){
+        requestAnimationFrame(() => {
+          updateScrollEffects();
+          ticking = false;
         });
-    })();
+        ticking = true;
+      }
+    }, {passive:true});
+    updateScrollEffects();
   </script>
+
+<script>
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('.vote-button');
+  if(!btn) return;
+  const strong = btn.querySelector('strong');
+  const match = strong.textContent.match(/(\d+)/);
+  if(!match) return;
+  let n = Number(match[1]);
+  if(btn.dataset.voted === '1'){
+    n -= 1;
+    btn.dataset.voted = '0';
+    btn.style.background = 'rgba(37,99,235,.12)';
+  }else{
+    n += 1;
+    btn.dataset.voted = '1';
+    btn.style.background = 'rgba(34,197,94,.12)';
+  }
+  strong.textContent = `▲ ${n}`;
+});
+</script>
+
+<script>
+// =========================================================
+// CONTADORES REALES — un unico fetch a /api/public/stats
+// alimenta tanto los 3 contadores de "Actividad" (seccion 02)
+// como el numero de plazas fundadoras restantes (seccion 16).
+// Si la peticion falla (CORS, red...) cada bloque se oculta
+// solo, nunca se muestra un numero inventado o un 0 falso.
+// =========================================================
+(() => {
+  const formatNumber = (n) => new Intl.NumberFormat('es-ES').format(Math.round(n));
+
+  function animateCounter(el, target, prefix){
+    const duration = 1500;
+    const start = performance.now();
+    function tick(now){
+      const p = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - p, 4);
+      el.textContent = `${prefix}${formatNumber(target * eased)}`;
+      if (p < 1) requestAnimationFrame(tick);
+      else el.textContent = `${prefix}${formatNumber(target)}`;
+    }
+    requestAnimationFrame(tick);
+  }
+
+  function wireStat(itemId, target){
+    const item = document.getElementById(itemId);
+    if (!item) return;
+    const numberEl = item.querySelector('.activity-v11-number');
+    if (!numberEl) return;
+    if (typeof target !== 'number') { item.style.display = 'none'; return; }
+    numberEl.dataset.count = String(target);
+    // Se anima solo cuando entra en pantalla, igual que el resto de bloques reveal.
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        animateCounter(numberEl, target, numberEl.dataset.prefix || '');
+        io.unobserve(entry.target);
+      });
+    }, { threshold: .45 });
+    io.observe(numberEl);
+  }
+
+  fetch('https://api.tdmksystems.com/api/public/stats')
+    .then(r => r.json())
+    .then(data => {
+      if (!data || data.ok !== true) throw new Error('respuesta invalida');
+
+      wireStat('statTrades',   data.operations_total);
+      wireStat('statAccounts', data.accounts_total);
+      wireStat('statUsers',    data.users_total);
+
+      const founderEl = document.getElementById('founderRemaining');
+      if (founderEl && typeof data.founder_remaining === 'number') {
+        founderEl.textContent = data.founder_remaining;
+      }
+    })
+    .catch(() => {
+      ['statTrades','statAccounts','statUsers'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = 'none';
+      });
+      // El titular de fundadores se queda con el "100" fijo por defecto si falla.
+    });
+})();
+</script>
+
 </body>
 </html>

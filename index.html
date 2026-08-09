@@ -2088,6 +2088,169 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
   }
 }
 
+
+
+/* =========================================================
+   V15 — MOBILE FIRST EXPERIENCE
+   Rediseño exclusivo <= 640px
+   Desktop permanece intacto
+   ========================================================= */
+
+@media(max-width:640px){
+  :root{--mobile-pad:20px;--mobile-radius:22px;}
+  body{background:#f7f9fc;}
+  .wrap,.activity-v11-inner,.steps-v11-inner,.mt-v11-inner,.roadmap-v10-inner,.proof-v10-inner,.plans-v12-inner,.product-chapter-inner{width:calc(100% - 40px);}
+
+  .topbar{background:rgba(5,8,14,.94);backdrop-filter:blur(18px);}
+  .topbar-inner{height:66px;gap:12px;}
+  .logo-img{height:32px;}
+  .nav-actions{gap:8px;}
+  .nav-actions .button{width:auto;min-height:38px;padding:0 15px;font-size:12px;}
+
+  .hero{min-height:auto;padding:0;background:radial-gradient(circle at 50% 12%,rgba(40,105,255,.19),transparent 32%),linear-gradient(180deg,#050810 0%,#07101d 100%);}
+  .hero-inner{padding:58px 0 28px;}
+  .hero-content{max-width:none;}
+  h1{max-width:360px;margin-bottom:20px;font-size:42px;line-height:.98;letter-spacing:-.055em;}
+  h1 em{color:#71aaff;}
+  .hero-copy{max-width:350px;font-size:16px;line-height:1.5;color:rgba(255,255,255,.69);}
+  .hero-actions{display:block;margin-top:26px;}
+  .hero-actions .button{width:auto;min-height:48px;padding:0 20px;font-size:13px;}
+  .hero-mobile-preview{position:relative;display:block;margin:34px -10px -5px;min-height:510px;overflow:hidden;}
+  .hero-mobile-preview::before{content:"";position:absolute;width:360px;height:360px;left:50%;top:46%;transform:translate(-50%,-50%);border-radius:50%;background:rgba(31,105,255,.18);filter:blur(65px);}
+  .hero-mobile-preview img{position:relative;z-index:2;width:auto;height:520px;max-width:none;margin:0 auto;object-fit:contain;filter:drop-shadow(0 32px 45px rgba(0,0,0,.55)) drop-shadow(0 0 26px rgba(35,104,255,.12));}
+
+  .activity-v11{padding:44px 0 48px;}
+  .activity-v11-head{margin-bottom:26px;}
+  .activity-v11-head h2{max-width:300px;font-size:31px;line-height:1;}
+  .activity-v11-head p{max-width:340px;margin-top:12px;font-size:13px;}
+  .activity-v11-grid{display:grid;grid-template-columns:repeat(3,1fr);border:0;gap:8px;}
+  .activity-v11-item,.activity-v11-item:nth-child(2),.activity-v11-item:nth-child(-n+2){min-height:112px;padding:17px 6px;border:1px solid rgba(96,165,250,.14);border-radius:14px;background:rgba(15,23,42,.56);}
+  .activity-v11-number{font-size:30px;}
+  .activity-v11-label{margin-top:9px;font-size:7.5px;line-height:1.35;letter-spacing:.08em;}
+
+  .statement{padding:82px 0;}
+  .statement p{max-width:350px;font-size:40px;line-height:.98;letter-spacing:-.055em;}
+
+  #journal{padding:74px 0 68px;}
+  #journal .feature-grid{display:flex;flex-direction:column;gap:0;}
+  #journal .feature-intro{order:1;}
+  #journal .feature-media{order:2;margin:36px 0 30px;}
+  #journal .feature-details{order:3;}
+  #journal .feature-title{max-width:355px;margin:14px 0 19px;font-size:42px;line-height:.97;}
+  #journal .feature-subtitle{margin-bottom:10px;font-size:16px;}
+  #journal .feature-copy{font-size:15px;line-height:1.52;}
+  #journal .feature-intro .feature-copy + .feature-copy{display:none;}
+  .journal-mobile-product{position:relative;width:100%;min-height:590px;display:flex!important;justify-content:center;align-items:center;overflow:hidden;border-radius:28px;background:radial-gradient(circle at 50% 40%,rgba(36,112,255,.20),transparent 32%),linear-gradient(145deg,#07111f,#0a1d38);}
+  .journal-mobile-product img{width:auto;height:570px;max-width:none;object-fit:contain;filter:drop-shadow(0 28px 40px rgba(0,0,0,.45));transform:translateY(8px);}
+  .mobile-product-badge{position:absolute;left:16px;bottom:16px;z-index:3;display:flex;align-items:center;gap:7px;padding:8px 11px;border-radius:999px;color:#dfeaff;background:rgba(4,11,24,.72);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(12px);font-size:10px;font-weight:800;}
+  .mobile-product-badge span{width:7px;height:7px;border-radius:50%;background:#35d978;box-shadow:0 0 10px #35d978;}
+  #journal .check-list{margin-top:8px;}
+  #journal .check-list li{padding:15px 0;}
+  #journal .check-head{margin-bottom:2px;}
+  #journal .check-list li p{font-size:12px;}
+
+  .steps-v11{padding:76px 0 80px;}
+  .steps-v11-head{text-align:left;margin-bottom:34px;}
+  .steps-v11-head h2{font-size:42px;}
+  .steps-v11-grid{gap:10px;}
+  .step-v11{display:grid;grid-template-columns:56px 1fr;column-gap:15px;text-align:left;padding:18px;border:1px solid rgba(96,165,250,.13);border-radius:18px;background:rgba(14,27,49,.58);}
+  .step-v11-num{grid-row:1 / 3;width:52px;height:52px;margin:0;border-radius:14px;font-size:13px;}
+  .step-v11 h3{align-self:end;margin:0 0 4px;font-size:18px;}
+  .step-v11 p{max-width:none;margin:0;font-size:12px;line-height:1.48;}
+
+  .problem{padding:78px 0 84px;}
+  .problem-head{display:block;margin-bottom:32px;}
+  .problem .feature-title{margin:15px 0 17px!important;font-size:41px;line-height:.98;}
+  .problem .feature-copy{font-size:15px;line-height:1.5;}
+  .question-grid{width:calc(100% + 20px);display:flex;gap:11px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;background:none;border:0;padding-right:20px;}
+  .question-grid::-webkit-scrollbar{display:none;}
+  .question{flex:0 0 82%;min-height:205px;padding:25px;border:1px solid #dde4ed;border-radius:20px;scroll-snap-align:start;background:#f8fafc;}
+  .question strong{max-width:280px;font-size:21px;}
+
+  .solution{padding:80px 0;}
+  .solution-grid{gap:38px;}
+  .solution .dark-title{font-size:40px!important;line-height:.97;}
+  .solution .dark-copy{margin-top:18px;font-size:15px;}
+  .solution-media{min-height:0;padding:17px;border-radius:22px;}
+  .solution-diagram{gap:7px;}
+  .node{padding:12px 13px;border-radius:11px;font-size:12px;}
+  .node span{font-size:9px;}
+  .arrow{height:10px;line-height:10px;}
+
+  #dashboard.dashboard-photo-section{padding:78px 0 60px;}
+  #dashboard .dashboard-photo-grid{width:calc(100% - 40px);display:flex;flex-direction:column;gap:32px;}
+  #dashboard .dashboard-photo-title{max-width:350px;margin:13px 0 18px;font-size:43px;line-height:.96;}
+  #dashboard .dashboard-photo-description{margin-bottom:25px;font-size:15px;}
+  #dashboard .dashboard-photo-list li{min-height:44px;font-size:11.5px;}
+  #dashboard .dashboard-photo-media{width:calc(100% + 20px);margin-right:-20px;}
+  #dashboard .dashboard-photo-shell{width:100%;}
+  #dashboard .dashboard-photo{border-radius:20px 0 0 20px;}
+
+  .product-chapter{padding:76px 0;}
+  .product-chapter-inner{display:flex;flex-direction:column;gap:32px;}
+  .product-chapter-copy,.product-chapter.reverse .product-chapter-copy{order:1!important;}
+  .product-chapter-visual,.product-chapter.reverse .product-chapter-visual{order:2!important;}
+  .product-chapter h2{max-width:355px;margin-bottom:18px;font-size:42px;line-height:.96;}
+  .product-chapter-copy>p{max-width:350px;margin-bottom:22px;font-size:14.5px;}
+  .product-pills{gap:6px;}
+  .product-pill{min-height:34px;padding:0 11px;font-size:10px;}
+  .discipline-chip-v12{max-width:100%;height:auto;min-height:0;margin-top:8px;padding:9px 11px;line-height:1.4;font-size:10px;}
+  .module-shot-wrap,#metrics-v8 .module-shot-wrap{width:calc(100% + 20px)!important;margin:0 -10px!important;}
+  .module-shot{width:100%;border-radius:18px!important;box-shadow:0 28px 55px rgba(10,28,58,.20);}
+
+  .brokers{padding:74px 0 80px;}
+  .brokers-head{margin-bottom:28px;text-align:left;}
+  .brokers-head h2{font-size:38px!important;line-height:1;}
+  .brokers-head .feature-copy{font-size:14px;}
+  .compat-stack{gap:25px;}
+  .platform-logo-pill{min-width:180px;min-height:82px;padding:12px 15px;}
+  .platform-logo-pill img,.platform-logo-fallback{width:40px;height:40px;}
+  .platform-logo-pill strong{font-size:12px;}
+  .broker-pill{font-size:11px!important;padding:7px 12px!important;}
+
+  .roadmap-v10{padding:78px 0 84px;}
+  .roadmap-v10-head{display:block;margin-bottom:32px;}
+  .roadmap-v10 h2{max-width:340px;font-size:42px;}
+  .roadmap-v10-head p{margin-top:18px;font-size:14px;}
+  .vote-grid{width:calc(100% + 20px);display:flex;gap:11px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-right:20px;}
+  .vote-grid::-webkit-scrollbar{display:none;}
+  .vote-card{flex:0 0 84%;min-height:180px;scroll-snap-align:start;}
+
+  .plans-v12{padding:76px 0 84px;}
+  .plans-v12-head{margin-bottom:33px;}
+  .plans-v12 h2{font-size:43px;}
+  .plans-v12-head p{font-size:14px;}
+  .plans-v12-grid{gap:11px;}
+  .plan-v12{min-height:0;padding:25px 22px;border-radius:20px;}
+  .plan-v12 .tag{margin-bottom:17px;}
+  .plan-v12 h3{font-size:29px;}
+  .plan-v12 .plan-line{margin:5px 0 16px;font-size:18px;}
+  .plan-v12 p{margin-bottom:17px;font-size:12.5px;}
+  .plan-v12 li{padding:9px 0;font-size:11px;}
+  .plan-card-cta{min-height:45px;margin-top:21px;font-size:12px;}
+
+  .founder-v8{padding:72px 0 80px;}
+  .founder-v8-card{width:calc(100% - 24px);display:flex;flex-direction:column;border-radius:25px;}
+  .founder-v8-copy{padding:35px 23px 15px!important;}
+  .founder-v8 h2{margin-bottom:19px;font-size:42px;line-height:.97;}
+  .founder-v8-copy>p{font-size:14px;}
+  .founder-benefit{padding:8px 10px;margin:0 4px 6px 0;font-size:10px;}
+  .founder-btn{width:100%;margin-top:20px;}
+  .founder-v8-visual{min-height:285px;padding:12px 11px 28px;}
+  .founder-v8-visual::before{inset:5% 3% 7%;border-radius:20px;}
+  .founder-cert-stage{width:105%;}
+  .founder-legal{width:calc(100% - 40px);margin-top:13px!important;font-size:9px;}
+
+  .closing{padding:94px 0;}
+  .closing h2{max-width:350px;font-size:49px;line-height:.91;}
+  .closing p{max-width:330px;margin:23px auto 27px;font-size:15px;}
+  .closing .button{width:auto;padding:0 21px;}
+
+  footer{padding:28px 0 35px;}
+  .footer-inner{flex-direction:column;gap:18px;}
+  .footer-links{gap:13px 18px;font-size:11px;}
+}
+
 </style>
 </head>
 <body>
@@ -2269,38 +2432,17 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
             </table>
           </div>
 
-          <!-- Version movil real: resumen compacto + tarjetas de operacion,
-               fiel al diseno movil de verdad del modulo Journal (no es una
-               reduccion de la de escritorio, es la interfaz movil real). -->
-          <div class="product-window mobile-only">
-            <div class="pw-topbar">
-              <div class="pw-title">Journal<span>Registro automático de tus operaciones</span></div>
-              <div class="pw-live"><span class="pw-dot"></span>En vivo</div>
-            </div>
-            <div class="pwm-stats">
-              <div class="pwm-stat"><span class="pwm-label">Operaciones</span><b>41</b></div>
-              <div class="pwm-div"></div>
-              <div class="pwm-stat"><span class="pwm-label">Win Rate</span><b class="win">64.2%</b></div>
-              <div class="pwm-div"></div>
-              <div class="pwm-stat"><span class="pwm-label">PnL</span><b class="win">+412,80</b></div>
-            </div>
-            <div class="pwm-cards">
-              <div class="pwm-card">
-                <div class="pwm-card-top"><span><b>EURUSD</b> <em class="buy">Compra</em></span><span class="pwm-result pos">▲ +84,20</span></div>
-                <div class="pwm-card-sub">05 ago 14:22 · Take Profit</div>
-              </div>
-              <div class="pwm-card">
-                <div class="pwm-card-top"><span><b>XAUUSD</b> <em class="sell">Venta</em></span><span class="pwm-result neg">▼ −31,50</span></div>
-                <div class="pwm-card-sub">05 ago 09:47 · Stop Loss</div>
-              </div>
-              <div class="pwm-card">
-                <div class="pwm-card-top"><span><b>US30</b> <em class="buy">Compra</em></span><span class="pwm-result pos">▲ +156,90</span></div>
-                <div class="pwm-card-sub">04 ago 19:03 · Take Profit</div>
-              </div>
-              <div class="pwm-card">
-                <div class="pwm-card-top"><span><b>GBPUSD</b> <em class="sell">Venta</em></span><span class="pwm-result pos">▲ +42,10</span></div>
-                <div class="pwm-card-sub">04 ago 11:36 · Take Profit</div>
-              </div>
+          <!-- Version móvil: producto real dentro de un dispositivo aislado -->
+          <div class="journal-mobile-product mobile-only">
+            <img
+              src="journal-mobile.png"
+              alt="Journal automático de TDMK Systems en versión móvil"
+              loading="lazy"
+              decoding="async"
+            >
+            <div class="mobile-product-badge">
+              <span></span>
+              Disponible también en móvil
             </div>
           </div>
         </div>

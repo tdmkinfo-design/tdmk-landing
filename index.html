@@ -2253,40 +2253,36 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
 
 
 /* =========================================================
-   V16 — JOURNAL MOBILE · SCROLL STORYTELLING
-   Primero el móvil centrado. Al avanzar el scroll se desplaza
-   a la derecha y aparecen los beneficios de forma progresiva.
-   Desktop no se modifica.
+   V17 — HERO MOBILE · SCROLL STORYTELLING
+   El Hero se fija durante el recorrido. Primero muestra el
+   producto centrado; al continuar el scroll el teléfono se
+   desplaza a la derecha y aparecen los beneficios a la izquierda.
+   La sección Journal independiente se oculta en móvil para evitar
+   duplicidad y acortar la landing. Desktop permanece intacto.
    ========================================================= */
 
-.journal-scroll-mobile{
-  display:none;
-}
+.hero-mobile-story{display:none;}
 
 @media(max-width:640px){
 
-  /* La propia sección Journal se convierte en el escenario largo. */
-  #journal{
-    display:block!important;
+  /* El Hero es el tramo largo que alimenta la animación. IMPORTANTE:
+     overflow visible permite que position:sticky funcione de verdad. */
+  .hero{
+    display:block;
     position:relative;
-    height:245svh;
-    min-height:1500px;
+    height:255svh;
+    min-height:1720px;
     padding:0!important;
     overflow:visible!important;
-    isolation:auto;
-    background:
-      radial-gradient(circle at 74% 24%,rgba(35,104,255,.22),transparent 31%),
-      radial-gradient(circle at 20% 72%,rgba(15,82,185,.12),transparent 28%),
-      linear-gradient(180deg,#040811 0%,#071426 52%,#050a13 100%)!important;
-    border:0;
+    background:#050810;
+    border-bottom:1px solid rgba(255,255,255,.07);
   }
 
-  /* Ocultamos la composición tradicional SOLO en móvil. */
-  #journal > .wrap{
-    display:none!important;
-  }
+  /* La composición normal del hero queda reservada para desktop. */
+  .hero > .hero-inner{display:none!important;}
+  .hero-mobile-preview{display:none!important;}
 
-  .journal-scroll-mobile{
+  .hero-mobile-story{
     display:block;
     position:relative;
     width:100%;
@@ -2294,198 +2290,244 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
     color:#fff;
   }
 
-  .journal-scroll-sticky{
+  .hero-mobile-sticky{
     position:sticky;
-    top:66px;
-    width:100%;
-    height:calc(100svh - 66px);
-    min-height:620px;
+    top:64px;
+    height:calc(100svh - 64px);
+    min-height:610px;
     overflow:hidden;
     isolation:isolate;
-  }
-
-  .journal-scroll-sticky::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    z-index:-3;
     background:
-      linear-gradient(90deg,rgba(2,7,15,.97) 0%,rgba(3,10,22,.90) 35%,rgba(5,15,31,.50) 70%,rgba(6,19,39,.10) 100%);
-    opacity:var(--journal-bg-opacity,0);
+      radial-gradient(circle at 76% 32%,rgba(38,112,255,.18),transparent 29%),
+      radial-gradient(circle at 16% 8%,rgba(22,89,215,.13),transparent 25%),
+      linear-gradient(180deg,#050810 0%,#07101e 58%,#050a13 100%);
   }
 
-  .journal-scroll-sticky::after{
+  .hero-mobile-sticky::before{
     content:"";
     position:absolute;
-    width:520px;
-    height:520px;
-    right:-250px;
-    top:16%;
-    z-index:-2;
-    border-radius:50%;
-    background:rgba(27,103,255,.20);
-    filter:blur(90px);
-    opacity:.85;
-    transform:scale(calc(.80 + (var(--journal-progress,0) * .20)));
-    will-change:transform;
-  }
-
-  /* =======================================================
-     TELÉFONO
-     ======================================================= */
-
-  .journal-scroll-phone{
-    position:absolute;
     inset:0;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    z-index:2;
-    pointer-events:none;
-    transform:
-      translate3d(calc(var(--journal-progress,0) * 38vw),0,0)
-      scale(calc(1 - (var(--journal-progress,0) * .035)));
-    transform-origin:center center;
-    will-change:transform;
+    z-index:-2;
+    background:linear-gradient(90deg,rgba(3,8,17,.94) 0%,rgba(4,10,22,.82) 36%,rgba(5,15,31,.28) 70%,rgba(5,15,31,0) 100%);
+    opacity:var(--hero-benefits-progress,0);
   }
 
-  .journal-scroll-phone img{
-    position:relative;
-    z-index:2;
-    display:block;
-    width:auto;
-    height:min(75svh,690px);
-    max-width:none;
-    object-fit:contain;
-    filter:
-      drop-shadow(0 38px 50px rgba(0,0,0,.54))
-      drop-shadow(0 0 26px rgba(35,105,255,.14));
-  }
-
-  .journal-phone-glow{
+  .hero-mobile-sticky::after{
+    content:"";
     position:absolute;
-    z-index:1;
-    width:330px;
-    height:540px;
+    width:500px;
+    height:500px;
+    right:-260px;
+    top:24%;
+    z-index:-1;
     border-radius:50%;
-    background:rgba(37,99,235,.18);
-    filter:blur(72px);
-    opacity:calc(.35 + (var(--journal-progress,0) * .45));
-    transform:translateX(18px);
+    background:rgba(31,105,255,.22);
+    filter:blur(92px);
+    opacity:calc(.45 + (var(--hero-phone-progress,0) * .35));
+    transform:scale(calc(.78 + (var(--hero-phone-progress,0) * .22)));
   }
 
-  /* =======================================================
-     COPY / BENEFICIOS
-     ======================================================= */
-
-  .journal-scroll-copy{
+  /* Primera escena: mensaje + CTA */
+  .hero-mobile-intro{
     position:absolute;
+    z-index:5;
+    top:34px;
     left:20px;
-    top:50%;
-    z-index:4;
-    width:min(49vw,205px);
-    transform:
-      translate3d(calc((1 - var(--journal-copy-progress,0)) * -34px),-50%,0);
-    opacity:var(--journal-copy-progress,0);
-    will-change:transform,opacity;
-    pointer-events:none;
+    right:20px;
+    opacity:var(--hero-intro-opacity,1);
+    transform:translate3d(0,calc((1 - var(--hero-intro-opacity,1)) * -24px),0);
+    will-change:opacity,transform;
+    pointer-events:auto;
   }
 
-  .journal-scroll-kicker{
-    margin-bottom:11px;
-    color:#65a7ff;
+  .hero-mobile-intro .hero-mobile-kicker{
+    margin-bottom:14px;
+    color:#89b7ff;
     font-size:9px;
-    line-height:1;
     font-weight:900;
-    letter-spacing:.15em;
+    letter-spacing:.14em;
     text-transform:uppercase;
   }
 
-  .journal-scroll-copy h2{
-    margin:0 0 25px;
+  .hero-mobile-intro h1{
+    max-width:345px;
+    margin:0 0 16px;
     color:#fff;
-    font-size:clamp(28px,8.2vw,34px);
+    font-size:clamp(38px,10.7vw,46px);
+    line-height:.96;
+    letter-spacing:-.058em;
+  }
+
+  .hero-mobile-intro h1 em{
+    display:block;
+    margin-top:5px;
+    color:#75adff;
+    font-style:normal;
+  }
+
+  .hero-mobile-intro p{
+    max-width:345px;
+    margin:0;
+    color:rgba(255,255,255,.66);
+    font-size:14px;
+    line-height:1.48;
+  }
+
+  .hero-mobile-intro .button{
+    width:auto;
+    min-height:46px;
+    margin-top:20px;
+    padding:0 19px;
+    font-size:12px;
+    box-shadow:0 14px 34px rgba(21,93,252,.20);
+  }
+
+  /* Teléfono: empieza centrado y termina parcialmente fuera a la derecha. */
+  .hero-mobile-phone{
+    position:absolute;
+    inset:0;
+    z-index:3;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    padding-bottom:8px;
+    pointer-events:none;
+    transform:
+      translate3d(calc(var(--hero-phone-progress,0) * 40vw),0,0)
+      scale(calc(1 - (var(--hero-phone-progress,0) * .045)));
+    transform-origin:center bottom;
+    will-change:transform;
+  }
+
+  .hero-mobile-phone img{
+    display:block;
+    width:auto;
+    height:min(61svh,555px);
+    max-width:none;
+    object-fit:contain;
+    filter:
+      drop-shadow(0 36px 54px rgba(0,0,0,.56))
+      drop-shadow(0 0 26px rgba(35,105,255,.14));
+  }
+
+  .hero-mobile-phone-glow{
+    position:absolute;
+    bottom:4%;
+    width:320px;
+    height:420px;
+    border-radius:50%;
+    background:rgba(37,99,235,.15);
+    filter:blur(72px);
+    opacity:calc(.28 + (var(--hero-phone-progress,0) * .46));
+  }
+
+  /* Segunda escena: beneficios. Se mantiene fija mientras continúa el scroll. */
+  .hero-mobile-benefits{
+    position:absolute;
+    z-index:6;
+    left:20px;
+    top:49%;
+    width:min(48vw,198px);
+    opacity:var(--hero-benefits-progress,0);
+    transform:
+      translate3d(calc((1 - var(--hero-benefits-progress,0)) * -34px),-50%,0);
+    will-change:opacity,transform;
+    pointer-events:none;
+  }
+
+  .hero-mobile-benefits .benefits-kicker{
+    margin-bottom:10px;
+    color:#65a7ff;
+    font-size:8px;
+    line-height:1;
+    font-weight:900;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+  }
+
+  .hero-mobile-benefits h2{
+    margin:0 0 22px;
+    color:#fff;
+    font-size:clamp(27px,8vw,33px);
     line-height:.94;
     letter-spacing:-.055em;
   }
 
-  .journal-scroll-benefits{
+  .hero-benefit-list{
     display:flex;
     flex-direction:column;
-    gap:16px;
+    gap:15px;
   }
 
-  .journal-scroll-benefit{
+  .hero-benefit-item{
     display:grid;
-    grid-template-columns:23px minmax(0,1fr);
+    grid-template-columns:22px minmax(0,1fr);
     gap:8px;
     align-items:start;
     opacity:0;
-    transform:translate3d(0,18px,0);
+    transform:translate3d(0,16px,0);
     filter:blur(4px);
     transition:
-      opacity .48s ease,
-      transform .62s cubic-bezier(.16,1,.3,1),
-      filter .48s ease;
+      opacity .45s ease,
+      transform .58s cubic-bezier(.16,1,.3,1),
+      filter .45s ease;
   }
 
-  .journal-scroll-benefit.is-visible{
+  .hero-benefit-item.is-visible{
     opacity:1;
     transform:none;
     filter:none;
   }
 
-  .journal-check{
-    width:22px;
-    height:22px;
+  .hero-benefit-check{
+    width:21px;
+    height:21px;
     display:flex;
     align-items:center;
     justify-content:center;
     border-radius:50%;
-    color:#7db4ff;
+    color:#82b8ff;
     background:rgba(37,99,235,.13);
     border:1px solid rgba(96,165,250,.28);
-    box-shadow:0 0 20px rgba(37,99,235,.09);
     font-size:10px;
     font-weight:900;
   }
 
-  .journal-scroll-benefit strong{
+  .hero-benefit-item strong{
     display:block;
     margin:0 0 3px;
     color:#f5f8ff;
-    font-size:11.5px;
+    font-size:11px;
     line-height:1.2;
   }
 
-  .journal-scroll-benefit p{
+  .hero-benefit-item p{
     margin:0;
-    color:#7f91aa;
-    font-size:9.5px;
-    line-height:1.43;
+    color:#8092aa;
+    font-size:9px;
+    line-height:1.42;
   }
 
-  /* Pequeña indicación al principio, desaparece al iniciar el recorrido. */
-  .journal-scroll-hint{
+  .hero-mobile-scroll-hint{
     position:absolute;
+    z-index:7;
     left:50%;
-    bottom:20px;
-    z-index:5;
+    bottom:13px;
     display:flex;
     align-items:center;
     gap:7px;
     transform:translateX(-50%);
-    color:#6e8099;
-    font-size:9px;
-    font-weight:800;
-    letter-spacing:.08em;
+    color:#667a96;
+    font-size:8px;
+    font-weight:850;
+    letter-spacing:.09em;
     text-transform:uppercase;
-    opacity:calc(1 - (var(--journal-progress,0) * 4));
+    opacity:calc(1 - (var(--hero-phone-progress,0) * 4));
     white-space:nowrap;
     pointer-events:none;
   }
 
-  .journal-scroll-hint span{
+  .hero-mobile-scroll-hint span{
     width:5px;
     height:5px;
     border-radius:50%;
@@ -2493,51 +2535,49 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
     box-shadow:0 0 11px rgba(77,157,255,.85);
   }
 
+  /* El Journal ya se ha explicado en el Hero. Lo eliminamos del flujo móvil. */
+  #journal{
+    display:none!important;
+  }
 }
 
 @media(max-width:390px){
-  .journal-scroll-copy{
-    left:16px;
-    width:47vw;
-  }
-  .journal-scroll-copy h2{
-    font-size:27px;
-  }
-  .journal-scroll-benefit strong{
-    font-size:10.8px;
-  }
-  .journal-scroll-benefit p{
-    font-size:9px;
-  }
-  .journal-scroll-phone img{
-    height:min(72svh,640px);
-  }
+  .hero-mobile-intro{left:16px;right:16px;top:28px;}
+  .hero-mobile-intro h1{font-size:38px;}
+  .hero-mobile-phone img{height:min(58svh,520px);}
+  .hero-mobile-benefits{left:16px;width:47vw;}
+  .hero-mobile-benefits h2{font-size:27px;}
+  .hero-benefit-item strong{font-size:10.3px;}
+  .hero-benefit-item p{font-size:8.7px;}
 }
 
 @media(prefers-reduced-motion:reduce) and (max-width:640px){
-  #journal{
+  .hero{
     height:auto;
     min-height:0;
-    padding:76px 0!important;
   }
-  .journal-scroll-sticky{
+  .hero-mobile-sticky{
     position:relative;
     top:auto;
-    height:720px;
+    height:850px;
   }
-  .journal-scroll-phone{
-    transform:translateX(38vw) scale(.965)!important;
+  .hero-mobile-intro{
+    opacity:1!important;
+    transform:none!important;
   }
-  .journal-scroll-copy{
+  .hero-mobile-phone{
+    transform:translateX(36vw) scale(.96)!important;
+  }
+  .hero-mobile-benefits{
     opacity:1!important;
     transform:translateY(-50%)!important;
   }
-  .journal-scroll-benefit{
+  .hero-benefit-item{
     opacity:1!important;
     transform:none!important;
     filter:none!important;
   }
-  .journal-scroll-hint{display:none!important;}
+  .hero-mobile-scroll-hint{display:none!important;}
 }
 
 </style>
@@ -2565,7 +2605,7 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
      17. Cierre
      ========================================================= -->
 
-<!-- TDMK Landing V14 · Reordenada y separada por secciones -->
+<!-- TDMK Landing V17 · Hero mobile scrollytelling + Journal móvil unificado -->
   <header class="topbar">
     <div class="wrap topbar-inner">
       <a href="#inicio" class="logo"><img src="tdmk-logo.png" alt="TDMK Systems" class="logo-img"></a>
@@ -2600,7 +2640,52 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
           </div>
         </div>
       </div>
-    </section>
+    
+    <!-- V17 · HERO MOBILE — producto centrado + beneficios al hacer scroll -->
+    <div class="hero-mobile-story" aria-label="TDMK Systems en móvil">
+      <div class="hero-mobile-sticky">
+
+        <div class="hero-mobile-intro">
+          <div class="hero-mobile-kicker">TU TRADING, LEÍDO AUTOMÁTICAMENTE</div>
+          <h1>Puede que tu estrategia gane dinero.<em>Eso no demuestra que funcione.</em></h1>
+          <p>Conecta MetaTrader y deja que TDMK registre, organice y convierta tu operativa en información que puedas entender.</p>
+          <a class="button button-blue" href="https://app.tdmksystems.com/?origen=landing_publica">Conectar mi MetaTrader gratis</a>
+        </div>
+
+        <div class="hero-mobile-benefits">
+          <div class="benefits-kicker">JOURNAL AUTOMÁTICO</div>
+          <h2>Todo se registra.<br>Tú solo operas.</h2>
+
+          <div class="hero-benefit-list">
+            <div class="hero-benefit-item" data-step="1">
+              <span class="hero-benefit-check">✓</span>
+              <div><strong>Registro automático</strong><p>Cada operación queda guardada al cerrarse.</p></div>
+            </div>
+            <div class="hero-benefit-item" data-step="2">
+              <span class="hero-benefit-check">✓</span>
+              <div><strong>Datos en tiempo real</strong><p>Win Rate, PnL y estadísticas siempre actualizadas.</p></div>
+            </div>
+            <div class="hero-benefit-item" data-step="3">
+              <span class="hero-benefit-check">✓</span>
+              <div><strong>Contexto de cada trade</strong><p>Sesión, símbolo, dirección y resultado en una sola lectura.</p></div>
+            </div>
+            <div class="hero-benefit-item" data-step="4">
+              <span class="hero-benefit-check">✓</span>
+              <div><strong>Sin Excel. Sin trabajo manual.</strong><p>Tu historial se construye mientras operas.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-mobile-phone" aria-hidden="true">
+          <div class="hero-mobile-phone-glow"></div>
+          <img src="journal-mobile.png" alt="" loading="eager" decoding="async">
+        </div>
+
+        <div class="hero-mobile-scroll-hint"><span></span>Sigue deslizando</div>
+      </div>
+    </div>
+
+</section>
 
 
     <!-- =====================================================
@@ -2737,66 +2822,7 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
         </div>
       </div>
 
-      <!-- V16 · Experiencia móvil del Journal controlada por scroll -->
-      <div class="journal-scroll-mobile" aria-label="Journal automático en versión móvil">
-        <div class="journal-scroll-sticky">
-
-          <div class="journal-scroll-copy">
-            <div class="journal-scroll-kicker">JOURNAL AUTOMÁTICO</div>
-            <h2>Todo se registra.<br>Tú solo operas.</h2>
-
-            <div class="journal-scroll-benefits">
-              <div class="journal-scroll-benefit" data-step="1">
-                <span class="journal-check">✓</span>
-                <div>
-                  <strong>Registro automático</strong>
-                  <p>Cada operación queda guardada al cerrarse.</p>
-                </div>
-              </div>
-
-              <div class="journal-scroll-benefit" data-step="2">
-                <span class="journal-check">✓</span>
-                <div>
-                  <strong>Datos en tiempo real</strong>
-                  <p>Win Rate, PnL y estadísticas siempre actualizadas.</p>
-                </div>
-              </div>
-
-              <div class="journal-scroll-benefit" data-step="3">
-                <span class="journal-check">✓</span>
-                <div>
-                  <strong>Contexto de cada trade</strong>
-                  <p>Sesión, símbolo, dirección y resultado en una sola lectura.</p>
-                </div>
-              </div>
-
-              <div class="journal-scroll-benefit" data-step="4">
-                <span class="journal-check">✓</span>
-                <div>
-                  <strong>Sin Excel. Sin trabajo manual.</strong>
-                  <p>Tu historial se construye mientras operas.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="journal-scroll-phone" aria-hidden="true">
-            <div class="journal-phone-glow"></div>
-            <img
-              src="journal-mobile.png"
-              alt=""
-              loading="lazy"
-              decoding="async"
-            >
-          </div>
-
-          <div class="journal-scroll-hint">
-            <span></span> Sigue deslizando
-          </div>
-
-        </div>
-      </div>
-    </section>
+</section>
 
 
     <!-- =====================================================
@@ -3460,42 +3486,50 @@ document.addEventListener('click', (e) => {
 
 <script>
 // =========================================================
-// V16 — JOURNAL MOBILE CONTROLADO POR SCROLL
-// El teléfono aparece centrado y el usuario, al seguir bajando,
-// lo desplaza hacia la derecha mientras se revelan los beneficios.
-// Solo actúa en <= 640px y no modifica la experiencia desktop.
+// V17 — HERO MOBILE CONTROLADO POR SCROLL
+// El Hero permanece fijado durante el recorrido. El teléfono
+// empieza centrado, se desplaza a la derecha y los beneficios
+// aparecen a la izquierda sin abandonar el viewport.
 // =========================================================
 (() => {
-  const journal = document.getElementById('journal');
-  if (!journal) return;
+  const hero = document.querySelector('.hero');
+  const story = document.querySelector('.hero-mobile-story');
+  if (!hero || !story) return;
 
-  const benefits = Array.from(journal.querySelectorAll('.journal-scroll-benefit'));
+  const benefits = Array.from(story.querySelectorAll('.hero-benefit-item'));
   const mq = window.matchMedia('(max-width: 640px)');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-  function clamp(value, min = 0, max = 1){
-    return Math.min(max, Math.max(min, value));
-  }
+  const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
 
-  function updateJournalStory(){
+  function updateHeroMobileStory(){
     if (!mq.matches || reduceMotion.matches) return;
 
-    const rect = journal.getBoundingClientRect();
-    const stickyTop = 66;
+    const rect = hero.getBoundingClientRect();
+    const stickyTop = 64;
     const viewport = window.innerHeight;
-    const travel = Math.max(1, journal.offsetHeight - (viewport - stickyTop));
+
+    // Distancia real durante la que el sticky permanece fijado.
+    const travel = Math.max(1, hero.offsetHeight - (viewport - stickyTop));
     const passed = clamp(stickyTop - rect.top, 0, travel);
     const progress = clamp(passed / travel);
 
-    // El texto comienza cuando el teléfono ya ha empezado a moverse.
-    const copyProgress = clamp((progress - .16) / .20);
+    // El primer 18% mantiene la composición inicial casi intacta.
+    // Después se apaga el copy inicial y comienza el desplazamiento del móvil.
+    const introFade = clamp((progress - .12) / .18);
+    const introOpacity = 1 - introFade;
+    const phoneProgress = clamp((progress - .14) / .32);
 
-    journal.style.setProperty('--journal-progress', progress.toFixed(4));
-    journal.style.setProperty('--journal-copy-progress', copyProgress.toFixed(4));
-    journal.style.setProperty('--journal-bg-opacity', copyProgress.toFixed(4));
+    // Los beneficios entran cuando el teléfono ya está claramente a la derecha.
+    const benefitsProgress = clamp((progress - .34) / .15);
 
-    // Los checks aparecen secuencialmente durante el recorrido.
-    const thresholds = [.28, .41, .54, .67];
+    hero.style.setProperty('--hero-intro-opacity', introOpacity.toFixed(4));
+    hero.style.setProperty('--hero-phone-progress', phoneProgress.toFixed(4));
+    hero.style.setProperty('--hero-benefits-progress', benefitsProgress.toFixed(4));
+
+    // Damos bastante recorrido después del último check para que el usuario
+    // pueda leerlo antes de que la sección sticky se libere.
+    const thresholds = [.43, .54, .65, .76];
     benefits.forEach((benefit, index) => {
       benefit.classList.toggle('is-visible', progress >= thresholds[index]);
     });
@@ -3505,7 +3539,7 @@ document.addEventListener('click', (e) => {
   function requestUpdate(){
     if (raf) return;
     raf = requestAnimationFrame(() => {
-      updateJournalStory();
+      updateHeroMobileStory();
       raf = 0;
     });
   }
@@ -3514,7 +3548,7 @@ document.addEventListener('click', (e) => {
   window.addEventListener('resize', requestUpdate, { passive:true });
   mq.addEventListener?.('change', requestUpdate);
 
-  updateJournalStory();
+  updateHeroMobileStory();
 })();
 </script>
 

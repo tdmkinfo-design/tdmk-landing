@@ -2253,333 +2253,172 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
 
 
 /* =========================================================
-   V17 — HERO MOBILE · SCROLL STORYTELLING
-   El Hero se fija durante el recorrido. Primero muestra el
-   producto centrado; al continuar el scroll el teléfono se
-   desplaza a la derecha y aparecen los beneficios a la izquierda.
-   La sección Journal independiente se oculta en móvil para evitar
-   duplicidad y acortar la landing. Desktop permanece intacto.
+   V18 — HERO MOBILE · COMPOSICIÓN ESTÁTICA
+   Primer módulo móvil: mensaje breve + producto real.
+   Sin scroll storytelling. El teléfono queda desplazado a
+   la derecha y el mensaje de valor vive a la izquierda.
+   Desktop permanece intacto.
    ========================================================= */
 
-.hero-mobile-story{display:none;}
+.hero-mobile-static{display:none;}
 
 @media(max-width:640px){
 
-  /* El Hero es el tramo largo que alimenta la animación. IMPORTANTE:
-     overflow visible permite que position:sticky funcione de verdad. */
   .hero{
     display:block;
     position:relative;
-    height:255svh;
-    min-height:1720px;
+    min-height:760px;
+    height:auto;
     padding:0!important;
-    overflow:visible!important;
-    background:#050810;
+    overflow:hidden!important;
+    background:
+      radial-gradient(circle at 82% 42%,rgba(41,111,255,.20),transparent 33%),
+      radial-gradient(circle at 18% 5%,rgba(20,87,211,.11),transparent 24%),
+      linear-gradient(180deg,#050810 0%,#07101e 58%,#050a13 100%);
     border-bottom:1px solid rgba(255,255,255,.07);
   }
 
-  /* La composición normal del hero queda reservada para desktop. */
+  /* El hero de escritorio se mantiene intacto, pero no se muestra en móvil. */
   .hero > .hero-inner{display:none!important;}
   .hero-mobile-preview{display:none!important;}
 
-  .hero-mobile-story{
+  .hero-mobile-static{
     display:block;
     position:relative;
     width:100%;
-    height:100%;
+    min-height:760px;
     color:#fff;
+    padding:34px 0 38px;
   }
 
-  .hero-mobile-sticky{
-    position:sticky;
-    top:64px;
-    height:calc(100svh - 64px);
-    min-height:610px;
-    overflow:hidden;
-    isolation:isolate;
-    background:
-      radial-gradient(circle at 76% 32%,rgba(38,112,255,.18),transparent 29%),
-      radial-gradient(circle at 16% 8%,rgba(22,89,215,.13),transparent 25%),
-      linear-gradient(180deg,#050810 0%,#07101e 58%,#050a13 100%);
+  .hero-mobile-static-inner{
+    position:relative;
+    width:100%;
+    min-height:688px;
   }
 
-  .hero-mobile-sticky::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    z-index:-2;
-    background:linear-gradient(90deg,rgba(3,8,17,.94) 0%,rgba(4,10,22,.82) 36%,rgba(5,15,31,.28) 70%,rgba(5,15,31,0) 100%);
-    opacity:var(--hero-benefits-progress,0);
+  /* Primera frase: aislada y ligeramente más pequeña. */
+  .hero-mobile-primary{
+    position:relative;
+    z-index:6;
+    width:calc(100% - 40px);
+    margin:0 auto;
   }
 
-  .hero-mobile-sticky::after{
-    content:"";
-    position:absolute;
-    width:500px;
-    height:500px;
-    right:-260px;
-    top:24%;
-    z-index:-1;
-    border-radius:50%;
-    background:rgba(31,105,255,.22);
-    filter:blur(92px);
-    opacity:calc(.45 + (var(--hero-phone-progress,0) * .35));
-    transform:scale(calc(.78 + (var(--hero-phone-progress,0) * .22)));
-  }
-
-  /* Primera escena: mensaje + CTA */
-  .hero-mobile-intro{
-    position:absolute;
-    z-index:5;
-    top:34px;
-    left:20px;
-    right:20px;
-    opacity:var(--hero-intro-opacity,1);
-    transform:translate3d(0,calc((1 - var(--hero-intro-opacity,1)) * -24px),0);
-    will-change:opacity,transform;
-    pointer-events:auto;
-  }
-
-  .hero-mobile-intro .hero-mobile-kicker{
-    margin-bottom:14px;
-    color:#89b7ff;
-    font-size:9px;
-    font-weight:900;
-    letter-spacing:.14em;
-    text-transform:uppercase;
-  }
-
-  .hero-mobile-intro h1{
-    max-width:345px;
-    margin:0 0 16px;
-    color:#fff;
-    font-size:clamp(38px,10.7vw,46px);
-    line-height:.96;
-    letter-spacing:-.058em;
-  }
-
-  .hero-mobile-intro h1 em{
-    display:block;
-    margin-top:5px;
-    color:#75adff;
-    font-style:normal;
-  }
-
-  .hero-mobile-intro p{
-    max-width:345px;
+  .hero-mobile-primary h1{
+    max-width:340px;
     margin:0;
-    color:rgba(255,255,255,.66);
-    font-size:14px;
-    line-height:1.48;
+    color:#fff;
+    font-size:clamp(34px,9.6vw,40px);
+    line-height:.98;
+    letter-spacing:-.055em;
+    font-weight:800;
   }
 
-  .hero-mobile-intro .button{
-    width:auto;
-    min-height:46px;
-    margin-top:20px;
-    padding:0 19px;
-    font-size:12px;
-    box-shadow:0 14px 34px rgba(21,93,252,.20);
-  }
-
-  /* Teléfono: empieza centrado y termina parcialmente fuera a la derecha. */
-  .hero-mobile-phone{
+  /* El teléfono no se mueve: composición visual de producto. */
+  .hero-mobile-device{
     position:absolute;
-    inset:0;
     z-index:3;
-    display:flex;
-    align-items:flex-end;
-    justify-content:center;
-    padding-bottom:8px;
+    right:-155px;
+    top:122px;
+    width:445px;
     pointer-events:none;
-    transform:
-      translate3d(calc(var(--hero-phone-progress,0) * 40vw),0,0)
-      scale(calc(1 - (var(--hero-phone-progress,0) * .045)));
-    transform-origin:center bottom;
-    will-change:transform;
   }
 
-  .hero-mobile-phone img{
+  .hero-mobile-device::before{
+    content:"";
+    position:absolute;
+    width:330px;
+    height:450px;
+    left:34px;
+    top:70px;
+    border-radius:50%;
+    background:rgba(37,99,235,.17);
+    filter:blur(72px);
+    z-index:-1;
+  }
+
+  .hero-mobile-device img{
     display:block;
-    width:auto;
-    height:min(61svh,555px);
+    width:100%;
+    height:auto;
     max-width:none;
     object-fit:contain;
     filter:
-      drop-shadow(0 36px 54px rgba(0,0,0,.56))
-      drop-shadow(0 0 26px rgba(35,105,255,.14));
+      drop-shadow(0 34px 52px rgba(0,0,0,.58))
+      drop-shadow(0 0 24px rgba(35,105,255,.12));
   }
 
-  .hero-mobile-phone-glow{
+  /* Mensaje lateral. Está diseñado para convivir con el teléfono. */
+  .hero-mobile-secondary{
     position:absolute;
-    bottom:4%;
-    width:320px;
-    height:420px;
-    border-radius:50%;
-    background:rgba(37,99,235,.15);
-    filter:blur(72px);
-    opacity:calc(.28 + (var(--hero-phone-progress,0) * .46));
-  }
-
-  /* Segunda escena: beneficios. Se mantiene fija mientras continúa el scroll. */
-  .hero-mobile-benefits{
-    position:absolute;
-    z-index:6;
+    z-index:7;
     left:20px;
-    top:49%;
-    width:min(48vw,198px);
-    opacity:var(--hero-benefits-progress,0);
-    transform:
-      translate3d(calc((1 - var(--hero-benefits-progress,0)) * -34px),-50%,0);
-    will-change:opacity,transform;
-    pointer-events:none;
+    top:270px;
+    width:48%;
+    max-width:188px;
   }
 
-  .hero-mobile-benefits .benefits-kicker{
-    margin-bottom:10px;
-    color:#65a7ff;
-    font-size:8px;
-    line-height:1;
-    font-weight:900;
-    letter-spacing:.14em;
-    text-transform:uppercase;
-  }
-
-  .hero-mobile-benefits h2{
-    margin:0 0 22px;
+  .hero-mobile-secondary h2{
+    margin:0 0 14px;
     color:#fff;
-    font-size:clamp(27px,8vw,33px);
-    line-height:.94;
+    font-size:clamp(27px,7.7vw,32px);
+    line-height:.95;
     letter-spacing:-.055em;
   }
 
-  .hero-benefit-list{
-    display:flex;
-    flex-direction:column;
-    gap:15px;
+  .hero-mobile-secondary h2 span{
+    color:#74adff;
   }
 
-  .hero-benefit-item{
-    display:grid;
-    grid-template-columns:22px minmax(0,1fr);
-    gap:8px;
-    align-items:start;
-    opacity:0;
-    transform:translate3d(0,16px,0);
-    filter:blur(4px);
-    transition:
-      opacity .45s ease,
-      transform .58s cubic-bezier(.16,1,.3,1),
-      filter .45s ease;
-  }
-
-  .hero-benefit-item.is-visible{
-    opacity:1;
-    transform:none;
-    filter:none;
-  }
-
-  .hero-benefit-check{
-    width:21px;
-    height:21px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:50%;
-    color:#82b8ff;
-    background:rgba(37,99,235,.13);
-    border:1px solid rgba(96,165,250,.28);
-    font-size:10px;
-    font-weight:900;
-  }
-
-  .hero-benefit-item strong{
-    display:block;
-    margin:0 0 3px;
-    color:#f5f8ff;
-    font-size:11px;
-    line-height:1.2;
-  }
-
-  .hero-benefit-item p{
+  .hero-mobile-secondary p{
     margin:0;
-    color:#8092aa;
-    font-size:9px;
-    line-height:1.42;
+    color:#8d9db4;
+    font-size:11.5px;
+    line-height:1.5;
   }
 
-  .hero-mobile-scroll-hint{
+  .hero-mobile-cta{
     position:absolute;
-    z-index:7;
+    z-index:8;
     left:50%;
-    bottom:13px;
-    display:flex;
-    align-items:center;
-    gap:7px;
+    bottom:26px;
     transform:translateX(-50%);
-    color:#667a96;
-    font-size:8px;
-    font-weight:850;
-    letter-spacing:.09em;
-    text-transform:uppercase;
-    opacity:calc(1 - (var(--hero-phone-progress,0) * 4));
-    white-space:nowrap;
-    pointer-events:none;
+    width:calc(100% - 40px);
+    display:flex;
+    justify-content:center;
   }
 
-  .hero-mobile-scroll-hint span{
-    width:5px;
-    height:5px;
-    border-radius:50%;
-    background:#4d9dff;
-    box-shadow:0 0 11px rgba(77,157,255,.85);
+  .hero-mobile-cta .button{
+    width:auto;
+    min-width:230px;
+    min-height:48px;
+    padding:0 20px;
+    font-size:12.5px;
+    box-shadow:0 14px 36px rgba(21,93,252,.24);
   }
 
-  /* El Journal ya se ha explicado en el Hero. Lo eliminamos del flujo móvil. */
-  #journal{
-    display:none!important;
-  }
+  /* El Journal ya está representado por el teléfono del Hero en móvil. */
+  #journal{display:none!important;}
 }
 
 @media(max-width:390px){
-  .hero-mobile-intro{left:16px;right:16px;top:28px;}
-  .hero-mobile-intro h1{font-size:38px;}
-  .hero-mobile-phone img{height:min(58svh,520px);}
-  .hero-mobile-benefits{left:16px;width:47vw;}
-  .hero-mobile-benefits h2{font-size:27px;}
-  .hero-benefit-item strong{font-size:10.3px;}
-  .hero-benefit-item p{font-size:8.7px;}
+  .hero{min-height:730px;}
+  .hero-mobile-static{min-height:730px;padding-top:30px;}
+  .hero-mobile-static-inner{min-height:660px;}
+  .hero-mobile-primary{width:calc(100% - 32px);}
+  .hero-mobile-primary h1{font-size:34px;max-width:310px;}
+  .hero-mobile-device{right:-158px;top:118px;width:420px;}
+  .hero-mobile-secondary{left:16px;top:260px;width:47%;max-width:174px;}
+  .hero-mobile-secondary h2{font-size:27px;}
+  .hero-mobile-secondary p{font-size:10.8px;}
+  .hero-mobile-cta{width:calc(100% - 32px);bottom:22px;}
+  .hero-mobile-cta .button{min-width:220px;}
 }
 
 @media(prefers-reduced-motion:reduce) and (max-width:640px){
-  .hero{
-    height:auto;
-    min-height:0;
-  }
-  .hero-mobile-sticky{
-    position:relative;
-    top:auto;
-    height:850px;
-  }
-  .hero-mobile-intro{
-    opacity:1!important;
-    transform:none!important;
-  }
-  .hero-mobile-phone{
-    transform:translateX(36vw) scale(.96)!important;
-  }
-  .hero-mobile-benefits{
-    opacity:1!important;
-    transform:translateY(-50%)!important;
-  }
-  .hero-benefit-item{
-    opacity:1!important;
-    transform:none!important;
-    filter:none!important;
-  }
-  .hero-mobile-scroll-hint{display:none!important;}
+  .hero-mobile-device img{filter:none;}
 }
-
 </style>
 </head>
 <body>
@@ -2605,7 +2444,7 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
      17. Cierre
      ========================================================= -->
 
-<!-- TDMK Landing V17 · Hero mobile scrollytelling + Journal móvil unificado -->
+<!-- TDMK Landing V18 · Hero mobile estático + Journal móvil unificado -->
   <header class="topbar">
     <div class="wrap topbar-inner">
       <a href="#inicio" class="logo"><img src="tdmk-logo.png" alt="TDMK Systems" class="logo-img"></a>
@@ -2641,97 +2480,29 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
         </div>
       </div>
     
-    <!-- V17 · HERO MOBILE — producto centrado + beneficios al hacer scroll -->
-    <div class="hero-mobile-story" aria-label="TDMK Systems en móvil">
-      <div class="hero-mobile-sticky">
+    <!-- V18 · HERO MOBILE — composición estática, directa y más corta -->
+    <div class="hero-mobile-static" aria-label="TDMK Systems en móvil">
+      <div class="hero-mobile-static-inner">
 
-        <div class="hero-mobile-intro">
-          <div class="hero-mobile-kicker">TU TRADING, LEÍDO AUTOMÁTICAMENTE</div>
-          <h1>Puede que tu estrategia gane dinero.<em>Eso no demuestra que funcione.</em></h1>
-          <p>Conecta MetaTrader y deja que TDMK registre, organice y convierta tu operativa en información que puedas entender.</p>
-          <a class="button button-blue" href="https://app.tdmksystems.com/?origen=landing_publica">Conectar mi MetaTrader gratis</a>
+        <div class="hero-mobile-primary">
+          <h1>Puede que tu trading gane dinero.</h1>
         </div>
 
-        <div class="hero-mobile-benefits">
-          <div class="benefits-kicker">JOURNAL AUTOMÁTICO</div>
-          <h2>Todo se registra.<br>Tú solo operas.</h2>
-
-          <div class="hero-benefit-list">
-            <div class="hero-benefit-item" data-step="1">
-              <span class="hero-benefit-check">✓</span>
-              <div><strong>Registro automático</strong><p>Cada operación queda guardada al cerrarse.</p></div>
-            </div>
-            <div class="hero-benefit-item" data-step="2">
-              <span class="hero-benefit-check">✓</span>
-              <div><strong>Datos en tiempo real</strong><p>Win Rate, PnL y estadísticas siempre actualizadas.</p></div>
-            </div>
-            <div class="hero-benefit-item" data-step="3">
-              <span class="hero-benefit-check">✓</span>
-              <div><strong>Contexto de cada trade</strong><p>Sesión, símbolo, dirección y resultado en una sola lectura.</p></div>
-            </div>
-            <div class="hero-benefit-item" data-step="4">
-              <span class="hero-benefit-check">✓</span>
-              <div><strong>Sin Excel. Sin trabajo manual.</strong><p>Tu historial se construye mientras operas.</p></div>
-            </div>
-          </div>
+        <div class="hero-mobile-secondary">
+          <h2>Pero eso no significa que <span>funcione.</span></h2>
+          <p>Conecta tu MetaTrader y empieza a analizar tu operativa con datos, no por intuición.</p>
         </div>
 
-        <div class="hero-mobile-phone" aria-hidden="true">
-          <div class="hero-mobile-phone-glow"></div>
+        <div class="hero-mobile-device" aria-hidden="true">
           <img src="journal-mobile.png" alt="" loading="eager" decoding="async">
         </div>
 
-        <div class="hero-mobile-scroll-hint"><span></span>Sigue deslizando</div>
+        <div class="hero-mobile-cta">
+          <a class="button button-blue" href="https://app.tdmksystems.com/?origen=landing_publica">Conectar una cuenta gratis</a>
+        </div>
+
       </div>
     </div>
-
-</section>
-
-
-    <!-- =====================================================
-         SECCIÓN 02 — ACTIVIDAD — Lo que pasa dentro de TDMK Systems
-         ===================================================== -->
-<section class="activity-v11" id="actividad">
-  <div class="activity-v11-inner">
-    <div class="activity-v11-head reveal">
-      <h2>Lo que pasa dentro de TDMK.</h2>
-      <p>
-        Cada operación registrada y cada cuenta conectada deja de ser información dispersa
-        y empieza a formar parte de una única estructura.
-      </p>
-    </div>
-
-    <!--
-      Datos reales — se rellenan desde /api/public/stats al cargar la pagina.
-      Si la peticion falla, cada bloque se oculta solo (ver script al final).
-    -->
-    <div class="activity-v11-grid reveal">
-      <div class="activity-v11-item" id="statTrades">
-        <div class="activity-v11-number" data-count="0" data-prefix="+">0</div>
-        <div class="activity-v11-label">Trades registrados</div>
-      </div>
-
-      <div class="activity-v11-item" id="statAccounts">
-        <div class="activity-v11-number" data-count="0" data-prefix="+">0</div>
-        <div class="activity-v11-label">Cuentas conectadas</div>
-      </div>
-
-      <div class="activity-v11-item" id="statUsers">
-        <div class="activity-v11-number" data-count="0" data-prefix="+">0</div>
-        <div class="activity-v11-label">Usuarios activos</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-    <!-- =====================================================
-         SECCIÓN 03 — MENSAJE CLAVE — El problema no es perder una operación
-         ===================================================== -->
-<section class="statement">
-      <div class="wrap reveal">
-        <p>El problema no es perder una operación. <em>El problema es repetir el mismo error sin saber que existe.</em></p>
-      </div>
     </section>
 
 
@@ -3484,73 +3255,6 @@ document.addEventListener('click', (e) => {
 </script>
 
 
-<script>
-// =========================================================
-// V17 — HERO MOBILE CONTROLADO POR SCROLL
-// El Hero permanece fijado durante el recorrido. El teléfono
-// empieza centrado, se desplaza a la derecha y los beneficios
-// aparecen a la izquierda sin abandonar el viewport.
-// =========================================================
-(() => {
-  const hero = document.querySelector('.hero');
-  const story = document.querySelector('.hero-mobile-story');
-  if (!hero || !story) return;
-
-  const benefits = Array.from(story.querySelectorAll('.hero-benefit-item'));
-  const mq = window.matchMedia('(max-width: 640px)');
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-
-  const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
-
-  function updateHeroMobileStory(){
-    if (!mq.matches || reduceMotion.matches) return;
-
-    const rect = hero.getBoundingClientRect();
-    const stickyTop = 64;
-    const viewport = window.innerHeight;
-
-    // Distancia real durante la que el sticky permanece fijado.
-    const travel = Math.max(1, hero.offsetHeight - (viewport - stickyTop));
-    const passed = clamp(stickyTop - rect.top, 0, travel);
-    const progress = clamp(passed / travel);
-
-    // El primer 18% mantiene la composición inicial casi intacta.
-    // Después se apaga el copy inicial y comienza el desplazamiento del móvil.
-    const introFade = clamp((progress - .12) / .18);
-    const introOpacity = 1 - introFade;
-    const phoneProgress = clamp((progress - .14) / .32);
-
-    // Los beneficios entran cuando el teléfono ya está claramente a la derecha.
-    const benefitsProgress = clamp((progress - .34) / .15);
-
-    hero.style.setProperty('--hero-intro-opacity', introOpacity.toFixed(4));
-    hero.style.setProperty('--hero-phone-progress', phoneProgress.toFixed(4));
-    hero.style.setProperty('--hero-benefits-progress', benefitsProgress.toFixed(4));
-
-    // Damos bastante recorrido después del último check para que el usuario
-    // pueda leerlo antes de que la sección sticky se libere.
-    const thresholds = [.43, .54, .65, .76];
-    benefits.forEach((benefit, index) => {
-      benefit.classList.toggle('is-visible', progress >= thresholds[index]);
-    });
-  }
-
-  let raf = 0;
-  function requestUpdate(){
-    if (raf) return;
-    raf = requestAnimationFrame(() => {
-      updateHeroMobileStory();
-      raf = 0;
-    });
-  }
-
-  window.addEventListener('scroll', requestUpdate, { passive:true });
-  window.addEventListener('resize', requestUpdate, { passive:true });
-  mq.addEventListener?.('change', requestUpdate);
-
-  updateHeroMobileStory();
-})();
-</script>
 
 </body>
 </html>

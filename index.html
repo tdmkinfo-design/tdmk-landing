@@ -2449,12 +2449,12 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
   align-items:center;
   justify-content:center;
   border-radius:50%;
-  color:#8fc0ff;
-  background:rgba(37,99,235,.12);
-  border:1px solid rgba(96,165,250,.28);
+  color:#4ade80;
+  background:rgba(74,222,128,.08);
+  border:1px solid rgba(74,222,128,.40);
   font-size:12px;
   font-weight:900;
-  box-shadow:0 0 22px rgba(37,99,235,.10);
+  box-shadow:0 0 22px rgba(74,222,128,.10);
 }
 
 .control-check-v19 strong{
@@ -2636,32 +2636,53 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
   }
 }
 
+
+/* =========================================================
+   V22 — ROADMAP LIKE + ORDEN DE CONVERSIÓN
+   ========================================================= */
+.vote-button strong{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+}
+.vote-button{
+  transition:transform .2s ease,background .2s ease,border-color .2s ease,color .2s ease;
+}
+.vote-button:hover{transform:translateY(-2px);}
+.vote-button[data-voted="1"]{
+  color:#fb7185;
+  background:rgba(244,63,94,.11)!important;
+  border-color:rgba(251,113,133,.32);
+}
+.vote-button[data-voted="1"] span{color:#fb7185;}
+
 </style>
 </head>
 <body>
 
 <!-- =========================================================
-     MAPA DE LA LANDING
-     01. Hero
-     02. Actividad / contadores
-     03. Mensaje clave
-     04. Journal Automático
-     05. Empieza en 3 pasos
-     06. Problema / preguntas
-     07. Solución TDMK
-     08. Dashboard
-     09. Métricas Avanzadas
-     10. Control Center
-     11. Gestor de Coberturas
-     12. Infraestructura VPS
-     13. Compatibilidad
-     14. Roadmap
-     15. Planes
-     16. Programa Fundador
-     17. Cierre
+     MAPA DE LA LANDING — ORDEN DE CONVERSIÓN
+     01. Hero mobile / propuesta principal
+     02. Antes de buscar otra estrategia
+     03. Por eso existe TDMK
+     04. Cómo funciona — 3 pasos
+     05. Dashboard
+     06. Métricas Avanzadas
+     07. Control Center
+     08. Programa Fundador
+     09. Gestor de Coberturas
+     10. Infraestructura VPS
+     11. Compatibilidad
+     12. Planes
+     13. Roadmap participativo
+     14. Cierre
+
+     Nota: Journal Automático se mantiene como módulo independiente
+     únicamente en desktop. En mobile está integrado en el Hero.
      ========================================================= -->
 
-<!-- TDMK Landing V20 · Hero mobile + safe area global + Control Center contenido -->
+<!-- TDMK Landing V22 · Orden de conversión + Roadmap con likes -->
   <header class="topbar">
     <div class="wrap topbar-inner">
       <a href="#inicio" class="logo"><img src="tdmk-logo.png" alt="TDMK Systems" class="logo-img"></a>
@@ -2675,7 +2696,7 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
   <main id="inicio">
 
     <!-- =====================================================
-         SECCIÓN 01 — HERO — Puede que tu estrategia gane dinero
+         SECCIÓN 01 — HERO — Puede que tu trading gane dinero
          ===================================================== -->
 <section class="hero" aria-label="Presentación de TDMK Systems">
       <div class="hero-inner">
@@ -2724,7 +2745,7 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
 
 
     <!-- =====================================================
-         SECCIÓN 04 — JOURNAL AUTOMÁTICO
+         SECCIÓN DESKTOP — JOURNAL AUTOMÁTICO — solo desktop; en mobile vive en el Hero
          ===================================================== -->
 <section class="feature theme-gray cinematic-enter" id="journal">
       <div class="wrap feature-grid">
@@ -2814,7 +2835,55 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
 
 
     <!-- =====================================================
-         SECCIÓN 05 — CÓMO FUNCIONA — Empieza en 3 pasos
+         SECCIÓN 02 — PROBLEMA — Antes de buscar otra estrategia
+         ===================================================== -->
+<section class="problem" id="problema">
+      <div class="wrap">
+        <div class="problem-head reveal">
+          <div class="feature-number">Antes de buscar otra estrategia</div>
+          <div>
+            <h2 class="feature-title" style="margin-top:0">¿Sabes realmente cómo opera la que ya tienes?</h2>
+            <p class="feature-copy">Ver el balance final no es analizar una estrategia. Una cuenta puede estar ganando mientras deteriora su esperanza matemática, concentra demasiado riesgo o depende de unas pocas operaciones.</p>
+          </div>
+        </div>
+        <div class="question-grid reveal">
+          <div class="question"><small>Sesiones</small><strong>¿Sabes en qué sesión ganas más y en cuál destruyes rentabilidad?</strong></div>
+          <div class="question"><small>Ventaja</small><strong>¿Tu estrategia tiene edge real o simplemente atraviesa una buena racha?</strong></div>
+          <div class="question"><small>Muestra</small><strong>¿Si cambiase la frecuencia de tu espacio muestral, ganarías lo mismo?</strong></div>
+          <div class="question"><small>Riesgo</small><strong>¿Cuánto capital tienes realmente expuesto cuando varias cuentas operan a la vez?</strong></div>
+          <div class="question"><small>Comportamiento</small><strong>¿Tus pérdidas vienen de la estrategia o de cómo la estás ejecutando?</strong></div>
+          <div class="question"><small>Robustez</small><strong>¿Podrías defender tu estrategia sin utilizar el beneficio como argumento?</strong></div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         SECCIÓN 03 — SOLUCIÓN — Por eso existe TDMK
+         ===================================================== -->
+<section class="solution">
+      <div class="wrap solution-grid">
+        <div class="reveal">
+          <div class="feature-number" style="color:#7fb0ff">Por eso existe TDMK</div>
+          <h2 class="dark-title" style="font-size:clamp(42px,6vw,78px)">No para decirte cuándo comprar. Sino para enseñarte cómo estás operando de verdad.</h2>
+          <p class="dark-copy">TDMK convierte la actividad de MetaTrader en información útil. Tú operas. La plataforma registra, organiza y presenta los datos para que puedas tomar decisiones con más criterio.</p>
+        </div>
+        <div class="solution-media reveal">
+          <div class="solution-diagram">
+            <div class="node primary"><b>MetaTrader 5</b><span>Datos reales</span></div>
+            <div class="arrow">↓</div>
+            <div class="node"><b>Journal Automático</b><span>Registro y contexto</span></div>
+            <div class="node"><b>Dashboard</b><span>Fotografía inmediata</span></div>
+            <div class="node"><b>Deja de calcular coberturas mientras el mercado se mueve.</b><span>Exposición real</span></div>
+            <div class="node"><b>Control & Automatización</b><span>infraestructura</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         SECCIÓN 04 — CÓMO FUNCIONA — Empieza en 3 pasos
          ===================================================== -->
 <section class="steps-v11" id="empezar">
   <div class="steps-v11-inner">
@@ -2847,55 +2916,7 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
 
 
     <!-- =====================================================
-         SECCIÓN 06 — PROBLEMA — Preguntas que obligan a mirar más allá del balance
-         ===================================================== -->
-<section class="problem" id="problema">
-      <div class="wrap">
-        <div class="problem-head reveal">
-          <div class="feature-number">Antes de buscar otra estrategia</div>
-          <div>
-            <h2 class="feature-title" style="margin-top:0">¿Sabes realmente cómo opera la que ya tienes?</h2>
-            <p class="feature-copy">Ver el balance final no es analizar una estrategia. Una cuenta puede estar ganando mientras deteriora su esperanza matemática, concentra demasiado riesgo o depende de unas pocas operaciones.</p>
-          </div>
-        </div>
-        <div class="question-grid reveal">
-          <div class="question"><small>Sesiones</small><strong>¿Sabes en qué sesión ganas más y en cuál destruyes rentabilidad?</strong></div>
-          <div class="question"><small>Ventaja</small><strong>¿Tu estrategia tiene edge real o simplemente atraviesa una buena racha?</strong></div>
-          <div class="question"><small>Muestra</small><strong>¿Si cambiase la frecuencia de tu espacio muestral, ganarías lo mismo?</strong></div>
-          <div class="question"><small>Riesgo</small><strong>¿Cuánto capital tienes realmente expuesto cuando varias cuentas operan a la vez?</strong></div>
-          <div class="question"><small>Comportamiento</small><strong>¿Tus pérdidas vienen de la estrategia o de cómo la estás ejecutando?</strong></div>
-          <div class="question"><small>Robustez</small><strong>¿Podrías defender tu estrategia sin utilizar el beneficio como argumento?</strong></div>
-        </div>
-      </div>
-    </section>
-
-
-    <!-- =====================================================
-         SECCIÓN 07 — SOLUCIÓN — Por eso existe TDMK
-         ===================================================== -->
-<section class="solution">
-      <div class="wrap solution-grid">
-        <div class="reveal">
-          <div class="feature-number" style="color:#7fb0ff">Por eso existe TDMK</div>
-          <h2 class="dark-title" style="font-size:clamp(42px,6vw,78px)">No para decirte cuándo comprar. Para enseñarte cómo estás operando de verdad.</h2>
-          <p class="dark-copy">TDMK convierte la actividad de MetaTrader en información útil. Tú operas. La plataforma registra, organiza y presenta los datos para que puedas tomar decisiones con más criterio.</p>
-        </div>
-        <div class="solution-media reveal">
-          <div class="solution-diagram">
-            <div class="node primary"><b>MetaTrader 5</b><span>Datos reales</span></div>
-            <div class="arrow">↓</div>
-            <div class="node"><b>Journal Automático</b><span>Registro y contexto</span></div>
-            <div class="node"><b>Dashboard</b><span>Fotografía inmediata</span></div>
-            <div class="node"><b>Deja de calcular coberturas mientras el mercado se mueve.</b><span>Exposición real</span></div>
-            <div class="node"><b>Control & Automatización</b><span>infraestructura</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-
-    <!-- =====================================================
-         SECCIÓN 08 — DASHBOARD — Una fotografía de tu trading
+         SECCIÓN 05 — DASHBOARD — Todo tu trading en una fotografía
          ===================================================== -->
 <section class="dashboard-photo-section" id="dashboard">
       <div class="dashboard-photo-grid">
@@ -2946,7 +2967,7 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
 
 
     <!-- =====================================================
-         SECCIÓN 09 — ANÁLISIS — Métricas Avanzadas
+         SECCIÓN 06 — MÉTRICAS AVANZADAS — Análisis cuantitativo
          ===================================================== -->
 <section class="product-chapter light reverse" id="metrics-v8">
   <div class="product-chapter-inner">
@@ -2967,7 +2988,7 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
 
 
     <!-- =====================================================
-         SECCIÓN 10 — CONTROL CENTER — Control y disciplina
+         SECCIÓN 07 — CONTROL CENTER — Control y disciplina
          ===================================================== -->
 <section class="product-chapter dark control-center-v19" id="control-v8">
   <div class="product-chapter-inner">
@@ -3027,7 +3048,58 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
 
 
     <!-- =====================================================
-         SECCIÓN 11 — GESTOR DE COBERTURAS
+         SECCIÓN 08 — PROGRAMA FUNDADOR — Primer punto fuerte de conversión
+         ===================================================== -->
+<section class="founder-v8" id="fundadores">
+  <div class="founder-v8-card">
+    <div class="founder-v8-copy reveal-left">
+      <div class="product-kicker">PROGRAMA FUNDADOR · <span id="founderRemaining">100</span> PLAZAS</div>
+
+      <h2>Estar desde el principio también tiene recompensa.</h2>
+
+      <p>
+        El Club Fundador reúne a los primeros usuarios que apuestan por TDMK.
+        Cuando se cubran las 100 plazas, se activará el reparto mensual destinado
+        al Club conforme a las condiciones del programa.
+      </p>
+
+      <div>
+        <span class="founder-benefit">◆ Certificado verificable</span>
+        <span class="founder-benefit">◆ Club privado</span>
+        <span class="founder-benefit">◆ Reparto mensual</span>
+      </div>
+
+      <div class="founder-price">1€</div>
+      <div class="founder-note">Sin suscripción activa ahora · El euro se utiliza únicamente para verificar la reserva.</div>
+
+      <a class="founder-btn" href="https://app.tdmksystems.com/?origen=landing_fundadores">
+        Reservar mi plaza
+      </a>
+    </div>
+
+    <div class="founder-v8-visual reveal-right">
+      <div class="founder-cert-stage">
+        <img
+          src="Certificado Fundadores Oficial.png"
+          alt="Certificado oficial del Programa Fundador de TDMK Systems"
+          class="founder-cert-image"
+          loading="lazy"
+          decoding="async"
+        >
+        <div class="founder-cert-caption">Certificado real del Club Fundador</div>
+      </div>
+    </div>
+  </div>
+
+  <p class="founder-legal">
+    El funcionamiento, cálculo, requisitos y continuidad del reparto del Club Fundador
+    quedarán definidos en las condiciones específicas del programa antes de su activación.
+  </p>
+</section>
+
+
+    <!-- =====================================================
+         SECCIÓN 09 — GESTOR DE COBERTURAS
          ===================================================== -->
 <section class="product-chapter blue" id="hedge-v8">
   <div class="product-chapter-inner">
@@ -3048,7 +3120,7 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
 
 
     <!-- =====================================================
-         SECCIÓN 12 — INFRAESTRUCTURA — Granjas VPS y Watchdog
+         SECCIÓN 10 — INFRAESTRUCTURA — Granjas VPS y Watchdog
          ===================================================== -->
 <section class="product-chapter dark" id="infra-v8">
   <div class="product-chapter-inner">
@@ -3073,7 +3145,7 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
 
 
     <!-- =====================================================
-         SECCIÓN 13 — COMPATIBILIDAD — Plataformas, fondeo y capital real
+         SECCIÓN 11 — COMPATIBILIDAD — Plataformas, fondeo y capital real
          ===================================================== -->
 <section class="brokers" id="compatibilidad">
   <div class="wrap">
@@ -3182,51 +3254,7 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
 
 
     <!-- =====================================================
-         SECCIÓN 14 — ROADMAP PARTICIPATIVO
-         ===================================================== -->
-<section class="roadmap-v10" id="roadmap">
-  <div class="roadmap-v10-inner">
-    <div class="roadmap-v10-head">
-      <div class="reveal-left">
-        <div class="product-kicker">ROADMAP PARTICIPATIVO</div>
-        <h2>Vota lo que más valor te aportaría.</h2>
-      </div>
-      <p class="reveal-right">
-        Aquí no publicamos lo que estamos construyendo internamente. Abrimos propuestas públicas
-        para que la comunidad nos ayude a priorizar mejoras sin convertir el Roadmap en un escaparate
-        para la competencia.
-      </p>
-    </div>
-
-    <div class="vote-grid">
-      <article class="vote-card reveal">
-        <div><h3>Informes de rendimiento exportables</h3><p>Generar un informe visual y compartible de una cuenta o estrategia con un solo clic.</p></div>
-        <button class="vote-button" type="button"><strong>▲ 184</strong><span>Votar</span></button>
-      </article>
-
-      <article class="vote-card reveal">
-        <div><h3>Dashboard personalizable</h3><p>Elegir qué KPIs y bloques quieres ver primero según tu forma de operar.</p></div>
-        <button class="vote-button" type="button"><strong>▲ 161</strong><span>Votar</span></button>
-      </article>
-
-      <article class="vote-card reveal">
-        <div><h3>Comparador de periodos</h3><p>Contrastar dos ventanas temporales de una estrategia para detectar cambios de comportamiento.</p></div>
-        <button class="vote-button" type="button"><strong>▲ 139</strong><span>Votar</span></button>
-      </article>
-
-      <article class="vote-card reveal">
-        <div><h3>Alertas configurables por usuario</h3><p>Decidir qué eventos merecen una notificación y por qué canal quieres recibirla.</p></div>
-        <button class="vote-button" type="button"><strong>▲ 127</strong><span>Votar</span></button>
-      </article>
-    </div>
-
-    <div class="vote-note">Los votos mostrados son datos de demostración para visualizar el diseño del módulo.</div>
-  </div>
-</section>
-
-
-    <!-- =====================================================
-         SECCIÓN 15 — PLANES — Starter / Trader / Institucional
+         SECCIÓN 12 — PLANES — Starter / Trader / Institucional
          ===================================================== -->
 <section class="plans-v12" id="planes">
   <div class="plans-v12-inner">
@@ -3309,58 +3337,51 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
 
 
     <!-- =====================================================
-         SECCIÓN 16 — PROGRAMA FUNDADOR
+         SECCIÓN 13 — ROADMAP PARTICIPATIVO
          ===================================================== -->
-<section class="founder-v8" id="fundadores">
-  <div class="founder-v8-card">
-    <div class="founder-v8-copy reveal-left">
-      <div class="product-kicker">PROGRAMA FUNDADOR · <span id="founderRemaining">100</span> PLAZAS</div>
-
-      <h2>Estar desde el principio también tiene recompensa.</h2>
-
-      <p>
-        El Club Fundador reúne a los primeros usuarios que apuestan por TDMK.
-        Cuando se cubran las 100 plazas, se activará el reparto mensual destinado
-        al Club conforme a las condiciones del programa.
+<section class="roadmap-v10" id="roadmap">
+  <div class="roadmap-v10-inner">
+    <div class="roadmap-v10-head">
+      <div class="reveal-left">
+        <div class="product-kicker">ROADMAP PARTICIPATIVO</div>
+        <h2>Vota lo que más valor te aportaría.</h2>
+      </div>
+      <p class="reveal-right">
+        Aquí no publicamos lo que estamos construyendo internamente. Abrimos propuestas públicas
+        para que la comunidad nos ayude a priorizar mejoras sin convertir el Roadmap en un escaparate
+        para la competencia.
       </p>
-
-      <div>
-        <span class="founder-benefit">◆ Certificado verificable</span>
-        <span class="founder-benefit">◆ Club privado</span>
-        <span class="founder-benefit">◆ Reparto mensual</span>
-      </div>
-
-      <div class="founder-price">1€</div>
-      <div class="founder-note">Sin suscripción activa ahora · El euro se utiliza únicamente para verificar la reserva.</div>
-
-      <a class="founder-btn" href="https://app.tdmksystems.com/?origen=landing_fundadores">
-        Reservar mi plaza
-      </a>
     </div>
 
-    <div class="founder-v8-visual reveal-right">
-      <div class="founder-cert-stage">
-        <img
-          src="Certificado Fundadores Oficial.png"
-          alt="Certificado oficial del Programa Fundador de TDMK Systems"
-          class="founder-cert-image"
-          loading="lazy"
-          decoding="async"
-        >
-        <div class="founder-cert-caption">Certificado real del Club Fundador</div>
-      </div>
+    <div class="vote-grid">
+      <article class="vote-card reveal">
+        <div><h3>Informes de rendimiento exportables</h3><p>Generar un informe visual y compartible de una cuenta o estrategia con un solo clic.</p></div>
+        <button class="vote-button" type="button" aria-label="Me gusta"><strong>♥ 184</strong><span>Me gusta</span></button>
+      </article>
+
+      <article class="vote-card reveal">
+        <div><h3>Dashboard personalizable</h3><p>Elegir qué KPIs y bloques quieres ver primero según tu forma de operar.</p></div>
+        <button class="vote-button" type="button" aria-label="Me gusta"><strong>♥ 161</strong><span>Me gusta</span></button>
+      </article>
+
+      <article class="vote-card reveal">
+        <div><h3>Comparador de periodos</h3><p>Contrastar dos ventanas temporales de una estrategia para detectar cambios de comportamiento.</p></div>
+        <button class="vote-button" type="button" aria-label="Me gusta"><strong>♥ 139</strong><span>Me gusta</span></button>
+      </article>
+
+      <article class="vote-card reveal">
+        <div><h3>Alertas configurables por usuario</h3><p>Decidir qué eventos merecen una notificación y por qué canal quieres recibirla.</p></div>
+        <button class="vote-button" type="button" aria-label="Me gusta"><strong>♥ 127</strong><span>Me gusta</span></button>
+      </article>
     </div>
+
+    <div class="vote-note">Los votos mostrados son datos de demostración para visualizar el diseño del módulo.</div>
   </div>
-
-  <p class="founder-legal">
-    El funcionamiento, cálculo, requisitos y continuidad del reparto del Club Fundador
-    quedarán definidos en las condiciones específicas del programa antes de su activación.
-  </p>
 </section>
 
 
     <!-- =====================================================
-         SECCIÓN 17 — CIERRE — CTA final
+         SECCIÓN 14 — CIERRE — CTA final
          ===================================================== -->
 <section class="closing">
       <div class="wrap reveal">
@@ -3427,20 +3448,25 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
 document.addEventListener('click', (e) => {
   const btn = e.target.closest('.vote-button');
   if(!btn) return;
+
   const strong = btn.querySelector('strong');
+  const label = btn.querySelector('span');
   const match = strong.textContent.match(/(\d+)/);
   if(!match) return;
+
   let n = Number(match[1]);
+
   if(btn.dataset.voted === '1'){
     n -= 1;
     btn.dataset.voted = '0';
-    btn.style.background = 'rgba(37,99,235,.12)';
+    if(label) label.textContent = 'Me gusta';
   }else{
     n += 1;
     btn.dataset.voted = '1';
-    btn.style.background = 'rgba(34,197,94,.12)';
+    if(label) label.textContent = 'Te gusta';
   }
-  strong.textContent = `▲ ${n}`;
+
+  strong.textContent = `♥ ${n}`;
 });
 </script>
 

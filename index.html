@@ -2552,6 +2552,90 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
   }
 }
 
+/* =========================================================
+   V20 — MOBILE SAFE AREA + MEDIA CONTAINMENT
+   Ningún bloque puede salirse del ancho disponible
+   ========================================================= */
+@media(max-width:640px){
+  :root{
+    --mobile-safe:16px;
+  }
+
+  /* Margen de seguridad común para toda la landing */
+  .wrap,
+  .activity-v11-inner,
+  .steps-v11-inner,
+  .mt-v11-inner,
+  .roadmap-v10-inner,
+  .proof-v10-inner,
+  .plans-v12-inner,
+  .product-chapter-inner,
+  #dashboard .dashboard-photo-grid,
+  .founder-legal{
+    width:calc(100% - (var(--mobile-safe) * 2))!important;
+    max-width:100%!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+  }
+
+  /* Ningún contenedor de producto puede desbordar */
+  .product-chapter,
+  .product-chapter-inner,
+  .product-chapter-visual,
+  .module-shot-wrap,
+  .control-center-visual-v19,
+  .control-center-shot-v19,
+  #metrics-v8 .module-shot-wrap{
+    max-width:100%!important;
+    min-width:0!important;
+  }
+
+  .product-chapter-visual,
+  .control-center-visual-v19{
+    width:100%!important;
+    margin-left:0!important;
+    margin-right:0!important;
+    overflow:hidden!important;
+  }
+
+  .module-shot-wrap,
+  #metrics-v8 .module-shot-wrap,
+  .control-center-shot-v19{
+    width:100%!important;
+    margin:0!important;
+  }
+
+  .module-shot,
+  .control-center-v19 .module-shot,
+  .product-real-image,
+  .dashboard-photo,
+  img{
+    max-width:100%;
+  }
+
+  .control-center-v19 .module-shot{
+    display:block;
+    width:100%!important;
+    height:auto!important;
+    object-fit:contain!important;
+    border-radius:16px!important;
+  }
+
+  /* El Control Center termina justo después de la imagen, sin huecos artificiales */
+  .control-center-v19 .product-chapter-visual{
+    min-height:0!important;
+    height:auto!important;
+    align-items:flex-start!important;
+  }
+
+  .control-center-v19 .module-shot-wrap::after{
+    left:10%;
+    right:10%;
+    bottom:-2%;
+    height:10%;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -2577,7 +2661,7 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
      17. Cierre
      ========================================================= -->
 
-<!-- TDMK Landing V18 · Hero mobile estático + Journal móvil unificado -->
+<!-- TDMK Landing V20 · Hero mobile + safe area global + Control Center contenido -->
   <header class="topbar">
     <div class="wrap topbar-inner">
       <a href="#inicio" class="logo"><img src="tdmk-logo.png" alt="TDMK Systems" class="logo-img"></a>
@@ -2930,7 +3014,7 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
     <div class="product-chapter-visual control-center-visual-v19 reveal-right">
       <div class="module-shot-wrap control-center-shot-v19">
         <img
-          src="control center.png"
+          src="control-center.png"
           class="module-shot"
           alt="Control Center real de TDMK Systems con cuentas, KPIs, drawdown y acciones de control"
           loading="lazy"

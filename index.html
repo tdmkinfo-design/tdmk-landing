@@ -2657,6 +2657,21 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
 }
 .vote-button[data-voted="1"] span{color:#fb7185;}
 
+
+/* =========================================================
+   V23 — ACTIVIDAD REAL + LIKES ROJOS
+   ========================================================= */
+.vote-button strong{
+  color:#ff4d67!important;
+}
+.vote-button:hover strong{
+  color:#ff3154!important;
+}
+.vote-button[data-voted="1"] strong{
+  color:#ff3154!important;
+  text-shadow:0 0 14px rgba(255,49,84,.28);
+}
+
 </style>
 </head>
 <body>
@@ -2667,22 +2682,23 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
      02. Antes de buscar otra estrategia
      03. Por eso existe TDMK
      04. Cómo funciona — 3 pasos
-     05. Dashboard
-     06. Métricas Avanzadas
-     07. Control Center
-     08. Programa Fundador
-     09. Gestor de Coberturas
-     10. Infraestructura VPS
-     11. Compatibilidad
-     12. Planes
-     13. Roadmap participativo
-     14. Cierre
+     05. Lo que pasa dentro de TDMK — datos reales
+     06. Dashboard
+     07. Métricas Avanzadas
+     08. Control Center
+     09. Programa Fundador
+     10. Gestor de Coberturas
+     11. Infraestructura VPS
+     12. Compatibilidad
+     13. Planes
+     14. Roadmap participativo
+     15. Cierre
 
      Nota: Journal Automático se mantiene como módulo independiente
      únicamente en desktop. En mobile está integrado en el Hero.
      ========================================================= -->
 
-<!-- TDMK Landing V22 · Orden de conversión + Roadmap con likes -->
+<!-- TDMK Landing V23 · Storytelling + actividad real + likes rojos -->
   <header class="topbar">
     <div class="wrap topbar-inner">
       <a href="#inicio" class="logo"><img src="tdmk-logo.png" alt="TDMK Systems" class="logo-img"></a>
@@ -2916,7 +2932,44 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
 
 
     <!-- =====================================================
-         SECCIÓN 05 — DASHBOARD — Todo tu trading en una fotografía
+         SECCIÓN 05 — ACTIVIDAD — Lo que pasa dentro de TDMK
+         Datos reales conectados al backend
+         ===================================================== -->
+<section class="activity-v11" id="actividad">
+  <div class="activity-v11-inner">
+    <div class="activity-v11-head reveal">
+      <h2>Lo que pasa dentro de TDMK.</h2>
+      <p>
+        Cada operación registrada y cada cuenta conectada deja de ser información dispersa
+        y empieza a formar parte de una única estructura.
+      </p>
+    </div>
+
+    <!--
+      Datos reales — se rellenan desde /api/public/stats al cargar la página.
+      Si la petición falla, cada bloque se oculta solo (ver script al final).
+    -->
+    <div class="activity-v11-grid reveal">
+      <div class="activity-v11-item" id="statTrades">
+        <div class="activity-v11-number" data-count="0" data-prefix="+">0</div>
+        <div class="activity-v11-label">Trades registrados</div>
+      </div>
+
+      <div class="activity-v11-item" id="statAccounts">
+        <div class="activity-v11-number" data-count="0" data-prefix="+">0</div>
+        <div class="activity-v11-label">Cuentas conectadas</div>
+      </div>
+
+      <div class="activity-v11-item" id="statUsers">
+        <div class="activity-v11-number" data-count="0" data-prefix="+">0</div>
+        <div class="activity-v11-label">Usuarios activos</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+    <!-- =====================================================
+         SECCIÓN 06 — DASHBOARD — Todo tu trading en una fotografía
          ===================================================== -->
 <section class="dashboard-photo-section" id="dashboard">
       <div class="dashboard-photo-grid">
@@ -2967,7 +3020,7 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
 
 
     <!-- =====================================================
-         SECCIÓN 06 — MÉTRICAS AVANZADAS — Análisis cuantitativo
+         SECCIÓN 07 — MÉTRICAS AVANZADAS — Análisis cuantitativo
          ===================================================== -->
 <section class="product-chapter light reverse" id="metrics-v8">
   <div class="product-chapter-inner">
@@ -2988,7 +3041,7 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
 
 
     <!-- =====================================================
-         SECCIÓN 07 — CONTROL CENTER — Control y disciplina
+         SECCIÓN 08 — CONTROL CENTER — Control y disciplina
          ===================================================== -->
 <section class="product-chapter dark control-center-v19" id="control-v8">
   <div class="product-chapter-inner">
@@ -3048,7 +3101,7 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
 
 
     <!-- =====================================================
-         SECCIÓN 08 — PROGRAMA FUNDADOR — Primer punto fuerte de conversión
+         SECCIÓN 09 — PROGRAMA FUNDADOR — Primer punto fuerte de conversión
          ===================================================== -->
 <section class="founder-v8" id="fundadores">
   <div class="founder-v8-card">
@@ -3099,7 +3152,7 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
 
 
     <!-- =====================================================
-         SECCIÓN 09 — GESTOR DE COBERTURAS
+         SECCIÓN 10 — GESTOR DE COBERTURAS
          ===================================================== -->
 <section class="product-chapter blue" id="hedge-v8">
   <div class="product-chapter-inner">
@@ -3120,7 +3173,7 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
 
 
     <!-- =====================================================
-         SECCIÓN 10 — INFRAESTRUCTURA — Granjas VPS y Watchdog
+         SECCIÓN 11 — INFRAESTRUCTURA — Granjas VPS y Watchdog
          ===================================================== -->
 <section class="product-chapter dark" id="infra-v8">
   <div class="product-chapter-inner">
@@ -3145,7 +3198,7 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
 
 
     <!-- =====================================================
-         SECCIÓN 11 — COMPATIBILIDAD — Plataformas, fondeo y capital real
+         SECCIÓN 12 — COMPATIBILIDAD — Plataformas, fondeo y capital real
          ===================================================== -->
 <section class="brokers" id="compatibilidad">
   <div class="wrap">
@@ -3254,7 +3307,7 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
 
 
     <!-- =====================================================
-         SECCIÓN 12 — PLANES — Starter / Trader / Institucional
+         SECCIÓN 13 — PLANES — Starter / Trader / Institucional
          ===================================================== -->
 <section class="plans-v12" id="planes">
   <div class="plans-v12-inner">
@@ -3337,7 +3390,7 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
 
 
     <!-- =====================================================
-         SECCIÓN 13 — ROADMAP PARTICIPATIVO
+         SECCIÓN 14 — ROADMAP PARTICIPATIVO
          ===================================================== -->
 <section class="roadmap-v10" id="roadmap">
   <div class="roadmap-v10-inner">
@@ -3381,7 +3434,7 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
 
 
     <!-- =====================================================
-         SECCIÓN 14 — CIERRE — CTA final
+         SECCIÓN 15 — CIERRE — CTA final
          ===================================================== -->
 <section class="closing">
       <div class="wrap reveal">

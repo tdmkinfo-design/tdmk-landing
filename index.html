@@ -2672,6 +2672,98 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
   text-shadow:0 0 14px rgba(255,49,84,.28);
 }
 
+
+/* =========================================================
+   V24 — AJUSTES ESTÉTICOS FINALES
+   Métricas / Fundadores / imágenes de producto
+   ========================================================= */
+.metrics-highlight{
+  color:#155dfc;
+}
+
+.founder-reservation-v24{
+  margin-top:24px;
+  padding:20px 22px;
+  border-radius:20px;
+  background:rgba(255,255,255,.64);
+  border:1px solid rgba(68,118,175,.16);
+  box-shadow:0 12px 28px rgba(45,93,150,.07);
+}
+.founder-reservation-v24>strong{
+  display:block;
+  color:#082b68;
+  font-size:18px;
+  line-height:1.25;
+  letter-spacing:-.02em;
+}
+.founder-reservation-v24>p{
+  margin:9px 0 0;
+  color:#4f6d91;
+  font-size:13px;
+  line-height:1.55;
+  max-width:540px;
+}
+.founder-actions-v24{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:16px;
+}
+.founder-actions-v24 .founder-btn{
+  margin-top:0;
+  min-width:0;
+  padding:0 18px;
+}
+.founder-btn-secondary-v24{
+  background:rgba(255,255,255,.86)!important;
+  color:#082b68!important;
+  border:1px solid rgba(8,43,104,.16);
+  box-shadow:none!important;
+}
+
+@media(max-width:640px){
+  #metrics-v8 .metrics-pills{
+    width:100%;
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:8px;
+  }
+  #metrics-v8 .metrics-pills .product-pill{
+    width:100%;
+    min-width:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+  }
+
+  .founder-reservation-v24{
+    margin-top:20px;
+    padding:17px 16px;
+    border-radius:17px;
+  }
+  .founder-reservation-v24>strong{font-size:16px;}
+  .founder-reservation-v24>p{font-size:12px;}
+  .founder-actions-v24{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:8px;
+  }
+  .founder-actions-v24 .founder-btn{
+    width:100%;
+    min-height:46px;
+    margin:0;
+    padding:0 12px;
+    font-size:11.5px;
+  }
+
+  #hedge-v8 .module-shot-wrap,
+  #infra-v8 .module-shot-wrap{
+    width:100%!important;
+    margin:0!important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -2698,7 +2790,7 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
      únicamente en desktop. En mobile está integrado en el Hero.
      ========================================================= -->
 
-<!-- TDMK Landing V23 · Storytelling + actividad real + likes rojos -->
+<!-- TDMK Landing V24 · Métricas + Fundadores + Coberturas + Granjas VPS -->
   <header class="topbar">
     <div class="wrap topbar-inner">
       <a href="#inicio" class="logo"><img src="tdmk-logo.png" alt="TDMK Systems" class="logo-img"></a>
@@ -3026,9 +3118,9 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
   <div class="product-chapter-inner">
     <div class="product-chapter-copy reveal-right">
       <div class="product-kicker">ANÁLISIS</div>
-      <h2>¿Tu estrategia funciona…<br>o simplemente es suerte?</h2>
+      <h2>¿Tu estrategia funciona…<br>o simplemente es <span class="metrics-highlight">suerte</span>?</h2>
       <p>Curva, drawdown, Sharpe, consistencia, sesiones, activos y una valoración cuantitativa que te obliga a mirar más allá del beneficio.</p>
-      <div class="product-pills">
+      <div class="product-pills metrics-pills">
         <span class="product-pill">Esperanza</span>
         <span class="product-pill">R/R</span>
         <span class="product-pill">Drawdown</span>
@@ -3108,7 +3200,7 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
     <div class="founder-v8-copy reveal-left">
       <div class="product-kicker">PROGRAMA FUNDADOR · <span id="founderRemaining">100</span> PLAZAS</div>
 
-      <h2>Estar desde el principio también tiene recompensa.</h2>
+      <h2>Estar desde el principio tiene recompensa.</h2>
 
       <p>
         El Club Fundador reúne a los primeros usuarios que apuestan por TDMK.
@@ -3122,12 +3214,23 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
         <span class="founder-benefit">◆ Reparto mensual</span>
       </div>
 
-      <div class="founder-price">1€</div>
-      <div class="founder-note">Sin suscripción activa ahora · El euro se utiliza únicamente para verificar la reserva.</div>
+      <div class="founder-reservation-v24">
+        <strong>Reserva tu plaza fundadora por 1 €</strong>
+        <p>
+          Elige Trader o Institucional. El euro se utiliza únicamente para confirmar
+          tu interés y verificar el método de pago. No es el precio del plan ni activa
+          ninguna suscripción.
+        </p>
 
-      <a class="founder-btn" href="https://app.tdmksystems.com/?origen=landing_fundadores">
-        Reservar mi plaza
-      </a>
+        <div class="founder-actions-v24">
+          <a class="founder-btn" href="https://app.tdmksystems.com/?origen=landing_fundador_trader&plan=trader">
+            Reservar Trader · 1 €
+          </a>
+          <a class="founder-btn founder-btn-secondary-v24" href="https://app.tdmksystems.com/?origen=landing_fundador_institucional&plan=institucional">
+            Reservar Institucional · 1 €
+          </a>
+        </div>
+      </div>
     </div>
 
     <div class="founder-v8-visual reveal-right">
@@ -3167,7 +3270,7 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
         <span class="product-pill">Target Neto </span>
       </div>
     </div>
-    <div class="product-chapter-visual reveal-right"><div class="module-shot-wrap"><img src="Gestor Coberturas Realista.png" class="module-shot" alt="Gestor de Coberturas TDMK con posiciones de compra y venta, match, break even y resultado estimado" loading="lazy" decoding="async"></div></div>
+    <div class="product-chapter-visual reveal-right"><div class="module-shot-wrap"><img src="gestor de coberturas.png" class="module-shot" alt="Gestor de Coberturas TDMK con posiciones de compra y venta, match, break even y resultado estimado" loading="lazy" decoding="async"></div></div>
   </div>
 </section>
 
@@ -3190,7 +3293,7 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
     </div>
     <div class="product-chapter-visual reveal-right">
       <div class="module-shot-wrap">
-        <img src="Granjas VPS Demo.png" class="module-shot" alt="Gestor de Granjas VPS de TDMK con servidores, recursos, cuentas y estado Watchdog" loading="lazy" decoding="async">
+        <img src="Granjas VPS.png" class="module-shot" alt="Gestor de Granjas VPS de TDMK con servidores, recursos, cuentas y estado Watchdog" loading="lazy" decoding="async">
       </div>
     </div>
   </div>

@@ -2764,6 +2764,229 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
   }
 }
 
+
+/* =========================================================
+   V25 — AJUSTES DE CONVERSIÓN Y COMPOSICIÓN
+   ========================================================= */
+
+.hero{scroll-margin-top:0}
+
+.solution-platforms{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+}
+.solution-platform-card{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:15px 16px;
+  border-radius:14px;
+  border:1px solid rgba(96,165,250,.28);
+  background:rgba(16,32,58,.88);
+  color:#fff;
+}
+.solution-platform-card img{
+  width:38px;height:38px;object-fit:contain;flex:0 0 38px;
+}
+.solution-platform-card b{display:block;font-size:13px}
+.solution-platform-card span{display:block;margin-top:3px;color:#8ea4c0;font-size:10px}
+
+.founder-benefits-grid{
+  width:100%;
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:8px;
+  margin-top:22px;
+}
+.founder-benefits-grid .founder-benefit{
+  width:100%;
+  min-height:44px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:0;
+  text-align:center;
+}
+.founder-reserve-note{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-top:14px;
+}
+.founder-reserve-note span{
+  padding:7px 10px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.12);
+  color:rgba(255,255,255,.72);
+  background:rgba(255,255,255,.045);
+  font-size:10px;
+  font-weight:700;
+}
+
+.product-pills-justified{
+  width:100%;
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:8px;
+}
+.product-pills-justified .product-pill{
+  width:100%;
+  min-width:0;
+  justify-content:center;
+  text-align:center;
+}
+
+.platform-static-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,230px));
+  gap:12px;
+}
+.platform-static-grid .platform-logo-pill{
+  min-width:0;
+  width:100%;
+}
+
+.plan-v12{position:relative;overflow:visible}
+.plan-starter{border-color:rgba(245,158,11,.24)!important}
+.plan-trader{
+  border-color:rgba(59,130,246,.48)!important;
+  box-shadow:0 22px 60px rgba(37,99,235,.11);
+}
+.plan-institutional{
+  border-color:rgba(34,197,94,.30)!important;
+  background:
+    radial-gradient(circle at 100% 0%,rgba(34,197,94,.07),transparent 35%),
+    #07111f!important;
+}
+.plan-ribbon{
+  position:absolute;
+  top:-14px;
+  left:50%;
+  transform:translateX(-50%);
+  min-width:105px;
+  padding:8px 15px;
+  border-radius:999px;
+  text-align:center;
+  color:#fff;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.05em;
+}
+.plan-ribbon-blue{background:#3b82f6}
+.plan-ribbon-green{background:#16a34a}
+
+.plan-price{
+  margin:8px 0 14px;
+  color:#fff;
+  font-size:42px;
+  line-height:1;
+  font-weight:900;
+  letter-spacing:-.045em;
+}
+.plan-price span{
+  margin-left:5px;
+  color:#738299;
+  font-size:14px;
+  font-weight:700;
+  letter-spacing:0;
+}
+.starter-price{color:#fbbf24}
+.plan-price-row{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:10px 14px;
+}
+.plan-founder-chip,
+.plan-founder-bottom{
+  border:1px solid rgba(245,158,11,.30);
+  color:#fbbf24;
+  background:rgba(245,158,11,.08);
+  border-radius:999px;
+  font-size:9.5px;
+  font-weight:900;
+}
+.plan-founder-chip{padding:7px 10px}
+.plan-founder-bottom{
+  width:max-content;
+  max-width:100%;
+  margin-top:18px;
+  padding:8px 11px;
+}
+.plan-feature-list{margin-top:18px!important}
+.plan-feature-list li{line-height:1.55}
+.plan-institutional .plan-card-cta.institutional{
+  color:#6ee7a8;
+  border-color:rgba(34,197,94,.42);
+  background:rgba(22,163,74,.12);
+}
+
+@media(max-width:640px){
+  .hero-inner{padding-top:34px!important}
+
+  .solution-platforms{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:7px;
+  }
+  .solution-platform-card{
+    min-width:0;
+    padding:11px 9px;
+    gap:7px;
+  }
+  .solution-platform-card img{width:28px;height:28px;flex-basis:28px}
+  .solution-platform-card b{font-size:10.5px}
+  .solution-platform-card span{font-size:8px}
+
+  .founder-benefits-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:6px;
+  }
+  .founder-benefits-grid .founder-benefit{
+    min-height:54px;
+    padding:8px 6px;
+    font-size:8.5px;
+    line-height:1.3;
+  }
+  .founder-reserve-note{
+    display:grid;
+    grid-template-columns:1fr;
+  }
+  .founder-reserve-note span{
+    width:100%;
+    border-radius:12px;
+  }
+
+  #hedge-v8 .product-pills-justified,
+  #infra-v8 .product-pills-justified{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:7px;
+  }
+  #hedge-v8 .product-pills-justified .product-pill,
+  #infra-v8 .product-pills-justified .product-pill{
+    min-height:38px;
+    padding:0 8px;
+    font-size:9.5px;
+  }
+
+  .platform-static-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:8px;
+  }
+  .platform-static-grid .platform-logo-pill{
+    min-height:78px;
+    padding:10px;
+  }
+
+  .plan-v12{margin-top:10px}
+  .plan-price{font-size:38px}
+  .plan-founder-bottom{
+    width:100%;
+    text-align:center;
+    border-radius:12px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -2790,18 +3013,8 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
      únicamente en desktop. En mobile está integrado en el Hero.
      ========================================================= -->
 
-<!-- TDMK Landing V24 · Métricas + Fundadores + Coberturas + Granjas VPS -->
-  <header class="topbar">
-    <div class="wrap topbar-inner">
-      <a href="#inicio" class="logo"><img src="tdmk-logo.png" alt="TDMK Systems" class="logo-img"></a>
-      <div class="nav-actions">
-        <a class="link" href="https://app.tdmksystems.com">Acceder</a>
-        <a class="button button-blue" href="https://app.tdmksystems.com/?origen=landing_publica">Crear cuenta</a>
-      </div>
-    </div>
-  </header>
-
-  <main id="inicio">
+<!-- TDMK Landing V25 · Conversión + MT4/MT5 + Fundadores + Planes -->
+<main id="inicio">
 
     <!-- =====================================================
          SECCIÓN 01 — HERO — Puede que tu trading gane dinero
@@ -2978,12 +3191,21 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
         </div>
         <div class="solution-media reveal">
           <div class="solution-diagram">
-            <div class="node primary"><b>MetaTrader 5</b><span>Datos reales</span></div>
+            <div class="solution-platforms">
+              <div class="solution-platform-card primary">
+                <img src="mt5-logo.png" alt="MetaTrader 5" onerror="this.style.display='none'">
+                <div><b>MetaTrader 5</b><span>Datos reales</span></div>
+              </div>
+              <div class="solution-platform-card primary">
+                <img src="mt4-logo.png" alt="MetaTrader 4" onerror="this.style.display='none'">
+                <div><b>MetaTrader 4</b><span>Datos reales</span></div>
+              </div>
+            </div>
             <div class="arrow">↓</div>
             <div class="node"><b>Journal Automático</b><span>Registro y contexto</span></div>
             <div class="node"><b>Dashboard</b><span>Fotografía inmediata</span></div>
-            <div class="node"><b>Deja de calcular coberturas mientras el mercado se mueve.</b><span>Exposición real</span></div>
-            <div class="node"><b>Control & Automatización</b><span>infraestructura</span></div>
+            <div class="node"><b>Gestor de Coberturas en capital real</b><span>Exposición y Break Even</span></div>
+            <div class="node"><b>Control & Automatización</b><span>Infraestructura</span></div>
           </div>
         </div>
       </div>
@@ -3203,23 +3425,23 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
       <h2>Estar desde el principio tiene recompensa.</h2>
 
       <p>
-        El Club Fundador reúne a los primeros usuarios que apuestan por TDMK.
-        Cuando se cubran las 100 plazas, se activará el reparto mensual destinado
+        El Club Fundador reconoce a los primeros usuarios que deciden construir TDMK con nosotros.
+        Cuando se cubran las 100 plazas fundadoras, se activará el reparto mensual destinado
         al Club conforme a las condiciones del programa.
       </p>
 
-      <div>
+      <div class="founder-benefits-grid">
         <span class="founder-benefit">◆ Certificado verificable</span>
         <span class="founder-benefit">◆ Club privado</span>
         <span class="founder-benefit">◆ Reparto mensual</span>
       </div>
 
       <div class="founder-reservation-v24">
-        <strong>Reserva tu plaza fundadora por 1 €</strong>
+        <strong>Reserva ahora tu plaza fundadora por 1 €</strong>
         <p>
-          Elige Trader o Institucional. El euro se utiliza únicamente para confirmar
-          tu interés y verificar el método de pago. No es el precio del plan ni activa
-          ninguna suscripción.
+          Puedes reservar una plaza Founder de Trader o Institucional.
+          El euro se utiliza únicamente para confirmar que existe un interés real y verificar
+          el método de pago. No es el precio del plan ni activa ninguna suscripción.
         </p>
 
         <div class="founder-actions-v24">
@@ -3229,6 +3451,12 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
           <a class="founder-btn founder-btn-secondary-v24" href="https://app.tdmksystems.com/?origen=landing_fundador_institucional&plan=institucional">
             Reservar Institucional · 1 €
           </a>
+        </div>
+
+        <div class="founder-reserve-note">
+          <span>100 plazas fundadoras</span>
+          <span>Acceso al Club Fundador</span>
+          <span>Reparto mensual al completarse las plazas</span>
         </div>
       </div>
     </div>
@@ -3263,7 +3491,7 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
       <div class="product-kicker">COBERTURAS</div>
       <h2>Calcula tu punto de equilibrio<br>antes de que el precio decida por ti.</h2>
       <p>El mercado no te da tiempo para anotar datos a mano. Encuentra tu Break Even dinamico al instante y ejecuta tu cobertura con precision.</p>
-      <div class="product-pills">
+      <div class="product-pills product-pills-justified">
         <span class="product-pill">Exposición real</span>
         <span class="product-pill">Match entre posiciones</span>
         <span class="product-pill">Break Even Dinámico</span>
@@ -3284,7 +3512,7 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
       <div class="product-kicker">INFRAESTRUCTURA</div>
       <h2>Sigue funcionando<br>aunque cierres el portátil.</h2>
       <p>Supervisa servidores, recursos, cuentas conectadas y Watchdog desde el mismo panel, incluso cuando tú no estás delante.</p>
-      <div class="product-pills">
+      <div class="product-pills product-pills-justified">
         <span class="product-pill">VPS</span>
         <span class="product-pill">Watchdog</span>
         <span class="product-pill">Alertas</span>
@@ -3318,38 +3546,19 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
 
       <div class="brokers-row">
         <span class="brokers-group-label">Plataformas</span>
-        <div class="marquee platform-marquee">
-          <div class="marquee-track platform-track">
+        <div class="platform-static-grid">
+          <div class="platform-logo-pill">
+            <img src="mt4-logo.png" alt="MetaTrader 4"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <span class="platform-logo-fallback" style="display:none">MT4</span>
+            <strong>MetaTrader 4</strong>
+          </div>
 
-            <div class="platform-logo-pill">
-              <img src="mt4-logo.png" alt="MetaTrader 4"
-                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-              <span class="platform-logo-fallback" style="display:none">MT4</span>
-              <strong>MetaTrader 4</strong>
-            </div>
-
-            <div class="platform-logo-pill">
-              <img src="mt5-logo.png" alt="MetaTrader 5"
-                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-              <span class="platform-logo-fallback" style="display:none">MT5</span>
-              <strong>MetaTrader 5</strong>
-            </div>
-
-            <!-- Duplicados para que el carrusel sea infinito -->
-            <div class="platform-logo-pill">
-              <img src="mt4-logo.png" alt="MetaTrader 4"
-                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-              <span class="platform-logo-fallback" style="display:none">MT4</span>
-              <strong>MetaTrader 4</strong>
-            </div>
-
-            <div class="platform-logo-pill">
-              <img src="mt5-logo.png" alt="MetaTrader 5"
-                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-              <span class="platform-logo-fallback" style="display:none">MT5</span>
-              <strong>MetaTrader 5</strong>
-            </div>
-
+          <div class="platform-logo-pill">
+            <img src="mt5-logo.png" alt="MetaTrader 5"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <span class="platform-logo-fallback" style="display:none">MT5</span>
+            <strong>MetaTrader 5</strong>
           </div>
         </div>
       </div>
@@ -3417,73 +3626,74 @@ linear-gradient(145deg,#07101f,#0b1730 52%,#07111f)}
     <div class="plans-v12-head reveal">
       <div class="product-kicker">UNA PLATAFORMA. TRES FORMAS DE UTILIZARLA.</div>
       <h2>Empieza mirando.<br>Termina escalando.</h2>
-      <p>
-        Elige el nivel que encaja con el momento en el que se encuentra tu operativa.
-      </p>
+      <p>Elige el nivel que encaja con el momento en el que se encuentra tu operativa.</p>
     </div>
 
     <div class="plans-v12-grid">
 
-      <article class="plan-v12 reveal">
+      <article class="plan-v12 plan-starter reveal">
         <div class="tag">Starter</div>
         <h3>Empieza a ver.</h3>
+        <div class="plan-price starter-price">Gratis</div>
         <div class="plan-line">Entiende qué está pasando.</div>
-        <p>
-          Para empezar a centralizar una cuenta y dejar de analizar tu trading a ciegas.
-        </p>
-        <ul>
-          <li>Una primera fotografía de tu operativa</li>
-          <li>Journal y visión centralizada</li>
-          <li>Punto de entrada al ecosistema TDMK</li>
+        <p>La base para dejar de improvisar y empezar a gestionar tu trading con datos reales.</p>
+        <ul class="plan-feature-list">
+          <li><strong>1 cuenta de trading conectada</strong></li>
+          <li>Dashboard con patrimonio y curva de balance</li>
+          <li>Métricas esenciales: Win Rate, R/R y esperanza</li>
+          <li>Journal automático de operaciones</li>
+          <li>Gestor de Coberturas</li>
+          <li>Roadmap participativo</li>
+          <li>Soporte estándar</li>
         </ul>
-
-        <a
-          class="plan-card-cta starter"
-          href="https://app.tdmksystems.com/?origen=landing_plan_starter"
-        >
+        <a class="plan-card-cta starter" href="https://app.tdmksystems.com/?origen=landing_plan_starter">
           Empieza gratis
         </a>
       </article>
 
-      <article class="plan-v12 featured reveal">
+      <article class="plan-v12 plan-trader featured reveal">
+        <div class="plan-ribbon plan-ribbon-blue">POPULAR</div>
         <div class="tag">Trader</div>
         <h3>Analiza.</h3>
+        <div class="plan-price-row">
+          <div class="plan-price">19<span>€/mes</span></div>
+          <div class="plan-founder-chip">◆ Precio Fundador</div>
+        </div>
         <div class="plan-line">Pasa del resultado al contexto.</div>
-        <p>
-          Para traders que necesitan comparar, medir riesgo y entender de verdad el comportamiento de sus sistemas.
-        </p>
-        <ul>
-          <li>Más cuentas bajo una misma lectura</li>
-          <li>Análisis y métricas cuantitativas</li>
-          <li>Protección y herramientas de control</li>
+        <p>Para traders que quieren centralizar varias cuentas y trabajar con más control operativo.</p>
+        <ul class="plan-feature-list">
+          <li><strong>Hasta 5 cuentas activas simultáneamente</strong></li>
+          <li>Dashboard con visión unificada</li>
+          <li>Acciones rápidas para proteger tu capital</li>
+          <li>Todo el flujo operativo de Starter</li>
+          <li>Soporte prioritario</li>
         </ul>
-
-        <a
-          class="plan-card-cta featured"
-          href="https://app.tdmksystems.com/?origen=landing_plan_trader&accion=lista_espera"
-        >
-          Apúntate a la lista de espera
+        <div class="plan-founder-bottom">◆ Precio Fundador · Solo por tiempo limitado</div>
+        <a class="plan-card-cta featured" href="https://app.tdmksystems.com/?origen=landing_plan_trader&accion=lista_espera">
+          Reservar plaza Founder
         </a>
       </article>
 
-      <article class="plan-v12 reveal">
+      <article class="plan-v12 plan-institutional reveal">
+        <div class="plan-ribbon plan-ribbon-green">RECOMENDADO</div>
         <div class="tag">Institucional</div>
         <h3>Escala.</h3>
+        <div class="plan-price-row">
+          <div class="plan-price">49<span>€/mes</span></div>
+          <div class="plan-founder-chip">◆ Precio Fundador</div>
+        </div>
         <div class="plan-line">Convierte trading en infraestructura.</div>
-        <p>
-          Para estructuras con múltiples cuentas, servidores, automatizaciones y necesidad de supervisión continua.
-        </p>
-        <ul>
-          <li>Infraestructura multi-cuenta</li>
-          <li>Granjas VPS y supervisión</li>
-          <li>Automatización y control operativo</li>
+        <p>Para estructuras con múltiples cuentas, servidores y necesidad de supervisión continua.</p>
+        <ul class="plan-feature-list">
+          <li><strong>Hasta 25 cuentas bajo una misma infraestructura</strong></li>
+          <li>Visión unificada de todo tu ecosistema</li>
+          <li>Granjas VPS para gestionar infraestructura</li>
+          <li>Supervisión automática 24/7</li>
+          <li>Acompañamiento para implementar y escalar</li>
         </ul>
-
-        <a
-          class="plan-card-cta"
-          href="https://app.tdmksystems.com/?origen=landing_plan_institucional&accion=lista_espera"
-        >
-          Apúntate a la lista de espera
+        <div class="plan-founder-bottom">◆ Precio Fundador · Solo por tiempo limitado</div>
+        <a class="plan-card-cta institutional" href="https://app.tdmksystems.com/?origen=landing_plan_institucional&accion=lista_espera">
+          Reserva tu plaza
         </a>
       </article>
 

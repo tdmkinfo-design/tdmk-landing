@@ -2500,6 +2500,202 @@
   }
 }
 
+
+/* =========================================================
+   V39 — HERO MOBILE · alineación + CTA final
+   Desktop mantiene composición aprobada
+   ========================================================= */
+
+/* Sin flecha en el CTA en ninguna versión */
+.hero-cta .hero-cta-arrow{
+  display:none!important;
+}
+
+/* CTA limpio: GRATIS blanco y sin iconos */
+.hero-cta{
+  gap:6px!important;
+}
+.hero-cta-free{
+  color:#fff!important;
+  font-weight:950!important;
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+@media(max-width:640px){
+
+  /*
+    Alineamos TDMK SYSTEMS con la parte superior física del móvil.
+    Ambos arrancan en el mismo top.
+  */
+  .hero{
+    min-height:680px!important;
+    height:auto!important;
+    overflow:hidden!important;
+  }
+
+  .hero-grid{
+    position:relative!important;
+    min-height:680px!important;
+    height:680px!important;
+    padding:0!important;
+  }
+
+  .hero-copy{
+    position:absolute!important;
+    z-index:6!important;
+    top:28px!important;
+    left:0!important;
+    width:48%!important;
+    max-width:170px!important;
+    height:auto!important;
+    padding:0!important;
+  }
+
+  .hero-brand{
+    margin:0 0 10px!important;
+    font-size:7px!important;
+    letter-spacing:.17em!important;
+  }
+
+  .hero h1{
+    width:100%!important;
+    margin:0!important;
+    font-size:23px!important;
+    line-height:1.02!important;
+    letter-spacing:-.045em!important;
+  }
+
+  .hero h1 .hero-second-line{
+    display:block!important;
+    width:100%!important;
+    margin-top:12px!important;
+    font-size:.67em!important;
+    line-height:1.10!important;
+  }
+
+  .hero p{
+    display:block!important;
+    width:100%!important;
+    margin:14px 0 0!important;
+    color:#98a8bd!important;
+    font-size:8.9px!important;
+    line-height:1.46!important;
+  }
+
+  /*
+    El móvil arranca exactamente a la misma altura que TDMK SYSTEMS.
+    Conservamos el desplazamiento a la derecha.
+  */
+  .hero-device{
+    position:absolute!important;
+    inset:0!important;
+    z-index:2!important;
+    min-height:680px!important;
+    height:680px!important;
+    pointer-events:none!important;
+  }
+
+  .hero-device::before{
+    top:52px!important;
+    right:-110px!important;
+  }
+
+  .hero-device img{
+    position:absolute!important;
+    top:28px!important;
+    right:-166px!important;
+    width:420px!important;
+    max-width:none!important;
+    max-height:none!important;
+  }
+
+  /*
+    CTA único, a todo el ancho útil y DEBAJO del móvil.
+    Queda por encima de la curva y de la UI inferior del navegador.
+  */
+  .hero-actions{
+    position:absolute!important;
+    z-index:10!important;
+    left:0!important;
+    right:0!important;
+    bottom:72px!important;
+    width:100%!important;
+    margin:0!important;
+    transform:none!important;
+    display:block!important;
+    pointer-events:auto!important;
+  }
+
+  .hero-cta{
+    width:100%!important;
+    min-width:0!important;
+    min-height:50px!important;
+    padding:0 18px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    border-radius:14px!important;
+    font-size:12px!important;
+    white-space:nowrap!important;
+  }
+
+  /* El botón CSS antiguo queda definitivamente anulado */
+  .hero-device::after{
+    content:none!important;
+    display:none!important;
+  }
+
+  /* La curva queda por debajo del CTA */
+  .hero.shape-wave::after{
+    height:48px!important;
+    z-index:4!important;
+  }
+}
+
+/* móviles muy estrechos */
+@media(max-width:390px){
+  .hero{
+    min-height:660px!important;
+  }
+
+  .hero-grid,
+  .hero-device{
+    min-height:660px!important;
+    height:660px!important;
+  }
+
+  .hero-copy{
+    top:24px!important;
+    width:47%!important;
+    max-width:158px!important;
+  }
+
+  .hero h1{
+    font-size:21px!important;
+  }
+
+  .hero p{
+    font-size:8.3px!important;
+  }
+
+  .hero-device img{
+    top:24px!important;
+    right:-174px!important;
+    width:410px!important;
+  }
+
+  .hero-actions{
+    bottom:68px!important;
+  }
+
+  .hero-cta{
+    min-height:48px!important;
+    font-size:11.5px!important;
+  }
+}
+
 </style>
 </head>
 
@@ -2526,13 +2722,9 @@
         </p>
 
         <div class="hero-actions">
-          <a class="button primary hero-cta" href="https://app.tdmksystems.com/?origen=landing_publica">
+          <a class="button primary hero-cta" href="https://app.tdmksystems.com/?origen=landing_hero">
             Analizar mi trading <strong class="hero-cta-free">GRATIS</strong>
-            <span class="hero-cta-arrow" aria-hidden="true">
-              <svg viewBox="0 0 24 24" focusable="false">
-                <path d="M5 12h13M13 7l5 5-5 5"/>
-              </svg>
-            </span>
+            
           </a>
         </div>
       </div>

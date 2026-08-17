@@ -2878,6 +2878,85 @@
   }
 }
 
+
+/* =========================================================
+   V42 — HERO MOBILE · CTA inferior SIN TOCAR DESKTOP
+   ========================================================= */
+
+/* Desktop y tablet conservan exactamente la composición V40 */
+.hero-actions-mobile{
+  display:none;
+}
+
+/* Mobile únicamente */
+@media(max-width:640px){
+
+  /*
+    Ocultamos SOLO en mobile el CTA original que vive dentro de hero-copy.
+    En desktop sigue exactamente donde estaba en V40.
+  */
+  .hero-copy > .hero-actions{
+    display:none!important;
+  }
+
+  /*
+    CTA mobile independiente, anclado respecto a todo el hero-grid.
+    Va en la franja inferior indicada, por encima de la curva.
+  */
+  .hero-actions-mobile{
+    position:absolute!important;
+    z-index:30!important;
+    left:0!important;
+    right:0!important;
+    bottom:72px!important;
+    width:100%!important;
+    display:block!important;
+    margin:0!important;
+    padding:0!important;
+    pointer-events:auto!important;
+  }
+
+  .hero-actions-mobile .hero-cta{
+    width:100%!important;
+    min-width:0!important;
+    min-height:54px!important;
+    margin:0!important;
+    padding:0 18px!important;
+    border-radius:14px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:6px!important;
+    font-size:12.5px!important;
+    white-space:nowrap!important;
+    box-shadow:
+      0 18px 40px rgba(23,105,255,.34),
+      0 0 0 1px rgba(255,255,255,.06) inset!important;
+  }
+
+  .hero-actions-mobile .hero-cta-free{
+    color:#fff!important;
+    font-weight:950!important;
+  }
+
+  /* No hay botón generado por CSS */
+  .hero-device::after{
+    content:none!important;
+    display:none!important;
+  }
+}
+
+@media(max-width:390px){
+  .hero-actions-mobile{
+    bottom:70px!important;
+  }
+
+  .hero-actions-mobile .hero-cta{
+    min-height:52px!important;
+    font-size:12px!important;
+  }
+}
+
 </style>
 </head>
 
@@ -2918,6 +2997,13 @@
           loading="eager"
           decoding="async"
         >
+      </div>
+
+      <!-- CTA exclusivo para mobile. Desktop conserva su CTA original. -->
+      <div class="hero-actions-mobile">
+        <a class="button primary hero-cta" href="https://app.tdmksystems.com/?origen=landing_hero">
+          Analizar mi trading <strong class="hero-cta-free">GRATIS</strong>
+        </a>
       </div>
     </div>
   </section>

@@ -4163,6 +4163,70 @@
   }
 }
 
+
+/* =========================================================
+   V59 — TRANSICIÓN FINAL CURVA + GRADIENTE
+   PLANES → CIERRE
+   ========================================================= */
+
+/* Neutraliza cualquier pseudo-transición antigua del bloque Planes */
+.offer.shape-soft::after{
+  display:none!important;
+  content:none!important;
+}
+
+/*
+  Curva real entre blanco y navy.
+  No hay pico, recta ni bloque intermedio.
+*/
+.offer-closing-transition{
+  position:relative!important;
+  z-index:5!important;
+  width:100%!important;
+  height:164px!important;
+  margin-top:-1px!important;
+  margin-bottom:-38px!important;
+  overflow:hidden!important;
+  background:#ffffff!important;
+  pointer-events:none!important;
+}
+
+.offer-closing-transition svg{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+}
+
+/* El cierre nace ya bajo la curva, con el mismo navy final */
+.closing{
+  margin-top:0!important;
+  padding-top:150px!important;
+  border-top:0!important;
+  box-shadow:none!important;
+  background:
+    radial-gradient(circle at 50% 0%,rgba(30,105,255,.20),transparent 30%),
+    linear-gradient(180deg,#07111f 0%,#050a12 100%)!important;
+}
+
+/* Mobile */
+@media(max-width:640px){
+  .offer-closing-transition{
+    height:116px!important;
+    margin-bottom:-28px!important;
+  }
+
+  .closing{
+    padding-top:110px!important;
+  }
+}
+
+@media(max-width:390px){
+  .offer-closing-transition{
+    height:108px!important;
+    margin-bottom:-26px!important;
+  }
+}
+
 </style>
 </head>
 
@@ -4519,34 +4583,35 @@
     </div>
   </section>
 
-  <!-- Transición Planes → Cierre -->
+  <!-- Transición Planes → Cierre · curva orgánica con gradiente -->
   <div class="offer-closing-transition" aria-hidden="true">
-    <svg viewBox="0 0 1440 160" preserveAspectRatio="none">
+    <svg viewBox="0 0 1440 180" preserveAspectRatio="none">
       <defs>
         <linearGradient id="offerClosingGradient" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stop-color="#ffffff"/>
-          <stop offset="34%" stop-color="#f5f8fc"/>
-          <stop offset="68%" stop-color="#dfe8f5"/>
-          <stop offset="88%" stop-color="#526a8a"/>
+          <stop offset="28%" stop-color="#f5f8fc"/>
+          <stop offset="55%" stop-color="#dbe6f4"/>
+          <stop offset="78%" stop-color="#7890af"/>
           <stop offset="100%" stop-color="#07111f"/>
         </linearGradient>
       </defs>
+
       <path
         class="offer-closing-fill"
         d="
-          M0,34
-          C230,18 430,20 650,40
-          C870,60 1090,62 1440,30
-          L1440,160
-          L0,160
+          M0,54
+          C190,18 395,22 610,48
+          C835,76 1080,82 1440,38
+          L1440,180
+          L0,180
           Z
         "
+        fill="url(#offerClosingGradient)"
       />
     </svg>
   </div>
 
-
-  <!-- =======================================================
+<!-- =======================================================
        08 — CIERRE
        ======================================================= -->
 <section class="closing">

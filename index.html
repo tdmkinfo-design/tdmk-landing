@@ -3179,6 +3179,230 @@
   }
 }
 
+
+/* =========================================================
+   V47 — LANDING CORTA
+   Módulo 2 = Journal Automático
+   Orden:
+   Hero → Journal → Fundadores → Dashboard → Métricas →
+   Control Center → Starter/Trader → Cierre
+   ========================================================= */
+
+/* =========================================================
+   JOURNAL V47
+   ========================================================= */
+
+.journal-v47{
+  padding:92px 0 112px;
+  background:
+    radial-gradient(circle at 88% 15%,rgba(23,105,255,.07),transparent 26%),
+    #fff;
+  color:#0c1017;
+}
+
+.journal-v47-grid{
+  display:grid;
+  grid-template-columns:.72fr 1.28fr;
+  gap:52px;
+  align-items:center;
+}
+
+.journal-v47-copy h2{
+  max-width:620px;
+  margin:0;
+  font-size:clamp(48px,5.5vw,78px);
+  line-height:.93;
+  letter-spacing:-.065em;
+}
+
+.journal-v47-copy h2 span{
+  color:#1769ff;
+}
+
+.journal-v47-copy>p{
+  max-width:560px;
+  margin:21px 0 0;
+  color:#667386;
+  font-size:15.5px;
+  line-height:1.56;
+}
+
+.journal-v47-points{
+  display:grid;
+  gap:0;
+  margin-top:24px;
+  border-top:1px solid #dde5ef;
+}
+
+.journal-v47-points>div{
+  display:grid;
+  grid-template-columns:28px 1fr;
+  gap:11px;
+  padding:13px 0;
+  border-bottom:1px solid #dde5ef;
+}
+
+.journal-v47-points>div>span{
+  width:25px;
+  height:25px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:0;
+  border-radius:50%;
+  color:#26bb65;
+  background:rgba(38,187,101,.08);
+  border:1px solid rgba(38,187,101,.25);
+  font-size:10px;
+  font-weight:900;
+  line-height:1;
+}
+
+.journal-v47-points b{
+  display:block;
+  color:#172033;
+  font-size:12.5px;
+}
+
+.journal-v47-points small{
+  display:block;
+  margin-top:3px;
+  color:#7a8799;
+  font-size:10px;
+  line-height:1.4;
+}
+
+.journal-v47-visual{
+  min-width:0;
+}
+
+.journal-v47-browser{
+  overflow:hidden;
+  width:100%;
+  border-radius:22px;
+  background:#07111f;
+  border:1px solid rgba(60,122,218,.18);
+  box-shadow:
+    0 38px 86px rgba(31,50,78,.17),
+    0 0 0 1px rgba(255,255,255,.02) inset;
+}
+
+.journal-v47-bar{
+  height:36px;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  padding:0 13px;
+  color:#75869c;
+  background:#0a1626;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  font-size:8px;
+}
+
+.journal-v47-bar i{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#516176;
+}
+
+.journal-v47-bar span{
+  margin-left:6px;
+}
+
+.journal-v47-browser img{
+  display:block;
+  width:100%;
+  height:auto;
+}
+
+/* Programa Fundador queda visualmente separado del Journal */
+.founder{
+  padding-top:94px!important;
+}
+
+/* La sección de planes ya no contiene compatibilidad */
+.offer .plans-head{
+  margin-top:0!important;
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+@media(max-width:980px){
+  .journal-v47-grid{
+    grid-template-columns:1fr;
+    gap:32px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+@media(max-width:640px){
+
+  .journal-v47{
+    padding:68px 0 78px;
+  }
+
+  .journal-v47-grid{
+    display:flex;
+    flex-direction:column;
+    gap:24px;
+  }
+
+  .journal-v47-copy h2{
+    font-size:41px;
+    line-height:.95;
+  }
+
+  .journal-v47-copy>p{
+    margin-top:16px;
+    font-size:13px;
+    line-height:1.50;
+  }
+
+  .journal-v47-points{
+    margin-top:18px;
+  }
+
+  .journal-v47-points>div{
+    grid-template-columns:26px 1fr;
+    padding:10px 0;
+  }
+
+  .journal-v47-points>div>span{
+    width:23px;
+    height:23px;
+  }
+
+  .journal-v47-points b{
+    font-size:11px;
+  }
+
+  .journal-v47-points small{
+    font-size:9px;
+  }
+
+  .journal-v47-browser{
+    border-radius:15px;
+  }
+
+  .journal-v47-bar{
+    height:29px;
+    padding:0 10px;
+  }
+
+  /*
+    La captura es panorámica. En móvil ocupa todo el ancho útil;
+    no la forzamos a una altura artificial ni recortamos datos.
+  */
+  .journal-v47-browser img{
+    width:100%;
+    height:auto;
+  }
+}
+
 </style>
 </head>
 
@@ -3189,7 +3413,7 @@
   <!-- =======================================================
        01 — HERO
        ======================================================= -->
-  <section class="hero shape-bottom shape-wave">
+<section class="hero shape-bottom shape-wave">
     <div class="wrap hero-grid">
       <div class="hero-copy reveal-left">
         <div class="hero-brand">TDMK SYSTEMS</div>
@@ -3231,274 +3455,64 @@
   </section>
 
   <!-- =======================================================
-       02 — PROBLEMA + SOLUCIÓN
+       02 — JOURNAL AUTOMÁTICO
        ======================================================= -->
-  <section class="problem-solution shape-bottom shape-slope" style="--next:#07111f;">
-    <div class="wrap">
+<section class="journal-v47 shape-bottom shape-soft" id="journal" style="--next:#e8f6ff;">
+  <div class="wrap journal-v47-grid">
 
-      <div class="problem-power-grid">
-        <div class="problem-power-copy reveal-left">
-          <div class="kicker">ANTES DE BUSCAR OTRA ESTRATEGIA</div>
+    <div class="journal-v47-copy reveal-left">
+      <div class="kicker">JOURNAL AUTOMÁTICO</div>
 
-          <h2>
-            Ganar dinero no responde
-            a la pregunta importante.
-          </h2>
+      <h2>
+        Opera.<br>
+        <span>El resto se registra solo.</span>
+      </h2>
 
-          <div class="problem-power-question">
-            ¿Por qué <span>funciona</span>?
-          </div>
+      <p>
+        Cada operación queda registrada automáticamente para que después puedas ver
+        qué hiciste, cuándo lo hiciste y qué resultado produjo, sin rellenar hojas
+        ni reconstruir tu operativa a mano.
+      </p>
 
-          <p>
-            El beneficio es solo el resultado final. Para saber si una estrategia
-            merece capital necesitas entender qué lo produce, cuánto riesgo consume
-            y si ese comportamiento puede repetirse.
-          </p>
+      <div class="journal-v47-points">
+        <div>
+          <span>✓</span>
+          <div><b>Sin rellenar operaciones</b><small>Tu histórico se construye mientras operas.</small></div>
         </div>
-
-        <div class="evidence-panel reveal-right">
-          <div class="evidence-top">
-            <span>RESULTADO</span>
-            <strong>+216,93 €</strong>
-            <em>≠ evidencia suficiente</em>
-          </div>
-
-          <div class="evidence-grid">
-            <div class="evidence-item">
-              <span>01</span>
-              <div>
-                <b>Ventaja</b>
-                <p>¿Existe edge o una buena racha?</p>
-              </div>
-            </div>
-
-            <div class="evidence-item">
-              <span>02</span>
-              <div>
-                <b>Riesgo</b>
-                <p>¿Cuánto capital expones realmente?</p>
-              </div>
-            </div>
-
-            <div class="evidence-item">
-              <span>03</span>
-              <div>
-                <b>Consistencia</b>
-                <p>¿El resultado depende de unas pocas operaciones?</p>
-              </div>
-            </div>
-
-            <div class="evidence-item">
-              <span>04</span>
-              <div>
-                <b>Robustez</b>
-                <p>¿Podrías defenderla sin hablar de beneficio?</p>
-              </div>
-            </div>
-          </div>
+        <div>
+          <span>✓</span>
+          <div><b>Todo queda contextualizado</b><small>Sesión, símbolo, duración, cierres y resultado.</small></div>
         </div>
-      </div>
-
-      <div class="tdmk-flow reveal">
-        <div class="tdmk-flow-platforms">
-          <div class="tdmk-platform">
-            <img src="mt4-logo.png" alt="MetaTrader 4">
-            <div><b>MetaTrader 4</b><span>Tu operativa</span></div>
-          </div>
-
-          <div class="tdmk-platform">
-            <img src="mt5-logo.png" alt="MetaTrader 5">
-            <div><b>MetaTrader 5</b><span>Tu operativa</span></div>
-          </div>
-        </div>
-
-        <div class="flow-pulse">→</div>
-
-        <div class="tdmk-core">
-          <small>TDMK SYSTEMS</small>
-          <strong>Registra · Mide · Controla</strong>
-        </div>
-
-        <div class="flow-pulse">→</div>
-
-        <div class="tdmk-outcome">
-          <span>Menos intuición</span>
-          <strong>Más criterio.</strong>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- =======================================================
-       03 — JOURNAL
-       ======================================================= -->
-  <section class="journal shape-bottom shape-tilt" id="journal" style="--next:#eef4ff;">
-    <div class="wrap module-grid journal-real-grid">
-
-      <div class="module-copy reveal-left">
-        <div class="kicker light">JOURNAL AUTOMÁTICO</div>
-
-        <h2>
-          Cada operación deja
-          una huella.
-        </h2>
-
-        <p>
-          TDMK registra automáticamente tu operativa para que puedas revisar
-          sesiones, símbolos, duración, cierres, resultados y patrones sin llevar
-          un Excel paralelo ni apuntar nada a mano.
-        </p>
-
-        <div class="journal-real-points">
-          <div><span>✓</span><b>Registro automático</b></div>
-          <div><span>✓</span><b>Filtros y contexto</b></div>
-          <div><span>✓</span><b>Histórico real de tu cuenta</b></div>
-        </div>
-      </div>
-
-      <div class="journal-real-visual reveal-right">
-        <div class="journal-browser">
-          <div class="journal-browser-bar">
-            <i></i><i></i><i></i>
-            <span>Journal · TDMK Systems</span>
-          </div>
-          <img
-            src="Journal PC.png"
-            alt="Journal real de TDMK Systems en versión escritorio"
-            loading="lazy"
-            decoding="async"
-          >
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- =======================================================
-       04 — ACTIVIDAD REAL
-       ======================================================= -->
-  <section class="activity shape-bottom shape-bite" id="actividad" style="--next:#fff;">
-    <div class="wrap activity-inner">
-      <div class="reveal-left">
-        <div class="kicker">LO QUE PASA DENTRO DE TDMK</div>
-        <h2>Datos reales.<br>Actividad real.</h2>
-      </div>
-
-      <div class="activity-stats reveal-right">
-        <div class="activity-stat" id="statTrades">
-          <strong data-prefix="+">—</strong>
-          <span>Trades registrados</span>
-        </div>
-        <div class="activity-stat" id="statAccounts">
-          <strong data-prefix="+">—</strong>
-          <span>Cuentas conectadas</span>
-        </div>
-        <div class="activity-stat" id="statUsers">
-          <strong data-prefix="+">—</strong>
-          <span>Usuarios activos</span>
+        <div>
+          <span>✓</span>
+          <div><b>Un histórico que puedes revisar</b><small>Deja de depender de memoria, capturas o Excel.</small></div>
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- =======================================================
-       05 — DASHBOARD
-       ======================================================= -->
-  <section class="dashboard shape-bottom shape-cut" id="dashboard" style="--next:#07111f;">
-    <div class="wrap dashboard-grid">
-      <div class="reveal-left">
-        <div class="kicker">DASHBOARD</div>
-        <h2>Todo tu trading.<br>Una sola fotografía.</h2>
-        <p>Balance, equity, curva, PnL y KPIs esenciales para entender en segundos qué está pasando.</p>
-
-        <ul class="dashboard-list">
-          <li>Patrimonio y rendimiento en tiempo real</li>
-          <li>Curva de balance e histórico</li>
-          <li>KPIs principales sin ruido</li>
-        </ul>
-      </div>
-
-      <div class="reveal-right">
-        <img src="Dashboard Blanco.png" alt="Dashboard de TDMK Systems" loading="lazy" decoding="async">
-      </div>
-    </div>
-  </section>
-
-  <!-- =======================================================
-       06 — MÉTRICAS AVANZADAS
-       ======================================================= -->
-  <section class="metrics shape-bottom shape-soft" id="metrics" style="--next:#f5f8fc;">
-    <div class="wrap metrics-grid">
-      <img
-        class="reveal-left"
-        src="metricas avanzadas.png"
-        alt="Métricas Avanzadas de TDMK Systems"
-        loading="lazy"
-        decoding="async"
-      >
-
-      <div class="reveal-right">
-        <div class="kicker light">MÉTRICAS AVANZADAS</div>
-        <h2>¿Tu estrategia funciona… o solo has tenido <span class="accent">suerte</span>?</h2>
-        <p>
-          Analiza esperanza, R/R, drawdown, consistencia, sesiones y comportamiento
-          para reducir la fricción entre “ganar” y entender por qué ganas.
-        </p>
-
-        <div class="metrics-pills">
-          <span class="metrics-pill">Esperanza</span>
-          <span class="metrics-pill">R/R</span>
-          <span class="metrics-pill">Drawdown</span>
-          <span class="metrics-pill">Robustez</span>
+    <div class="journal-v47-visual reveal-right">
+      <div class="journal-v47-browser">
+        <div class="journal-v47-bar">
+          <i></i><i></i><i></i>
+          <span>Journal · TDMK Systems</span>
         </div>
+
+        <img
+          src="Journal PC.png"
+          alt="Journal automático real de TDMK Systems"
+          loading="lazy"
+          decoding="async"
+        >
       </div>
     </div>
-  </section>
+
+  </div>
+</section>
 
   <!-- =======================================================
-       07 — CONTROL CENTER
+       03 — PROGRAMA FUNDADOR
        ======================================================= -->
-  <section class="control shape-bottom shape-slope" id="control-center" style="--next:#e8f6ff;">
-    <div class="wrap control-grid">
-      <div class="reveal-left">
-        <div class="kicker">CONTROL CENTER</div>
-        <h2>Si algo pasa,<br>actúa.</h2>
-        <p>
-          Balance, equity, floating, drawdown, PnL y acciones críticas sobre tus cuentas
-          desde un único lugar.
-        </p>
-
-        <div class="control-checks">
-          <div class="control-check">
-            <span class="control-icon">✓</span>
-            <div><strong>Control de disciplina</strong><span>Bloqueo automático por límites de riesgo.</span></div>
-          </div>
-          <div class="control-check">
-            <span class="control-icon">✓</span>
-            <div><strong>Break Even</strong><span>Protege posiciones abiertas desde el panel.</span></div>
-          </div>
-          <div class="control-check">
-            <span class="control-icon">✓</span>
-            <div><strong>Cierre de emergencia</strong><span>Actúa sobre todas las posiciones cuando lo necesites.</span></div>
-          </div>
-          <div class="control-check">
-            <span class="control-icon">✓</span>
-            <div><strong>Bloqueo de cuenta</strong><span>Impide nuevas operaciones desde TDMK.</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="reveal-right">
-        <img src="control-center.png" alt="Control Center real de TDMK Systems" loading="lazy" decoding="async">
-      </div>
-    </div>
-  </section>
-
-  <!-- =======================================================
-       08 — PROGRAMA FUNDADOR
-       ======================================================= -->
-  <section class="founder shape-bottom shape-tilt" id="fundadores" style="--next:#fff;">
+<section class="founder shape-bottom shape-tilt" id="fundadores" style="--next:#fff;">
     <div class="wrap founder-card">
       <div class="reveal-left">
         <div class="kicker">
@@ -3540,28 +3554,104 @@
   </section>
 
   <!-- =======================================================
-       09 — COMPATIBILIDAD + PLANES
+       04 — DASHBOARD
        ======================================================= -->
-  <section class="offer shape-bottom shape-soft" id="planes" style="--next:#07111f;">
-    <div class="wrap">
+<section class="dashboard shape-bottom shape-cut" id="dashboard" style="--next:#07111f;">
+    <div class="wrap dashboard-grid">
+      <div class="reveal-left">
+        <div class="kicker">DASHBOARD</div>
+        <h2>Todo tu trading.<br>Una sola fotografía.</h2>
+        <p>Balance, equity, curva, PnL y KPIs esenciales para entender en segundos qué está pasando.</p>
 
-      <div class="compat reveal">
-        <div>
-          <div class="kicker">COMPATIBILIDAD</div>
-          <h2>Conecta lo que ya utilizas.</h2>
+        <ul class="dashboard-list">
+          <li>Patrimonio y rendimiento en tiempo real</li>
+          <li>Curva de balance e histórico</li>
+          <li>KPIs principales sin ruido</li>
+        </ul>
+      </div>
+
+      <div class="reveal-right">
+        <img src="Dashboard Blanco.png" alt="Dashboard de TDMK Systems" loading="lazy" decoding="async">
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================================
+       05 — MÉTRICAS AVANZADAS
+       ======================================================= -->
+<section class="metrics shape-bottom shape-soft" id="metrics" style="--next:#f5f8fc;">
+    <div class="wrap metrics-grid">
+      <img
+        class="reveal-left"
+        src="metricas avanzadas.png"
+        alt="Métricas Avanzadas de TDMK Systems"
+        loading="lazy"
+        decoding="async"
+      >
+
+      <div class="reveal-right">
+        <div class="kicker light">MÉTRICAS AVANZADAS</div>
+        <h2>¿Tu estrategia funciona… o solo has tenido <span class="accent">suerte</span>?</h2>
+        <p>
+          Analiza esperanza, R/R, drawdown, consistencia, sesiones y comportamiento
+          para reducir la fricción entre “ganar” y entender por qué ganas.
+        </p>
+
+        <div class="metrics-pills">
+          <span class="metrics-pill">Esperanza</span>
+          <span class="metrics-pill">R/R</span>
+          <span class="metrics-pill">Drawdown</span>
+          <span class="metrics-pill">Robustez</span>
         </div>
+      </div>
+    </div>
+  </section>
 
-        <div class="platforms-static">
-          <div class="platform-card">
-            <img src="mt4-logo.png" alt="MetaTrader 4">
-            <strong>MetaTrader 4</strong>
+  <!-- =======================================================
+       06 — CONTROL CENTER
+       ======================================================= -->
+<section class="control shape-bottom shape-slope" id="control-center" style="--next:#e8f6ff;">
+    <div class="wrap control-grid">
+      <div class="reveal-left">
+        <div class="kicker">CONTROL CENTER</div>
+        <h2>Si algo pasa,<br>actúa.</h2>
+        <p>
+          Balance, equity, floating, drawdown, PnL y acciones críticas sobre tus cuentas
+          desde un único lugar.
+        </p>
+
+        <div class="control-checks">
+          <div class="control-check">
+            <span class="control-icon">✓</span>
+            <div><strong>Control de disciplina</strong><span>Bloqueo automático por límites de riesgo.</span></div>
           </div>
-          <div class="platform-card">
-            <img src="mt5-logo.png" alt="MetaTrader 5">
-            <strong>MetaTrader 5</strong>
+          <div class="control-check">
+            <span class="control-icon">✓</span>
+            <div><strong>Break Even</strong><span>Protege posiciones abiertas desde el panel.</span></div>
+          </div>
+          <div class="control-check">
+            <span class="control-icon">✓</span>
+            <div><strong>Cierre de emergencia</strong><span>Actúa sobre todas las posiciones cuando lo necesites.</span></div>
+          </div>
+          <div class="control-check">
+            <span class="control-icon">✓</span>
+            <div><strong>Bloqueo de cuenta</strong><span>Impide nuevas operaciones desde TDMK.</span></div>
           </div>
         </div>
       </div>
+
+      <div class="reveal-right">
+        <img src="control-center.png" alt="Control Center real de TDMK Systems" loading="lazy" decoding="async">
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================================
+       07 — PLANES · STARTER + TRADER
+       ======================================================= -->
+<section class="offer shape-bottom shape-soft" id="planes" style="--next:#07111f;">
+    <div class="wrap">
+</div>
 
       <div class="plans-head reveal">
         <div class="kicker">EMPIEZA SIN FRICCIÓN</div>
@@ -3620,9 +3710,9 @@
   </section>
 
   <!-- =======================================================
-       10 — CIERRE
+       08 — CIERRE
        ======================================================= -->
-  <section class="closing">
+<section class="closing">
     <div class="wrap reveal">
       <h2>No se puede cambiar aquello que no se mide.</h2>
       <p>

@@ -3403,6 +3403,160 @@
   }
 }
 
+
+/* =========================================================
+   V48 — JOURNAL + ACTIVIDAD REAL + FUNDADOR
+   ========================================================= */
+
+/* JOURNAL más compacto */
+.journal-v47{
+  padding-top:84px!important;
+  padding-bottom:118px!important;
+}
+.journal-v47-grid{align-items:start!important;}
+.journal-v47-copy>p{display:none!important;}
+.journal-v47-points{margin-top:22px!important;}
+
+/* ACTIVIDAD REAL integrada dentro del módulo 2 */
+.journal-activity{
+  margin-top:38px;
+  display:grid;
+  grid-template-columns:.78fr 1.22fr;
+  gap:22px;
+  align-items:center;
+  padding:20px 22px;
+  border-radius:22px;
+  color:#fff;
+  background:
+    radial-gradient(circle at 90% 0%,rgba(37,112,255,.22),transparent 34%),
+    linear-gradient(145deg,#06111f,#0b1d37);
+  border:1px solid rgba(78,139,232,.16);
+  box-shadow:0 20px 55px rgba(31,52,84,.12);
+}
+.journal-activity-copy span{
+  display:block;
+  color:#79afff;
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:.13em;
+}
+.journal-activity-copy strong{
+  display:block;
+  max-width:360px;
+  margin-top:7px;
+  font-size:18px;
+  line-height:1.08;
+  letter-spacing:-.03em;
+}
+.journal-activity-stats{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:7px;
+}
+.journal-activity-stat{
+  min-height:82px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  padding:10px 6px;
+  border-radius:14px;
+  background:rgba(255,255,255,.055);
+  border:1px solid rgba(255,255,255,.08);
+  text-align:center;
+}
+.journal-activity-stat b{
+  color:#fff;
+  font-size:25px;
+  line-height:1;
+  letter-spacing:-.04em;
+  font-variant-numeric:tabular-nums;
+}
+.journal-activity-stat small{
+  margin-top:7px;
+  color:#7fa6d9;
+  font-size:7.2px;
+  font-weight:900;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+/* JOURNAL -> FUNDADOR: curva orgánica visible */
+.journal-v47.shape-soft::after{
+  height:96px!important;
+  left:-10%!important;
+  width:120%!important;
+  right:auto!important;
+  bottom:-46px!important;
+  border-radius:50% 50% 0 0 / 100% 100% 0 0!important;
+  transform:rotate(-1.2deg)!important;
+  clip-path:none!important;
+  background:#cfe6ff!important;
+  box-shadow:0 -14px 40px rgba(64,136,230,.10);
+}
+
+/* FUNDADOR: más contraste */
+.founder{
+  padding-top:112px!important;
+  background:
+    radial-gradient(circle at 12% 10%,rgba(68,173,255,.28),transparent 30%),
+    radial-gradient(circle at 88% 86%,rgba(155,108,255,.18),transparent 28%),
+    linear-gradient(135deg,#cfe6ff 0%,#d9ecff 38%,#e8e1ff 100%)!important;
+}
+
+/* FUNDADOR -> DASHBOARD: curva suave y asimétrica */
+.founder.shape-tilt::after{
+  height:104px!important;
+  left:-14%!important;
+  width:128%!important;
+  right:auto!important;
+  bottom:-50px!important;
+  clip-path:none!important;
+  transform:rotate(1.4deg)!important;
+  border-radius:44% 56% 0 0 / 100% 82% 0 0!important;
+  background:#fff!important;
+}
+
+@media(max-width:640px){
+  .journal-v47{
+    padding-top:66px!important;
+    padding-bottom:88px!important;
+  }
+  .journal-v47-copy h2{margin-bottom:0!important;}
+  .journal-v47-points{margin-top:18px!important;}
+
+  .journal-activity{
+    margin-top:26px;
+    grid-template-columns:1fr;
+    gap:14px;
+    padding:16px;
+    border-radius:18px;
+  }
+  .journal-activity-copy strong{font-size:15px;}
+  .journal-activity-stats{gap:5px;}
+  .journal-activity-stat{
+    min-height:72px;
+    border-radius:12px;
+  }
+  .journal-activity-stat b{font-size:21px;}
+  .journal-activity-stat small{
+    font-size:6.2px;
+    letter-spacing:.05em;
+  }
+
+  .journal-v47.shape-soft::after{
+    height:62px!important;
+    bottom:-30px!important;
+  }
+
+  .founder{padding-top:88px!important;}
+
+  .founder.shape-tilt::after{
+    height:66px!important;
+    bottom:-32px!important;
+  }
+}
+
 </style>
 </head>
 
@@ -3467,14 +3621,7 @@
         Opera.<br>
         <span>El resto se registra solo.</span>
       </h2>
-
-      <p>
-        Cada operación queda registrada automáticamente para que después puedas ver
-        qué hiciste, cuándo lo hiciste y qué resultado produjo, sin rellenar hojas
-        ni reconstruir tu operativa a mano.
-      </p>
-
-      <div class="journal-v47-points">
+<div class="journal-v47-points">
         <div>
           <span>✓</span>
           <div><b>Sin rellenar operaciones</b><small>Tu histórico se construye mientras operas.</small></div>
@@ -3507,6 +3654,30 @@
     </div>
 
   </div>
+
+    <div class="journal-activity reveal" aria-label="Actividad real dentro de TDMK">
+      <div class="journal-activity-copy">
+        <span>LO QUE PASA DENTRO DE TDMK</span>
+        <strong>La plataforma ya está generando actividad real.</strong>
+      </div>
+
+      <div class="journal-activity-stats">
+        <div class="journal-activity-stat" id="statTrades">
+          <b data-prefix="+">—</b>
+          <small>Trades registrados</small>
+        </div>
+
+        <div class="journal-activity-stat" id="statAccounts">
+          <b data-prefix="+">—</b>
+          <small>Cuentas conectadas</small>
+        </div>
+
+        <div class="journal-activity-stat" id="statUsers">
+          <b data-prefix="+">—</b>
+          <small>Usuarios activos</small>
+        </div>
+      </div>
+    </div>
 </section>
 
   <!-- =======================================================

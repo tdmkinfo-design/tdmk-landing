@@ -2957,6 +2957,94 @@
   }
 }
 
+
+/* =========================================================
+   V43 — HERO MOBILE · ajuste visual
+   Desktop permanece intacto
+   ========================================================= */
+@media(max-width:640px){
+
+  /* Mensaje principal más legible */
+  .hero h1{
+    font-size:26px!important;
+    line-height:1.01!important;
+  }
+
+  .hero h1 .hero-second-line{
+    font-size:.72em!important;
+    line-height:1.08!important;
+  }
+
+  /* Un poco más de presencia para el texto explicativo */
+  .hero p{
+    font-size:9.5px!important;
+    line-height:1.45!important;
+  }
+
+  /* Teléfono ligeramente mayor, manteniendo su alineación superior */
+  .hero-device img{
+    width:445px!important;
+    right:-178px!important;
+  }
+
+  /* CTA inferior centrado, ya no ocupa todo el ancho */
+  .hero-actions-mobile{
+    left:50%!important;
+    right:auto!important;
+    width:auto!important;
+    transform:translateX(-50%)!important;
+    bottom:72px!important;
+  }
+
+  .hero-actions-mobile .hero-cta{
+    width:auto!important;
+    min-width:245px!important;
+    min-height:56px!important;
+    padding:0 28px!important;
+    border-radius:16px!important;
+    font-size:14px!important;
+    font-weight:850!important;
+  }
+
+  .hero-actions-mobile .hero-cta-free{
+    font-size:14px!important;
+  }
+}
+
+@media(max-width:390px){
+  .hero h1{
+    font-size:24px!important;
+  }
+
+  .hero h1 .hero-second-line{
+    font-size:.72em!important;
+  }
+
+  .hero p{
+    font-size:9px!important;
+  }
+
+  .hero-device img{
+    width:430px!important;
+    right:-180px!important;
+  }
+
+  .hero-actions-mobile{
+    bottom:70px!important;
+  }
+
+  .hero-actions-mobile .hero-cta{
+    min-width:230px!important;
+    min-height:54px!important;
+    padding:0 24px!important;
+    font-size:13.5px!important;
+  }
+
+  .hero-actions-mobile .hero-cta-free{
+    font-size:13.5px!important;
+  }
+}
+
 </style>
 </head>
 

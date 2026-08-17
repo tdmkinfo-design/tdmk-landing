@@ -3559,9 +3559,11 @@
 
 
 /* =========================================================
-   V49 — ACTIVIDAD TDMK ALINEADA + TRANSICIÓN MOBILE
+   V50 — ACTIVIDAD ALINEADA + CURVA AZUL FUERTE
    ========================================================= */
 @media (max-width:640px){
+
+  /* La tarjeta queda alineada con la imagen del Journal */
   .journal-activity{
     width:100% !important;
     max-width:none !important;
@@ -3570,38 +3572,342 @@
     border-radius:15px !important;
     padding:16px 15px !important;
   }
-  .journal-v47 > .wrap{overflow:visible !important;}
+
   .journal-v47-browser,
   .journal-activity{
     margin-left:0 !important;
     margin-right:0 !important;
   }
+
+  /*
+    Journal -> Fundador:
+    curva azul fuerte, con la caída/pico visual hacia la izquierda.
+    Mismo universo cromático que "Lo que pasa dentro de TDMK".
+  */
   .journal-v47.shape-soft::after{
     content:"" !important;
     position:absolute !important;
     z-index:2 !important;
-    left:-8% !important;
+    left:-12% !important;
     right:auto !important;
-    width:116% !important;
-    height:118px !important;
-    bottom:-52px !important;
-    background:#cfe6ff !important;
+    width:124% !important;
+    height:122px !important;
+    bottom:-54px !important;
+
+    background:
+      radial-gradient(circle at 72% 18%, rgba(33,108,255,.34), transparent 34%),
+      linear-gradient(105deg,#071a35 0%,#0a2c5b 42%,#1264c9 100%) !important;
+
     clip-path:none !important;
-    transform:rotate(4.8deg) !important;
+    transform:rotate(-4.8deg) !important;
     transform-origin:50% 50% !important;
-    border-radius:50% 50% 0 0 / 78% 78% 0 0 !important;
-    box-shadow:none !important;
+    border-radius:50% 50% 0 0 / 82% 82% 0 0 !important;
+    box-shadow:0 -12px 36px rgba(9,57,126,.14) !important;
     pointer-events:none !important;
   }
-  .journal-v47{padding-bottom:124px !important;}
-  .founder{padding-top:108px !important;}
+
+  .journal-v47{
+    padding-bottom:124px !important;
+  }
+
+  .founder{
+    padding-top:108px !important;
+  }
 }
+
 @media (max-width:390px){
-  .journal-activity{padding:15px 14px !important;}
+  .journal-activity{
+    padding:15px 14px !important;
+  }
+
   .journal-v47.shape-soft::after{
-    height:112px !important;
-    bottom:-50px !important;
-    transform:rotate(5.2deg) !important;
+    height:116px !important;
+    bottom:-52px !important;
+    transform:rotate(-5.2deg) !important;
+  }
+}
+
+
+/* =========================================================
+   V51 — BANDERA ORGÁNICA HACIA LA IZQUIERDA
+   ========================================================= */
+
+/* Oculta la nueva bandera fuera de mobile. Desktop queda como estaba. */
+.journal-flag-transition{
+  display:none;
+}
+
+@media(max-width:640px){
+
+  /*
+    Imagen Journal y tarjeta de actividad comparten exactamente
+    la misma alineación lateral.
+  */
+  .journal-v47-visual{
+    width:calc(100% - 48px)!important;
+    margin-left:24px!important;
+    margin-right:24px!important;
+  }
+
+  .journal-activity{
+    width:calc(100% - 48px)!important;
+    margin:26px 24px 0!important;
+    padding:16px 15px!important;
+    border-radius:15px!important;
+    box-sizing:border-box!important;
+  }
+
+  /*
+    Anulamos por completo la transición anterior en forma de cúpula.
+  */
+  .journal-v47.shape-soft::after{
+    display:none!important;
+    content:none!important;
+  }
+
+  /*
+    La nueva transición es una BANDERA orgánica:
+    - apunta hacia la izquierda;
+    - su punta comienza exactamente en la misma vertical
+      que la captura del Journal (24px);
+    - azul fuerte, igual que la tarjeta de actividad;
+    - la parte inferior cae progresivamente hacia la derecha.
+  */
+  .journal-flag-transition{
+    position:relative;
+    z-index:3;
+    display:block;
+    width:calc(100% - 48px);
+    height:118px;
+    margin:0 24px -40px;
+    pointer-events:none;
+    overflow:visible;
+  }
+
+  .journal-flag-transition svg{
+    display:block;
+    width:100%;
+    height:100%;
+    overflow:visible;
+  }
+
+  .journal-v47{
+    padding-bottom:92px!important;
+  }
+
+  /*
+    Fundadores arranca después de la bandera.
+    Mantiene el fondo azul claro del módulo siguiente.
+  */
+  .founder{
+    padding-top:112px!important;
+  }
+}
+
+@media(max-width:390px){
+
+  .journal-v47-visual{
+    width:calc(100% - 40px)!important;
+    margin-left:20px!important;
+    margin-right:20px!important;
+  }
+
+  .journal-activity{
+    width:calc(100% - 40px)!important;
+    margin-left:20px!important;
+    margin-right:20px!important;
+  }
+
+  .journal-flag-transition{
+    width:calc(100% - 40px);
+    height:112px;
+    margin-left:20px;
+    margin-right:20px;
+    margin-bottom:-38px;
+  }
+}
+
+
+/* =========================================================
+   V52 — TRANSICIÓN PROFESIONAL JOURNAL → FUNDADORES
+   ========================================================= */
+
+/* Neutralizamos transiciones anteriores del Journal */
+.journal-v47.shape-soft::after{
+  display:none!important;
+  content:none!important;
+}
+
+.journal-flag-transition{
+  display:none!important;
+}
+
+/* Transición única: curva suave + acento TDMK */
+.journal-founder-transition{
+  position:relative;
+  z-index:6;
+  width:100%;
+  height:126px;
+  margin-top:-1px;
+  margin-bottom:-1px;
+  overflow:hidden;
+  background:#fff;
+  pointer-events:none;
+}
+
+.journal-founder-transition svg{
+  display:block;
+  width:100%;
+  height:100%;
+}
+
+.journal-founder-accent{
+  fill:none;
+  stroke:#0a2c5b;
+  stroke-width:10;
+  stroke-linecap:round;
+  opacity:.96;
+}
+
+.journal-founder-fill{
+  fill:#cfe6ff;
+}
+
+.journal-v47{
+  padding-bottom:72px!important;
+}
+
+.founder{
+  margin-top:-2px!important;
+  padding-top:86px!important;
+  background:
+    radial-gradient(circle at 12% 10%,rgba(68,173,255,.28),transparent 30%),
+    radial-gradient(circle at 88% 86%,rgba(155,108,255,.18),transparent 28%),
+    linear-gradient(135deg,#cfe6ff 0%,#d9ecff 38%,#e8e1ff 100%)!important;
+}
+
+@media(max-width:640px){
+  .journal-founder-transition{
+    height:94px;
+  }
+
+  .journal-founder-accent{
+    stroke-width:8;
+  }
+
+  .journal-v47{
+    padding-bottom:58px!important;
+  }
+
+  .founder{
+    padding-top:72px!important;
+  }
+}
+
+@media(max-width:390px){
+  .journal-founder-transition{
+    height:88px;
+  }
+}
+
+
+/* =========================================================
+   V53 — TRANSICIÓN BLANCO → AZUL CLARO
+   ========================================================= */
+
+/* Eliminamos completamente la línea/acento azul fuerte */
+.journal-founder-accent{
+  display:none!important;
+  stroke:none!important;
+}
+
+/*
+  La propia curva pasa progresivamente del blanco del Journal
+  al azul claro del Programa Fundador.
+*/
+.journal-founder-transition{
+  background:#fff!important;
+}
+
+.journal-founder-fill{
+  fill:url(#journalFounderSoftGradient)!important;
+}
+
+
+/* =========================================================
+   V54 — TRANSICIÓN JOURNAL → FUNDADORES TOTALMENTE INTEGRADA
+   ========================================================= */
+
+/*
+  Eliminamos la sensación de "línea recta" haciendo que:
+  1) la transición invada ligeramente el inicio de Fundadores;
+  2) Fundadores continúe exactamente el mismo gradiente;
+  3) no exista ningún cambio brusco de color en el empalme.
+*/
+
+.journal-founder-transition{
+  height:150px!important;
+  margin-bottom:-34px!important;
+  background:#fff!important;
+}
+
+.journal-founder-transition svg{
+  height:100%!important;
+}
+
+/* Curva más profunda y natural */
+.journal-founder-fill{
+  fill:url(#journalFounderSoftGradient)!important;
+}
+
+/*
+  Fundadores empieza con el MISMO azul de cierre de la transición.
+  Sin borde, sin línea y sin cambio de tono visible.
+*/
+.founder{
+  margin-top:0!important;
+  padding-top:112px!important;
+  background:
+    radial-gradient(circle at 12% 10%,rgba(68,173,255,.20),transparent 32%),
+    radial-gradient(circle at 88% 86%,rgba(155,108,255,.14),transparent 30%),
+    linear-gradient(
+      180deg,
+      #cfe6ff 0%,
+      #d7eaff 18%,
+      #e1efff 42%,
+      #e9e5ff 100%
+    )!important;
+  border-top:none!important;
+  box-shadow:none!important;
+}
+
+/* El contenido de Fundadores se separa de la curva, no el fondo */
+.founder-card{
+  position:relative;
+  z-index:2;
+}
+
+/* MOBILE */
+@media(max-width:640px){
+
+  .journal-founder-transition{
+    height:120px!important;
+    margin-bottom:-30px!important;
+  }
+
+  .founder{
+    padding-top:96px!important;
+  }
+}
+
+@media(max-width:390px){
+  .journal-founder-transition{
+    height:112px!important;
+    margin-bottom:-28px!important;
+  }
+
+  .founder{
+    padding-top:90px!important;
   }
 }
 
@@ -3727,6 +4033,36 @@
       </div>
     </div>
 </section>
+
+  <!-- Transición Journal → Programa Fundador -->
+  <div class="journal-founder-transition" aria-hidden="true">
+    <svg viewBox="0 0 1440 150" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="journalFounderSoftGradient" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#ffffff"/>
+          <stop offset="38%" stop-color="#f4f9ff"/>
+          <stop offset="72%" stop-color="#dfedff"/>
+          <stop offset="100%" stop-color="#cfe6ff"/>
+        </linearGradient>
+      </defs>
+      <path
+        class="journal-founder-accent"
+        d="M0,44
+           C220,12 430,18 650,42
+           C870,66 1080,64 1440,24"
+      />
+      <path
+        class="journal-founder-fill"
+        d="M0,42
+           C210,20 420,26 640,50
+           C860,74 1090,78 1440,38
+           L1440,150
+           L0,150
+           Z"
+      />
+    </svg>
+  </div>
+
 
   <!-- =======================================================
        03 — PROGRAMA FUNDADOR

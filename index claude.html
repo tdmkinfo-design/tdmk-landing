@@ -1,0 +1,2722 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>TDMK Systems — Entiende cómo opera realmente tu estrategia</title>
+  <meta name="description" content="Conecta MetaTrader y analiza tu trading con Journal automático, Dashboard, Métricas Avanzadas y Control Center.">
+
+  <style>
+    :root{
+      --ink:#0c1017;
+      --paper:#ffffff;
+      --paper-soft:#f4f7fb;
+      --ice:#edf4ff;
+      --navy:#050b14;
+      --navy2:#071528;
+      --navy3:#0b203d;
+      --blue:#1769ff;
+      --blue2:#69a8ff;
+      --green:#48df84;
+      --red:#ff4b66;
+      --amber:#ffbf2f;
+      --muted:#677386;
+      --muted2:#8d9bb0;
+      --line:#dce4ee;
+      --max:1320px;
+      --safe:20px;
+      --radius:28px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;overflow-x:hidden}
+    body{
+      margin:0;
+      overflow-x:hidden;
+      font-family:Arial,Helvetica,sans-serif;
+      color:var(--ink);
+      background:var(--paper);
+      -webkit-font-smoothing:antialiased;
+    }
+
+    img{display:block;max-width:100%}
+    a{text-decoration:none;color:inherit}
+    button{font:inherit}
+    .wrap{width:min(calc(100% - 40px),var(--max));margin-inline:auto}
+
+    .kicker{
+      margin:0 0 14px;
+      color:var(--blue);
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+    }
+    .kicker.light{color:#8dbaff}
+
+    .section-title{
+      margin:0;
+      font-size:clamp(44px,5.5vw,78px);
+      line-height:.94;
+      letter-spacing:-.06em;
+    }
+
+    .copy{
+      max-width:620px;
+      margin:20px 0 0;
+      color:var(--muted);
+      font-size:17px;
+      line-height:1.55;
+    }
+    .copy.light{color:#94a3b8}
+
+    .button{
+      min-height:50px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:0 22px;
+      border-radius:999px;
+      font-size:13px;
+      font-weight:900;
+      transition:.2s ease;
+    }
+    .button:hover{transform:translateY(-2px)}
+    .button.primary{
+      color:#fff;
+      background:var(--blue);
+      box-shadow:0 16px 34px rgba(23,105,255,.25);
+    }
+
+    /* =========================================================
+       TRANSICIONES ORGÁNICAS
+       Cada bloque usa una geometría distinta.
+       ========================================================= */
+
+    .shape-bottom{position:relative;isolation:isolate}
+    .shape-bottom::after{
+      content:"";
+      position:absolute;
+      z-index:4;
+      pointer-events:none;
+      left:0;
+      right:0;
+      bottom:-1px;
+      height:64px;
+      background:var(--next,#fff);
+    }
+
+    .shape-wave::after{
+      clip-path:path("M0,38 C230,2 420,78 670,35 C930,-5 1120,54 1440,18 L1440,64 L0,64 Z");
+    }
+
+    .shape-slope::after{
+      clip-path:polygon(0 60%,100% 0,100% 100%,0 100%);
+    }
+
+    .shape-tilt::after{
+      clip-path:polygon(0 15%,100% 55%,100% 100%,0 100%);
+    }
+
+    .shape-bite::after{
+      left:-4%;
+      right:-4%;
+      height:78px;
+      border-radius:52% 48% 0 0 / 100% 100% 0 0;
+    }
+
+    .shape-soft::after{
+      left:-8%;
+      right:-8%;
+      height:72px;
+      border-radius:58% 42% 0 0 / 100% 100% 0 0;
+      transform:rotate(-1.2deg);
+    }
+
+    .shape-cut::after{
+      clip-path:polygon(0 34%,24% 4%,50% 48%,76% 8%,100% 32%,100% 100%,0 100%);
+    }
+
+    /* =========================================================
+       01 HERO
+       ========================================================= */
+
+    .hero{
+      min-height:100svh;
+      color:#fff;
+      background:
+        radial-gradient(circle at 80% 26%,rgba(50,119,255,.28),transparent 28%),
+        radial-gradient(circle at 12% 90%,rgba(23,105,255,.10),transparent 30%),
+        linear-gradient(180deg,#03070d 0%,#06101d 60%,#0a1930 100%);
+      --next:#fff;
+    }
+
+    .hero-grid{
+      min-height:100svh;
+      display:grid;
+      grid-template-columns:minmax(0,1.08fr) minmax(420px,.92fr);
+      gap:26px;
+      align-items:center;
+      padding:48px 0 68px;
+    }
+
+    .hero-copy{position:relative;z-index:3}
+    .hero-brand{
+      margin-bottom:22px;
+      color:#8dbaff;
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:.20em;
+    }
+
+    .hero h1{
+      max-width:820px;
+      margin:0;
+      font-size:clamp(58px,6.6vw,102px);
+      line-height:.90;
+      letter-spacing:-.075em;
+    }
+    .hero h1 .accent{color:#73aaff}
+
+    .hero p{
+      max-width:650px;
+      margin:24px 0 0;
+      color:#9babc0;
+      font-size:18px;
+      line-height:1.5;
+    }
+    .hero-actions{margin-top:28px}
+
+    .hero-device{
+      position:relative;
+      min-height:760px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .hero-device::before{
+      content:"";
+      position:absolute;
+      width:500px;
+      height:610px;
+      border-radius:50%;
+      background:rgba(35,105,255,.16);
+      filter:blur(90px);
+    }
+    .hero-device img{
+      position:relative;
+      z-index:2;
+      width:min(100%,510px);
+      filter:
+        drop-shadow(0 45px 60px rgba(0,0,0,.58))
+        drop-shadow(0 0 30px rgba(44,112,255,.16));
+    }
+
+    /* =========================================================
+       02 PROBLEMA + SOLUCIÓN COMPACTA
+       ========================================================= */
+
+    .problem-solution{
+      padding:110px 0 120px;
+      background:#fff;
+      --next:#081321;
+    }
+
+    .problem-grid{
+      display:grid;
+      grid-template-columns:.86fr 1.14fr;
+      gap:56px;
+      align-items:start;
+    }
+
+    .problem-questions{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:10px;
+    }
+
+    .question{
+      min-height:170px;
+      padding:22px;
+      border-radius:20px;
+      border:1px solid var(--line);
+      background:#f8fafc;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+    .question span{
+      color:var(--blue);
+      font-size:9px;
+      font-weight:900;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+    }
+    .question strong{
+      font-size:18px;
+      line-height:1.22;
+      letter-spacing:-.025em;
+    }
+
+    .solution-strip{
+      margin-top:42px;
+      display:grid;
+      grid-template-columns:1.15fr auto 1fr auto 1fr;
+      align-items:center;
+      gap:10px;
+      padding:18px;
+      border-radius:22px;
+      background:#07111f;
+      color:#fff;
+    }
+
+    .platform-pair{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:7px;
+    }
+    .platform{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      min-height:52px;
+      padding:10px;
+      border-radius:13px;
+      border:1px solid rgba(103,161,255,.18);
+      background:#0b1b32;
+    }
+    .platform img{width:30px;height:30px;object-fit:contain}
+    .platform b{font-size:10px}
+    .strip-arrow{color:#5ea6ff;font-weight:900}
+    .strip-node{
+      min-height:52px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:10px 13px;
+      border-radius:13px;
+      background:#0b1b32;
+      border:1px solid rgba(255,255,255,.08);
+      text-align:center;
+      font-size:10px;
+      font-weight:850;
+    }
+
+    /* =========================================================
+       03 JOURNAL
+       ========================================================= */
+
+    .journal{
+      padding:110px 0 122px;
+      color:#fff;
+      background:
+        radial-gradient(circle at 82% 18%,rgba(42,112,255,.20),transparent 30%),
+        linear-gradient(145deg,#06101e,#0b1a31);
+      --next:#eef4ff;
+    }
+
+    .module-grid{
+      display:grid;
+      grid-template-columns:.78fr 1.22fr;
+      gap:56px;
+      align-items:center;
+    }
+
+    .module-copy h2{
+      margin:0;
+      font-size:clamp(48px,5.6vw,80px);
+      line-height:.93;
+      letter-spacing:-.065em;
+    }
+    .module-copy p{
+      max-width:560px;
+      margin:22px 0 0;
+      color:#93a2b8;
+      font-size:16px;
+      line-height:1.55;
+    }
+
+    .journal-benefits{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:7px;
+      margin-top:24px;
+    }
+    .journal-benefit{
+      min-height:42px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:8px;
+      border-radius:13px;
+      color:#dce9fb;
+      background:rgba(255,255,255,.055);
+      border:1px solid rgba(255,255,255,.09);
+      font-size:9.5px;
+      font-weight:850;
+      text-align:center;
+    }
+
+    .journal-preview{
+      border-radius:24px;
+      background:#071426;
+      border:1px solid rgba(95,154,239,.18);
+      box-shadow:0 38px 90px rgba(0,0,0,.22);
+      overflow:hidden;
+    }
+
+    .journal-preview-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:20px 22px 12px;
+    }
+    .journal-preview-head strong{font-size:18px}
+    .live{
+      padding:5px 9px;
+      border-radius:999px;
+      color:#62e495;
+      background:rgba(72,223,132,.08);
+      border:1px solid rgba(72,223,132,.20);
+      font-size:9px;
+      font-weight:900;
+    }
+
+    .journal-preview-body{padding:0 22px 22px}
+    .journal-kpis{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:8px;
+      margin-bottom:14px;
+    }
+    .journal-kpi{
+      padding:12px;
+      border-radius:12px;
+      background:#0b1b32;
+      border:1px solid rgba(255,255,255,.07);
+    }
+    .journal-kpi span{
+      display:block;
+      color:#718198;
+      font-size:7px;
+      font-weight:900;
+      text-transform:uppercase;
+    }
+    .journal-kpi b{
+      display:block;
+      margin-top:4px;
+      font-size:15px;
+    }
+    .green{color:var(--green)}
+
+    .journal-table{display:grid;gap:7px}
+    .trade{
+      display:grid;
+      grid-template-columns:1fr .7fr .7fr auto;
+      gap:10px;
+      align-items:center;
+      padding:9px 10px;
+      border-radius:10px;
+      background:rgba(13,29,54,.78);
+      font-size:9px;
+    }
+    .trade span{color:#708198}
+    .trade strong{color:#dce6f5}
+    .profit{
+      padding:4px 8px;
+      border-radius:999px;
+      color:#50e58d;
+      background:rgba(72,223,132,.08);
+      border:1px solid rgba(72,223,132,.20);
+      font-weight:900;
+    }
+
+    /* =========================================================
+       04 ACTIVIDAD REAL — BANDA CORTA
+       ========================================================= */
+
+    .activity{
+      padding:72px 0 80px;
+      background:#eef4ff;
+      --next:#fff;
+    }
+    .activity-inner{
+      display:grid;
+      grid-template-columns:.9fr 1.1fr;
+      gap:46px;
+      align-items:center;
+    }
+    .activity h2{
+      margin:0;
+      font-size:clamp(34px,4vw,54px);
+      line-height:.96;
+      letter-spacing:-.05em;
+    }
+    .activity-stats{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:8px;
+    }
+    .activity-stat{
+      min-height:118px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-direction:column;
+      border-radius:17px;
+      background:#fff;
+      border:1px solid #d7e2f0;
+      text-align:center;
+    }
+    .activity-stat strong{
+      font-size:36px;
+      line-height:1;
+      letter-spacing:-.05em;
+      font-variant-numeric:tabular-nums;
+    }
+    .activity-stat span{
+      margin-top:9px;
+      color:#5f7da8;
+      font-size:8px;
+      font-weight:900;
+      letter-spacing:.10em;
+      text-transform:uppercase;
+    }
+
+    /* =========================================================
+       05 DASHBOARD
+       ========================================================= */
+
+    .dashboard{
+      padding:112px 0 122px;
+      background:#fff;
+      --next:#07111f;
+    }
+
+    .dashboard-grid{
+      display:grid;
+      grid-template-columns:.72fr 1.28fr;
+      gap:46px;
+      align-items:center;
+    }
+    .dashboard h2{
+      margin:0;
+      font-size:clamp(48px,5.6vw,80px);
+      line-height:.93;
+      letter-spacing:-.065em;
+    }
+    .dashboard p{
+      max-width:560px;
+      margin:20px 0 0;
+      color:var(--muted);
+      font-size:16px;
+      line-height:1.55;
+    }
+    .dashboard-list{
+      margin:26px 0 0;
+      padding:0;
+      list-style:none;
+      border-top:1px solid var(--line);
+    }
+    .dashboard-list li{
+      padding:13px 0;
+      border-bottom:1px solid var(--line);
+      font-size:12px;
+      color:#4a5667;
+    }
+    .dashboard img{
+      width:100%;
+      border-radius:22px;
+      box-shadow:0 35px 80px rgba(29,50,82,.13);
+    }
+
+    /* =========================================================
+       06 MÉTRICAS
+       ========================================================= */
+
+    .metrics{
+      padding:112px 0 122px;
+      color:#fff;
+      background:
+        radial-gradient(circle at 12% 16%,rgba(36,105,255,.20),transparent 28%),
+        linear-gradient(145deg,#06101e,#0a1b32);
+      --next:#f5f8fc;
+    }
+
+    .metrics-grid{
+      display:grid;
+      grid-template-columns:1.08fr .92fr;
+      gap:48px;
+      align-items:center;
+    }
+    .metrics img{
+      width:100%;
+      border-radius:20px;
+      box-shadow:0 40px 90px rgba(0,0,0,.24);
+      border:1px solid rgba(255,255,255,.09);
+    }
+    .metrics h2{
+      margin:0;
+      font-size:clamp(48px,5.5vw,78px);
+      line-height:.93;
+      letter-spacing:-.06em;
+    }
+    .metrics h2 .accent{color:#69a8ff}
+    .metrics p{
+      margin:20px 0 0;
+      color:#98a7bb;
+      font-size:16px;
+      line-height:1.55;
+    }
+    .metrics-pills{
+      width:100%;
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:7px;
+      margin-top:22px;
+    }
+    .metrics-pill{
+      min-height:40px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:7px;
+      border-radius:12px;
+      color:#d8e7fa;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      font-size:9.5px;
+      font-weight:850;
+      text-align:center;
+    }
+
+    /* =========================================================
+       07 CONTROL CENTER
+       ========================================================= */
+
+    .control{
+      padding:112px 0 122px;
+      background:#f5f8fc;
+      --next:#e8f6ff;
+    }
+
+    .control-grid{
+      display:grid;
+      grid-template-columns:.78fr 1.22fr;
+      gap:48px;
+      align-items:center;
+    }
+    .control h2{
+      margin:0;
+      font-size:clamp(48px,5.7vw,80px);
+      line-height:.93;
+      letter-spacing:-.065em;
+    }
+    .control p{
+      max-width:540px;
+      margin:20px 0 0;
+      color:var(--muted);
+      font-size:16px;
+      line-height:1.55;
+    }
+    .control-checks{
+      margin-top:24px;
+      border-top:1px solid var(--line);
+    }
+    .control-check{
+      display:grid;
+      grid-template-columns:28px 1fr;
+      gap:12px;
+      padding:14px 0;
+      border-bottom:1px solid var(--line);
+    }
+    .control-icon{
+      width:25px;
+      height:25px;
+      display:grid;
+      place-items:center;
+      border-radius:50%;
+      color:var(--green);
+      background:rgba(72,223,132,.09);
+      border:1px solid rgba(72,223,132,.38);
+      font-size:11px;
+      font-weight:900;
+    }
+    .control-check strong{display:block;font-size:13px}
+    .control-check span{display:block;margin-top:2px;color:#7a8798;font-size:10.5px}
+    .control img{
+      width:100%;
+      border-radius:22px;
+      box-shadow:0 36px 84px rgba(28,48,78,.13);
+    }
+
+    /* =========================================================
+       08 PROGRAMA FUNDADOR
+       ========================================================= */
+
+    .founder{
+      padding:110px 0 118px;
+      background:
+        radial-gradient(circle at 12% 16%,rgba(72,197,255,.22),transparent 25%),
+        radial-gradient(circle at 82% 80%,rgba(210,173,255,.18),transparent 25%),
+        linear-gradient(135deg,#e8f6ff,#e6f2ff 55%,#f8efff);
+      --next:#fff;
+    }
+
+    .founder-card{
+      display:grid;
+      grid-template-columns:.88fr 1.12fr;
+      gap:30px;
+      align-items:center;
+      padding:50px;
+      border-radius:30px;
+      background:rgba(255,255,255,.55);
+      border:1px solid rgba(78,127,180,.16);
+      box-shadow:0 30px 75px rgba(50,92,138,.10);
+    }
+    .founder h2{
+      margin:0;
+      color:#0b306b;
+      font-size:clamp(46px,5.3vw,76px);
+      line-height:.94;
+      letter-spacing:-.065em;
+    }
+    .founder p{
+      margin:20px 0 0;
+      color:#496889;
+      font-size:15px;
+      line-height:1.55;
+    }
+    .founder-benefits{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:7px;
+      margin-top:20px;
+    }
+    .founder-benefit{
+      min-height:46px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:8px;
+      border-radius:13px;
+      background:#fff;
+      border:1px solid rgba(49,98,151,.13);
+      color:#123c72;
+      font-size:9px;
+      font-weight:900;
+      text-align:center;
+    }
+    .founder-reserve{
+      margin-top:20px;
+      padding:16px;
+      border-radius:16px;
+      background:#fff;
+      border:1px solid rgba(49,98,151,.13);
+    }
+    .founder-reserve strong{
+      display:block;
+      color:#0b306b;
+      font-size:15px;
+    }
+    .founder-reserve p{
+      margin-top:7px;
+      font-size:11.5px;
+    }
+    .founder-reserve .button{
+      width:100%;
+      margin-top:13px;
+    }
+    .founder-visual img{
+      width:100%;
+      border-radius:16px;
+      filter:drop-shadow(0 28px 30px rgba(20,62,108,.15));
+    }
+
+    /* =========================================================
+       09 COMPATIBILIDAD + PLANES
+       ========================================================= */
+
+    .offer{
+      padding:110px 0 120px;
+      background:#fff;
+      --next:#07111f;
+    }
+
+    .compat{
+      display:grid;
+      grid-template-columns:.7fr 1.3fr;
+      gap:36px;
+      align-items:center;
+      padding:0 0 70px;
+      border-bottom:1px solid var(--line);
+    }
+    .compat h2{
+      margin:0;
+      font-size:clamp(34px,4.3vw,58px);
+      line-height:.96;
+      letter-spacing:-.05em;
+    }
+    .platforms-static{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:8px;
+    }
+    .platform-card{
+      min-height:92px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:12px;
+      padding:14px;
+      border-radius:18px;
+      background:#f6f9fd;
+      border:1px solid var(--line);
+    }
+    .platform-card img{width:44px;height:44px;object-fit:contain}
+    .platform-card strong{font-size:13px}
+
+    .plans-head{
+      max-width:780px;
+      margin:72px 0 38px;
+    }
+    .plans-head h2{
+      margin:0;
+      font-size:clamp(46px,5.3vw,76px);
+      line-height:.94;
+      letter-spacing:-.06em;
+    }
+    .plans-head p{
+      margin:16px 0 0;
+      color:var(--muted);
+      font-size:15px;
+    }
+
+    .plans-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:14px;
+    }
+
+    .plan{
+      min-height:500px;
+      display:flex;
+      flex-direction:column;
+      padding:30px;
+      border-radius:24px;
+      border:1px solid var(--line);
+      background:#f8fafc;
+    }
+    .plan.trader{
+      color:#fff;
+      background:
+        radial-gradient(circle at 100% 0%,rgba(54,121,255,.16),transparent 36%),
+        linear-gradient(145deg,#071426,#0b2344);
+      border-color:rgba(76,140,255,.42);
+      box-shadow:0 28px 70px rgba(18,68,145,.14);
+    }
+
+    .plan-name{
+      color:var(--blue);
+      font-size:10px;
+      font-weight:900;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+    }
+    .trader .plan-name{color:#7eb5ff}
+    .plan h3{
+      margin:12px 0 0;
+      font-size:34px;
+      letter-spacing:-.045em;
+    }
+    .plan-price{
+      margin:12px 0 8px;
+      font-size:42px;
+      font-weight:900;
+      letter-spacing:-.05em;
+    }
+    .plan.starter .plan-price{color:var(--amber)}
+    .plan-price span{
+      margin-left:5px;
+      color:#7f8da3;
+      font-size:13px;
+      font-weight:700;
+      letter-spacing:0;
+    }
+    .plan-line{
+      margin-bottom:18px;
+      color:var(--blue);
+      font-size:16px;
+      font-weight:900;
+    }
+    .trader .plan-line{color:#77afff}
+    .plan>p{
+      margin:0 0 16px;
+      color:#687486;
+      font-size:12.5px;
+      line-height:1.5;
+    }
+    .trader>p{color:#98a8be}
+
+    .plan ul{
+      list-style:none;
+      padding:0;
+      margin:0 0 18px;
+      border-top:1px solid #e2e9f1;
+    }
+    .trader ul{border-color:rgba(255,255,255,.10)}
+    .plan li{
+      position:relative;
+      padding:10px 0 10px 18px;
+      border-bottom:1px solid #e6ecf3;
+      color:#495669;
+      font-size:11.5px;
+      line-height:1.45;
+    }
+    .trader li{
+      color:#bdc8d6;
+      border-color:rgba(255,255,255,.07);
+    }
+    .plan li::before{
+      content:"✓";
+      position:absolute;
+      left:0;
+      color:var(--blue);
+      font-weight:900;
+    }
+    .starter li::before{color:var(--amber)}
+
+    .founder-chip{
+      width:max-content;
+      max-width:100%;
+      padding:7px 10px;
+      margin-bottom:14px;
+      border-radius:999px;
+      color:var(--amber);
+      border:1px solid rgba(255,191,47,.28);
+      background:rgba(255,191,47,.08);
+      font-size:9px;
+      font-weight:900;
+    }
+
+    .plan .button{width:100%;margin-top:auto}
+    .trader .button.primary{
+      color:#0b326f;
+      background:#fff;
+      box-shadow:none;
+    }
+
+    /* =========================================================
+       10 CIERRE
+       ========================================================= */
+
+    .closing{
+      padding:130px 0 115px;
+      color:#fff;
+      text-align:center;
+      background:
+        radial-gradient(circle at 50% 0%,rgba(30,105,255,.20),transparent 30%),
+        linear-gradient(180deg,#07111f,#050a12);
+    }
+    .closing h2{
+      max-width:1000px;
+      margin:0 auto;
+      font-size:clamp(54px,7.8vw,108px);
+      line-height:.88;
+      letter-spacing:-.075em;
+    }
+    .closing p{
+      max-width:620px;
+      margin:24px auto 28px;
+      color:#96a5b9;
+      font-size:16px;
+    }
+
+    footer{
+      padding:28px 0;
+      color:#728099;
+      background:#050a12;
+      border-top:1px solid rgba(255,255,255,.06);
+      font-size:11px;
+    }
+    .footer-inner{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
+
+    /* =========================================================
+       REVEAL
+       ========================================================= */
+
+    .reveal,.reveal-left,.reveal-right{
+      opacity:0;
+      filter:blur(4px);
+      transition:
+        opacity .75s ease,
+        transform .9s cubic-bezier(.16,1,.3,1),
+        filter .75s ease;
+    }
+    .reveal{transform:translateY(24px)}
+    .reveal-left{transform:translateX(-34px)}
+    .reveal-right{transform:translateX(34px)}
+    .visible{
+      opacity:1!important;
+      transform:none!important;
+      filter:none!important;
+    }
+
+    /* =========================================================
+       TABLET
+       ========================================================= */
+
+    @media(max-width:980px){
+      .hero-grid,
+      .problem-grid,
+      .module-grid,
+      .activity-inner,
+      .dashboard-grid,
+      .metrics-grid,
+      .control-grid,
+      .founder-card,
+      .compat{
+        grid-template-columns:1fr;
+      }
+
+      .hero-grid{gap:0;padding-top:42px}
+      .hero-device{min-height:580px}
+      .hero-device img{width:min(100%,430px)}
+      .problem-questions{grid-template-columns:repeat(2,1fr)}
+      .solution-strip{grid-template-columns:1fr}
+      .strip-arrow{transform:rotate(90deg);justify-self:center}
+      .activity-inner{gap:26px}
+      .metrics .module-copy{order:1}
+      .metrics img{order:2}
+      .plans-grid{grid-template-columns:1fr}
+      .founder-card{padding:40px}
+    }
+
+    /* =========================================================
+       MOBILE
+       ========================================================= */
+
+    @media(max-width:640px){
+      :root{--safe:16px}
+      .wrap{width:calc(100% - (var(--safe) * 2))}
+      .shape-bottom::after{height:38px}
+
+      .hero{min-height:740px}
+      .hero-grid{
+        position:relative;
+        min-height:710px;
+        display:block;
+        padding:28px 0 44px;
+      }
+      .hero-brand{margin-bottom:13px;font-size:9px}
+      .hero h1{
+        max-width:310px;
+        font-size:36px;
+        line-height:.98;
+      }
+      .hero h1 .accent{display:none}
+      .hero p{display:none}
+      .hero-actions{display:none}
+
+      .hero-device{
+        position:absolute;
+        inset:0;
+        display:block;
+        min-height:710px;
+        pointer-events:none;
+      }
+      .hero-device::before{
+        width:330px;
+        height:440px;
+        left:50%;
+        top:170px;
+        transform:translateX(-40%);
+      }
+      .hero-device img{
+        position:absolute;
+        right:-150px;
+        top:104px;
+        width:430px;
+        max-width:none;
+        filter:drop-shadow(0 38px 50px rgba(0,0,0,.55));
+      }
+      .hero-device::after{
+        content:"Conectar una cuenta gratis";
+        position:absolute;
+        z-index:8;
+        left:50%;
+        bottom:12px;
+        transform:translateX(-50%);
+        min-width:230px;
+        min-height:48px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        padding:0 18px;
+        border-radius:999px;
+        color:#fff;
+        background:var(--blue);
+        box-shadow:0 14px 34px rgba(21,93,252,.24);
+        font-size:12px;
+        font-weight:900;
+      }
+
+      .problem-solution{padding:76px 0 82px}
+      .section-title{font-size:40px}
+      .copy{font-size:14px}
+      .problem-grid{gap:28px}
+      .problem-questions{
+        width:calc(100% + var(--safe));
+        display:flex;
+        gap:9px;
+        overflow-x:auto;
+        padding-right:var(--safe);
+        scrollbar-width:none;
+        scroll-snap-type:x mandatory;
+      }
+      .problem-questions::-webkit-scrollbar{display:none}
+      .question{
+        flex:0 0 83%;
+        min-height:185px;
+        scroll-snap-align:start;
+      }
+      .solution-strip{margin-top:28px;padding:13px}
+      .platform-pair{gap:6px}
+
+      .journal{padding:78px 0 84px}
+      .module-grid{gap:28px}
+      .module-copy h2{font-size:41px}
+      .module-copy p{font-size:13.5px}
+      .journal-benefits{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}
+      .journal-benefit{min-height:50px;font-size:7.8px;padding:6px}
+      .journal-preview{border-radius:17px}
+      .journal-preview-head{padding:15px 14px 10px}
+      .journal-preview-body{padding:0 14px 14px}
+      .journal-kpis{grid-template-columns:repeat(2,1fr);gap:5px}
+      .trade{grid-template-columns:1fr auto;font-size:8px}
+      .trade span:nth-child(2),.trade span:nth-child(3){display:none}
+
+      .activity{padding:56px 0 64px}
+      .activity h2{font-size:30px}
+      .activity-stats{gap:5px}
+      .activity-stat{min-height:96px;padding:8px 4px}
+      .activity-stat strong{font-size:26px}
+      .activity-stat span{font-size:6.8px;letter-spacing:.06em}
+
+      .dashboard{padding:78px 0 86px}
+      .dashboard-grid{gap:26px}
+      .dashboard h2{font-size:41px}
+      .dashboard p{font-size:13.5px}
+      .dashboard img{border-radius:15px}
+
+      .metrics{padding:78px 0 86px}
+      .metrics-grid{display:flex;flex-direction:column;gap:26px}
+      .metrics-grid>div:nth-child(2){order:1}
+      .metrics-grid>img{order:2}
+      .metrics h2{font-size:41px}
+      .metrics p{font-size:13.5px}
+      .metrics-pills{grid-template-columns:repeat(2,1fr);gap:6px}
+      .metrics-pill{min-height:38px}
+
+      .control{padding:78px 0 86px}
+      .control-grid{gap:26px}
+      .control h2{font-size:41px}
+      .control p{font-size:13.5px}
+      .control img{border-radius:15px}
+
+      .founder{padding:76px 0 84px}
+      .founder-card{padding:26px 18px;border-radius:22px}
+      .founder h2{font-size:40px}
+      .founder p{font-size:13px}
+      .founder-benefits{gap:5px}
+      .founder-benefit{min-height:52px;font-size:7.8px;padding:6px}
+      .founder-visual{margin-top:8px}
+
+      .offer{padding:76px 0 84px}
+      .compat{gap:24px;padding-bottom:48px}
+      .compat h2{font-size:34px}
+      .platform-card{min-height:76px;padding:9px;gap:7px}
+      .platform-card img{width:35px;height:35px}
+      .platform-card strong{font-size:10px}
+      .plans-head{margin:50px 0 28px}
+      .plans-head h2{font-size:40px}
+      .plans-grid{gap:14px}
+      .plan{min-height:0;padding:22px 18px;border-radius:20px}
+      .plan h3{font-size:28px}
+      .plan-price{font-size:37px}
+      .plan li{font-size:10.5px}
+
+      .closing{padding:90px 0 82px}
+      .closing h2{font-size:48px}
+      .closing p{font-size:13.5px}
+
+      .footer-inner{flex-direction:column}
+    }
+
+    @media(prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto}
+      *,*::before,*::after{
+        animation-duration:.01ms!important;
+        animation-iteration-count:1!important;
+        transition-duration:.01ms!important;
+      }
+      .reveal,.reveal-left,.reveal-right{opacity:1;transform:none;filter:none}
+    }
+  
+/* =========================================================
+   V28 — PULIDO VISUAL
+   Hero, transiciones, problema, Journal, checks y Fundadores
+   ========================================================= */
+
+/* ---------- HERO: más ancho y sin solapes ---------- */
+.hero-grid{
+  grid-template-columns:minmax(0,1.24fr) minmax(390px,.76fr);
+  gap:18px;
+}
+.hero h1{
+  max-width:900px;
+  font-size:clamp(56px,5.85vw,94px);
+  line-height:.965;
+  letter-spacing:-.066em;
+}
+.hero p{
+  max-width:690px;
+  margin-top:22px;
+}
+.hero-device{
+  min-height:710px;
+}
+.hero-device img{
+  width:min(100%,470px);
+}
+.hero-actions{
+  margin-top:28px;
+}
+
+/* ---------- TRANSICIONES: cada una con personalidad ---------- */
+.shape-bottom{
+  position:relative;
+  isolation:isolate;
+}
+.shape-bottom::after{
+  bottom:-2px;
+}
+
+/* Ola ancha y desplazada */
+.shape-wave::after{
+  height:94px;
+  clip-path:polygon(
+    0 50%, 7% 40%, 15% 32%, 24% 27%, 34% 29%,
+    44% 39%, 54% 51%, 63% 56%, 72% 52%, 82% 39%,
+    91% 24%, 100% 14%, 100% 100%, 0 100%
+  );
+}
+
+/* Diagonal contundente */
+.shape-slope::after{
+  height:104px;
+  clip-path:polygon(0 72%, 68% 5%, 100% 28%, 100% 100%, 0 100%);
+}
+
+/* Corte ascendente asimétrico */
+.shape-tilt::after{
+  height:96px;
+  clip-path:polygon(0 12%, 20% 32%, 48% 22%, 74% 58%, 100% 27%, 100% 100%, 0 100%);
+}
+
+/* Gran mordida / valle */
+.shape-bite::after{
+  height:98px;
+  left:-12%;
+  right:-12%;
+  width:124%;
+  border-radius:0 0 52% 48% / 0 0 92% 92%;
+  transform:translateY(-30px);
+}
+
+/* Sierra orgánica */
+.shape-cut::after{
+  height:105px;
+  clip-path:polygon(
+    0 48%, 12% 20%, 27% 38%, 43% 7%, 57% 42%,
+    73% 16%, 88% 36%, 100% 8%, 100% 100%, 0 100%
+  );
+}
+
+/* Curva lateral desplazada */
+.shape-soft::after{
+  height:102px;
+  left:-18%;
+  right:auto;
+  width:138%;
+  border-radius:62% 38% 0 0 / 100% 76% 0 0;
+  transform:rotate(-2.2deg);
+}
+
+/* ---------- ZONA 2: PROBLEMA POTENTE ---------- */
+.problem-solution{
+  padding:112px 0 138px;
+  background:
+    radial-gradient(circle at 88% 8%,rgba(23,105,255,.08),transparent 26%),
+    #fff;
+}
+
+.problem-power-grid{
+  display:grid;
+  grid-template-columns:.86fr 1.14fr;
+  gap:46px;
+  align-items:stretch;
+}
+
+.problem-power-copy{
+  padding:24px 0 20px;
+}
+
+.problem-power-copy h2{
+  max-width:660px;
+  margin:0;
+  font-size:clamp(48px,5vw,76px);
+  line-height:.95;
+  letter-spacing:-.06em;
+}
+
+.problem-power-question{
+  margin-top:26px;
+  color:#10141c;
+  font-size:clamp(42px,4.6vw,68px);
+  line-height:.95;
+  font-weight:900;
+  letter-spacing:-.055em;
+}
+.problem-power-question span{
+  color:var(--blue);
+}
+
+.problem-power-copy p{
+  max-width:600px;
+  margin:22px 0 0;
+  color:#69768a;
+  font-size:16px;
+  line-height:1.58;
+}
+
+.evidence-panel{
+  padding:26px;
+  border-radius:28px;
+  color:#fff;
+  background:
+    radial-gradient(circle at 100% 0%,rgba(39,110,255,.24),transparent 34%),
+    linear-gradient(145deg,#050b15,#0a1a32);
+  border:1px solid rgba(84,145,255,.18);
+  box-shadow:0 34px 85px rgba(21,48,86,.18);
+}
+
+.evidence-top{
+  min-height:130px;
+  display:grid;
+  align-content:center;
+  padding:20px;
+  border-radius:20px;
+  background:linear-gradient(135deg,rgba(24,101,255,.16),rgba(255,255,255,.025));
+  border:1px solid rgba(103,161,255,.16);
+}
+
+.evidence-top span{
+  color:#6ea9ff;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:.14em;
+}
+.evidence-top strong{
+  margin-top:5px;
+  font-size:43px;
+  line-height:1;
+  letter-spacing:-.05em;
+}
+.evidence-top em{
+  margin-top:8px;
+  color:#8ea0b7;
+  font-size:11px;
+  font-style:normal;
+}
+
+.evidence-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:8px;
+  margin-top:9px;
+}
+
+.evidence-item{
+  min-height:112px;
+  display:grid;
+  grid-template-columns:30px 1fr;
+  gap:9px;
+  padding:15px;
+  border-radius:16px;
+  background:rgba(255,255,255,.045);
+  border:1px solid rgba(255,255,255,.07);
+}
+
+.evidence-item>span{
+  width:27px;
+  height:27px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:9px;
+  color:#75afff;
+  background:rgba(23,105,255,.12);
+  font-size:8px;
+  font-weight:900;
+}
+.evidence-item b{
+  display:block;
+  font-size:12px;
+}
+.evidence-item p{
+  margin:5px 0 0;
+  color:#8191a8;
+  font-size:10px;
+  line-height:1.4;
+}
+
+.tdmk-flow{
+  margin-top:28px;
+  display:grid;
+  grid-template-columns:1.25fr auto 1fr auto .8fr;
+  gap:10px;
+  align-items:center;
+  padding:14px;
+  border-radius:22px;
+  background:#050c17;
+  border:1px solid rgba(70,132,225,.16);
+  box-shadow:0 20px 55px rgba(16,38,69,.12);
+}
+
+.tdmk-flow-platforms{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:7px;
+}
+
+.tdmk-platform{
+  min-height:58px;
+  display:flex;
+  align-items:center;
+  gap:9px;
+  padding:9px 11px;
+  border-radius:13px;
+  background:#0a1a30;
+  border:1px solid rgba(86,145,235,.15);
+}
+
+.tdmk-platform img{
+  width:31px;
+  height:31px;
+  object-fit:contain;
+}
+.tdmk-platform b{
+  display:block;
+  color:#fff;
+  font-size:10px;
+}
+.tdmk-platform span{
+  display:block;
+  margin-top:2px;
+  color:#6f8098;
+  font-size:7.5px;
+}
+
+.flow-pulse{
+  color:#4aa5ff;
+  font-size:19px;
+  font-weight:900;
+}
+
+.tdmk-core,
+.tdmk-outcome{
+  min-height:58px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:9px 13px;
+  border-radius:13px;
+  background:linear-gradient(135deg,rgba(23,105,255,.18),rgba(255,255,255,.03));
+  border:1px solid rgba(88,149,247,.17);
+}
+
+.tdmk-core small{
+  color:#6ea9ff;
+  font-size:7.5px;
+  font-weight:900;
+  letter-spacing:.10em;
+}
+.tdmk-core strong,
+.tdmk-outcome strong{
+  margin-top:2px;
+  color:#fff;
+  font-size:11px;
+}
+.tdmk-outcome span{
+  color:#7d8da5;
+  font-size:8px;
+}
+
+/* ---------- JOURNAL: captura REAL ---------- */
+.journal{
+  padding:102px 0 128px;
+}
+
+.journal-real-grid{
+  grid-template-columns:.66fr 1.34fr;
+  gap:44px;
+}
+
+.journal-real-points{
+  display:grid;
+  gap:8px;
+  margin-top:24px;
+}
+.journal-real-points>div{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  color:#dbe7f6;
+  font-size:11px;
+}
+.journal-real-points span{
+  width:22px;
+  height:22px;
+  flex:0 0 22px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  color:#58e791;
+  border:1px solid rgba(88,231,145,.34);
+  background:rgba(88,231,145,.08);
+  line-height:1;
+  font-size:10px;
+  font-weight:900;
+}
+
+.journal-browser{
+  overflow:hidden;
+  border-radius:22px;
+  background:#050a12;
+  border:1px solid rgba(99,157,247,.19);
+  box-shadow:0 42px 96px rgba(0,0,0,.30);
+}
+.journal-browser-bar{
+  height:36px;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  padding:0 13px;
+  background:#0a1525;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.journal-browser-bar i{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#536276;
+}
+.journal-browser-bar span{
+  margin-left:7px;
+  color:#72839b;
+  font-size:8px;
+}
+.journal-browser img{
+  width:100%;
+  height:auto;
+}
+
+/* ---------- CONTROL CENTER: checks perfectamente centrados ---------- */
+.control-icon{
+  width:27px;
+  height:27px;
+  min-width:27px;
+  min-height:27px;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:0!important;
+  margin:0!important;
+  line-height:1!important;
+  text-align:center!important;
+  font-size:12px!important;
+  font-family:Arial,Helvetica,sans-serif!important;
+  transform:none!important;
+}
+.control-check{
+  align-items:start;
+}
+
+/* ---------- FUNDADORES: copy y certificado terminan a la misma altura ---------- */
+.founder-card{
+  align-items:stretch;
+}
+.founder-card>div:first-child{
+  display:flex;
+  flex-direction:column;
+  min-height:100%;
+}
+.founder-reserve{
+  margin-top:auto;
+}
+.founder-visual{
+  display:flex;
+  align-items:stretch;
+}
+.founder-visual img{
+  width:100%;
+  height:100%;
+  max-height:620px;
+  object-fit:contain;
+  object-position:center bottom;
+}
+
+/* ---------- TABLET ---------- */
+@media(max-width:980px){
+  .hero-grid{
+    grid-template-columns:1fr;
+  }
+  .hero h1{
+    max-width:900px;
+  }
+  .problem-power-grid{
+    grid-template-columns:1fr;
+  }
+  .tdmk-flow{
+    grid-template-columns:1fr;
+  }
+  .flow-pulse{
+    justify-self:center;
+    transform:rotate(90deg);
+  }
+  .journal-real-grid{
+    grid-template-columns:1fr;
+  }
+  .founder-reserve{
+    margin-top:22px;
+  }
+}
+
+/* ---------- MOBILE ---------- */
+@media(max-width:640px){
+
+  .hero h1{
+    max-width:315px;
+    font-size:36px;
+    line-height:1;
+    letter-spacing:-.055em;
+  }
+
+  .problem-solution{
+    padding:74px 0 94px;
+  }
+
+  .problem-power-grid{
+    gap:24px;
+  }
+
+  .problem-power-copy{
+    padding:0;
+  }
+
+  .problem-power-copy h2{
+    font-size:39px;
+  }
+
+  .problem-power-question{
+    margin-top:18px;
+    font-size:38px;
+  }
+
+  .problem-power-copy p{
+    margin-top:16px;
+    font-size:13px;
+  }
+
+  .evidence-panel{
+    padding:14px;
+    border-radius:20px;
+  }
+
+  .evidence-top{
+    min-height:100px;
+    padding:14px;
+  }
+
+  .evidence-top strong{
+    font-size:34px;
+  }
+
+  .evidence-grid{
+    gap:6px;
+  }
+
+  .evidence-item{
+    min-height:106px;
+    grid-template-columns:24px 1fr;
+    padding:11px;
+  }
+
+  .evidence-item>span{
+    width:22px;
+    height:22px;
+    font-size:7px;
+  }
+
+  .evidence-item b{font-size:10.5px}
+  .evidence-item p{font-size:8.5px}
+
+  .tdmk-flow{
+    margin-top:16px;
+    padding:10px;
+    border-radius:17px;
+  }
+
+  .tdmk-flow-platforms{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  .tdmk-platform{
+    min-width:0;
+    padding:8px;
+  }
+
+  .tdmk-platform img{
+    width:25px;
+    height:25px;
+  }
+
+  .tdmk-platform b{font-size:8.5px}
+  .tdmk-platform span{font-size:6.5px}
+
+  .journal{
+    padding:74px 0 94px;
+  }
+
+  .journal-real-grid{
+    gap:24px;
+  }
+
+  .journal .module-copy h2{
+    font-size:39px;
+  }
+
+  .journal .module-copy p{
+    font-size:13px;
+  }
+
+  .journal-real-points{
+    gap:6px;
+  }
+
+  .journal-real-points>div{
+    font-size:10px;
+  }
+
+  .journal-browser{
+    border-radius:15px;
+  }
+
+  .journal-browser-bar{
+    height:29px;
+  }
+
+  .founder-card{
+    align-items:initial;
+  }
+
+  .founder-visual img{
+    height:auto;
+    max-height:none;
+  }
+
+  /* en mobile las transiciones siguen distintas, pero menos altas */
+  .shape-wave::after,
+  .shape-slope::after,
+  .shape-tilt::after,
+  .shape-bite::after,
+  .shape-cut::after,
+  .shape-soft::after{
+    height:52px;
+  }
+}
+
+
+/* =========================================================
+   V29 — HERO · ajuste aislado
+   ========================================================= */
+
+/* Más protagonismo al dispositivo y menos al titular */
+.hero-grid{
+  grid-template-columns:minmax(0,1.04fr) minmax(500px,.96fr);
+  gap:10px;
+  align-items:center;
+}
+
+.hero h1{
+  max-width:780px;
+  font-size:clamp(50px,5.15vw,82px);
+  line-height:.97;
+  letter-spacing:-.062em;
+}
+
+.hero p{
+  max-width:650px;
+}
+
+.hero-device{
+  min-height:720px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.hero-device img{
+  width:min(100%,570px);
+  max-height:760px;
+  object-fit:contain;
+}
+
+/* Nueva transición Hero -> módulo 2:
+   barrido diagonal suave con doble profundidad, sin semicírculo */
+.hero.shape-wave::after{
+  height:118px;
+  left:0;
+  right:0;
+  width:100%;
+  border-radius:0;
+  transform:none;
+  clip-path:polygon(
+    0 44%,
+    16% 50%,
+    34% 43%,
+    53% 57%,
+    72% 38%,
+    88% 46%,
+    100% 30%,
+    100% 100%,
+    0 100%
+  );
+}
+
+/* segunda línea de profundidad exclusivamente en el Hero */
+.hero::before{
+  content:"";
+  position:absolute;
+  z-index:0;
+  left:0;
+  right:0;
+  bottom:25px;
+  height:78px;
+  pointer-events:none;
+  background:linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(70,145,255,.12) 24%,
+    rgba(92,164,255,.28) 53%,
+    rgba(70,145,255,.08) 82%,
+    transparent 100%
+  );
+  clip-path:polygon(
+    0 60%,
+    18% 66%,
+    35% 56%,
+    54% 70%,
+    73% 50%,
+    88% 58%,
+    100% 42%,
+    100% 48%,
+    88% 64%,
+    73% 56%,
+    54% 76%,
+    35% 62%,
+    18% 72%,
+    0 66%
+  );
+}
+
+.hero > .wrap{
+  position:relative;
+  z-index:1;
+}
+
+@media(max-width:980px){
+  .hero-grid{
+    grid-template-columns:1fr;
+  }
+
+  .hero h1{
+    max-width:760px;
+  }
+
+  .hero-device img{
+    width:min(100%,520px);
+  }
+}
+
+@media(max-width:640px){
+  .hero-grid{
+    gap:4px;
+  }
+
+  .hero h1{
+    max-width:330px;
+    font-size:34px;
+    line-height:1;
+  }
+
+  .hero-device{
+    min-height:500px;
+  }
+
+  .hero-device img{
+    width:min(118%,430px);
+    max-width:none;
+  }
+
+  .hero.shape-wave::after{
+    height:66px;
+  }
+
+  .hero::before{
+    bottom:12px;
+    height:48px;
+  }
+}
+
+
+/* =========================================================
+   V30 — HERO · transición curva limpia
+   ========================================================= */
+
+/* Sustituye la transición con picos por una curva orgánica continua */
+.hero.shape-wave::after{
+  height:112px;
+  left:-4%;
+  right:auto;
+  bottom:-1px;
+  width:108%;
+  border-radius:0;
+  transform:none;
+  clip-path:none;
+  background:var(--next, #fff);
+  /* gran elipse: el borde superior visible queda completamente curvo */
+  border-radius:50% 50% 0 0 / 42% 42% 0 0;
+  transform:translateY(56%);
+}
+
+/* Eliminamos la segunda línea quebrada de profundidad de V29 */
+.hero::before{
+  display:none;
+}
+
+@media(max-width:640px){
+  .hero.shape-wave::after{
+    height:72px;
+    width:116%;
+    left:-8%;
+    transform:translateY(58%);
+    border-radius:50% 50% 0 0 / 48% 48% 0 0;
+  }
+}
+
+
+/* =========================================================
+   V31 — HERO · nuevo mensaje
+   ========================================================= */
+
+.hero h1 .hero-second-line{
+  display:block;
+  max-width:790px;
+  margin-top:20px;
+  font-size:.61em;
+  line-height:1.08;
+  letter-spacing:-.045em;
+}
+
+@media(max-width:640px){
+  .hero h1{
+    max-width:325px;
+  }
+
+  .hero h1 .hero-second-line{
+    display:block;
+    max-width:270px;
+    margin-top:14px;
+    font-size:.67em;
+    line-height:1.08;
+  }
+}
+
+
+/* =========================================================
+   V32 — HERO · CTA con más gancho
+   ========================================================= */
+
+.hero-cta{
+  min-height:58px;
+  padding:0 30px;
+  gap:10px;
+  border-radius:999px;
+  font-size:15px;
+  font-weight:900;
+  letter-spacing:-.01em;
+  box-shadow:
+    0 18px 42px rgba(23,105,255,.30),
+    0 0 0 1px rgba(255,255,255,.06) inset,
+    0 0 24px rgba(23,105,255,.18);
+}
+
+.hero-cta span{
+  display:inline-block;
+  font-size:18px;
+  line-height:1;
+  transition:transform .2s ease;
+}
+
+.hero-cta:hover{
+  transform:translateY(-3px);
+  box-shadow:
+    0 22px 48px rgba(23,105,255,.36),
+    0 0 0 1px rgba(255,255,255,.08) inset,
+    0 0 30px rgba(23,105,255,.22);
+}
+
+.hero-cta:hover span{
+  transform:translateX(4px);
+}
+
+@media(max-width:640px){
+  .hero-cta{
+    min-height:52px;
+    padding:0 22px;
+    font-size:13px;
+  }
+}
+
+
+/* =========================================================
+   V33 — HERO · copy final + GRATIS destacado
+   ========================================================= */
+
+.hero-cta-free{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  margin-left:1px;
+  padding:4px 8px;
+  border-radius:7px;
+  color:#07111f;
+  background:#fff;
+  font-size:.88em;
+  font-weight:950;
+  letter-spacing:.025em;
+  line-height:1;
+  box-shadow:0 1px 0 rgba(255,255,255,.25) inset;
+}
+
+@media(max-width:640px){
+  .hero-cta-free{
+    padding:4px 7px;
+    border-radius:6px;
+  }
+}
+
+
+/* =========================================================
+   V34 — HERO · CTA refinado
+   ========================================================= */
+
+/* GRATIS integrado en el texto: negro, fuerte, sin etiqueta */
+.hero-cta-free{
+  display:inline!important;
+  margin:0!important;
+  padding:0!important;
+  border-radius:0!important;
+  color:#07111f!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  font-size:1em!important;
+  font-weight:950!important;
+  letter-spacing:.015em!important;
+  line-height:inherit!important;
+}
+
+/* Flecha vectorial, no carácter/emoji */
+.hero-cta .hero-cta-arrow{
+  width:27px;
+  height:27px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  margin-left:2px;
+  border-radius:50%;
+  background:rgba(5,18,42,.16);
+  border:1px solid rgba(5,18,42,.16);
+  transition:
+    transform .22s ease,
+    background .22s ease;
+}
+
+.hero-cta .hero-cta-arrow svg{
+  width:15px;
+  height:15px;
+  display:block;
+  fill:none;
+  stroke:#fff;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.hero-cta:hover .hero-cta-arrow{
+  transform:translateX(4px);
+  background:rgba(5,18,42,.25);
+}
+
+/* Anula la regla antigua que desplazaba cualquier span del CTA */
+.hero-cta:hover > span{
+  transform:none;
+}
+.hero-cta:hover > .hero-cta-arrow{
+  transform:translateX(4px);
+}
+
+
+/* =========================================================
+   V35 — HERO · mejor encaje vertical + GRATIS blanco
+   ========================================================= */
+
+/* Sube el bloque completo en pantallas desktop de menor altura */
+@media (min-width: 901px){
+  .hero-inner{
+    transform: translateY(-42px);
+  }
+}
+
+/* Ajuste progresivo para portátiles / ventanas menos altas */
+@media (min-width: 901px) and (max-height: 900px){
+  .hero-inner{
+    transform: translateY(-62px);
+  }
+}
+
+@media (min-width: 901px) and (max-height: 800px){
+  .hero-inner{
+    transform: translateY(-74px);
+  }
+}
+
+/* GRATIS vuelve a blanco, manteniendo peso visual */
+.hero-cta-free{
+  color:#fff!important;
+  font-weight:950!important;
+  letter-spacing:.025em!important;
+}
+
+
+/* =========================================================
+   V36 — HERO · centrado vertical real
+   ========================================================= */
+
+/*
+  El problema no era el contenido interno, sino el espacio vertical
+  reservado por el propio Hero. En desktop hacemos que el contenido
+  ocupe la altura visible y lo centramos ligeramente hacia arriba.
+*/
+@media (min-width: 901px){
+  .hero{
+    min-height:100svh!important;
+    height:100svh!important;
+    padding-top:0!important;
+    padding-bottom:0!important;
+    display:flex!important;
+    align-items:center!important;
+  }
+
+  .hero-inner{
+    width:100%!important;
+    transform:translateY(-7vh)!important;
+    margin-top:0!important;
+    margin-bottom:0!important;
+  }
+}
+
+/* En pantallas de portátil, aprovechamos todavía más el viewport */
+@media (min-width: 901px) and (max-height: 900px){
+  .hero-inner{
+    transform:translateY(-9vh)!important;
+  }
+}
+
+@media (min-width: 901px) and (max-height: 780px){
+  .hero-inner{
+    transform:translateY(-10vh)!important;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<main>
+
+  <!-- =======================================================
+       01 — HERO
+       ======================================================= -->
+  <section class="hero shape-bottom shape-wave">
+    <div class="wrap hero-grid">
+      <div class="hero-copy reveal-left">
+        <div class="hero-brand">TDMK SYSTEMS</div>
+
+        <h1>
+          El beneficio es una consecuencia.
+          <span class="accent hero-second-line">La calidad de tu trading está en las decisiones que lo producen.</span>
+        </h1>
+
+        <p>
+          Conecta tu cuenta de MetaTrader y descubre qué hay realmente detrás de los resultados:
+          cómo operas, cuánto arriesgas y qué patrones se repiten.
+        </p>
+
+        <div class="hero-actions">
+          <a class="button primary hero-cta" href="https://app.tdmksystems.com/?origen=landing_publica">
+            Analizar mi trading <strong class="hero-cta-free">GRATIS</strong>
+            <span class="hero-cta-arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path d="M5 12h13M13 7l5 5-5 5"/>
+              </svg>
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-device reveal-right">
+        <img
+          src="journal-mobile.png"
+          alt="Journal automático de TDMK Systems en móvil"
+          loading="eager"
+          decoding="async"
+        >
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================================
+       02 — PROBLEMA + SOLUCIÓN
+       ======================================================= -->
+  <section class="problem-solution shape-bottom shape-slope" style="--next:#07111f;">
+    <div class="wrap">
+
+      <div class="problem-power-grid">
+        <div class="problem-power-copy reveal-left">
+          <div class="kicker">ANTES DE BUSCAR OTRA ESTRATEGIA</div>
+
+          <h2>
+            Ganar dinero no responde
+            a la pregunta importante.
+          </h2>
+
+          <div class="problem-power-question">
+            ¿Por qué <span>funciona</span>?
+          </div>
+
+          <p>
+            El beneficio es solo el resultado final. Para saber si una estrategia
+            merece capital necesitas entender qué lo produce, cuánto riesgo consume
+            y si ese comportamiento puede repetirse.
+          </p>
+        </div>
+
+        <div class="evidence-panel reveal-right">
+          <div class="evidence-top">
+            <span>RESULTADO</span>
+            <strong>+216,93 €</strong>
+            <em>≠ evidencia suficiente</em>
+          </div>
+
+          <div class="evidence-grid">
+            <div class="evidence-item">
+              <span>01</span>
+              <div>
+                <b>Ventaja</b>
+                <p>¿Existe edge o una buena racha?</p>
+              </div>
+            </div>
+
+            <div class="evidence-item">
+              <span>02</span>
+              <div>
+                <b>Riesgo</b>
+                <p>¿Cuánto capital expones realmente?</p>
+              </div>
+            </div>
+
+            <div class="evidence-item">
+              <span>03</span>
+              <div>
+                <b>Consistencia</b>
+                <p>¿El resultado depende de unas pocas operaciones?</p>
+              </div>
+            </div>
+
+            <div class="evidence-item">
+              <span>04</span>
+              <div>
+                <b>Robustez</b>
+                <p>¿Podrías defenderla sin hablar de beneficio?</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tdmk-flow reveal">
+        <div class="tdmk-flow-platforms">
+          <div class="tdmk-platform">
+            <img src="mt4-logo.png" alt="MetaTrader 4">
+            <div><b>MetaTrader 4</b><span>Tu operativa</span></div>
+          </div>
+
+          <div class="tdmk-platform">
+            <img src="mt5-logo.png" alt="MetaTrader 5">
+            <div><b>MetaTrader 5</b><span>Tu operativa</span></div>
+          </div>
+        </div>
+
+        <div class="flow-pulse">→</div>
+
+        <div class="tdmk-core">
+          <small>TDMK SYSTEMS</small>
+          <strong>Registra · Mide · Controla</strong>
+        </div>
+
+        <div class="flow-pulse">→</div>
+
+        <div class="tdmk-outcome">
+          <span>Menos intuición</span>
+          <strong>Más criterio.</strong>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =======================================================
+       03 — JOURNAL
+       ======================================================= -->
+  <section class="journal shape-bottom shape-tilt" id="journal" style="--next:#eef4ff;">
+    <div class="wrap module-grid journal-real-grid">
+
+      <div class="module-copy reveal-left">
+        <div class="kicker light">JOURNAL AUTOMÁTICO</div>
+
+        <h2>
+          Cada operación deja
+          una huella.
+        </h2>
+
+        <p>
+          TDMK registra automáticamente tu operativa para que puedas revisar
+          sesiones, símbolos, duración, cierres, resultados y patrones sin llevar
+          un Excel paralelo ni apuntar nada a mano.
+        </p>
+
+        <div class="journal-real-points">
+          <div><span>✓</span><b>Registro automático</b></div>
+          <div><span>✓</span><b>Filtros y contexto</b></div>
+          <div><span>✓</span><b>Histórico real de tu cuenta</b></div>
+        </div>
+      </div>
+
+      <div class="journal-real-visual reveal-right">
+        <div class="journal-browser">
+          <div class="journal-browser-bar">
+            <i></i><i></i><i></i>
+            <span>Journal · TDMK Systems</span>
+          </div>
+          <img
+            src="Journal PC.png"
+            alt="Journal real de TDMK Systems en versión escritorio"
+            loading="lazy"
+            decoding="async"
+          >
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =======================================================
+       04 — ACTIVIDAD REAL
+       ======================================================= -->
+  <section class="activity shape-bottom shape-bite" id="actividad" style="--next:#fff;">
+    <div class="wrap activity-inner">
+      <div class="reveal-left">
+        <div class="kicker">LO QUE PASA DENTRO DE TDMK</div>
+        <h2>Datos reales.<br>Actividad real.</h2>
+      </div>
+
+      <div class="activity-stats reveal-right">
+        <div class="activity-stat" id="statTrades">
+          <strong data-prefix="+">—</strong>
+          <span>Trades registrados</span>
+        </div>
+        <div class="activity-stat" id="statAccounts">
+          <strong data-prefix="+">—</strong>
+          <span>Cuentas conectadas</span>
+        </div>
+        <div class="activity-stat" id="statUsers">
+          <strong data-prefix="+">—</strong>
+          <span>Usuarios activos</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================================
+       05 — DASHBOARD
+       ======================================================= -->
+  <section class="dashboard shape-bottom shape-cut" id="dashboard" style="--next:#07111f;">
+    <div class="wrap dashboard-grid">
+      <div class="reveal-left">
+        <div class="kicker">DASHBOARD</div>
+        <h2>Todo tu trading.<br>Una sola fotografía.</h2>
+        <p>Balance, equity, curva, PnL y KPIs esenciales para entender en segundos qué está pasando.</p>
+
+        <ul class="dashboard-list">
+          <li>Patrimonio y rendimiento en tiempo real</li>
+          <li>Curva de balance e histórico</li>
+          <li>KPIs principales sin ruido</li>
+        </ul>
+      </div>
+
+      <div class="reveal-right">
+        <img src="Dashboard Blanco.png" alt="Dashboard de TDMK Systems" loading="lazy" decoding="async">
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================================
+       06 — MÉTRICAS AVANZADAS
+       ======================================================= -->
+  <section class="metrics shape-bottom shape-soft" id="metrics" style="--next:#f5f8fc;">
+    <div class="wrap metrics-grid">
+      <img
+        class="reveal-left"
+        src="metricas avanzadas.png"
+        alt="Métricas Avanzadas de TDMK Systems"
+        loading="lazy"
+        decoding="async"
+      >
+
+      <div class="reveal-right">
+        <div class="kicker light">MÉTRICAS AVANZADAS</div>
+        <h2>¿Tu estrategia funciona… o solo has tenido <span class="accent">suerte</span>?</h2>
+        <p>
+          Analiza esperanza, R/R, drawdown, consistencia, sesiones y comportamiento
+          para reducir la fricción entre “ganar” y entender por qué ganas.
+        </p>
+
+        <div class="metrics-pills">
+          <span class="metrics-pill">Esperanza</span>
+          <span class="metrics-pill">R/R</span>
+          <span class="metrics-pill">Drawdown</span>
+          <span class="metrics-pill">Robustez</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================================
+       07 — CONTROL CENTER
+       ======================================================= -->
+  <section class="control shape-bottom shape-slope" id="control-center" style="--next:#e8f6ff;">
+    <div class="wrap control-grid">
+      <div class="reveal-left">
+        <div class="kicker">CONTROL CENTER</div>
+        <h2>Si algo pasa,<br>actúa.</h2>
+        <p>
+          Balance, equity, floating, drawdown, PnL y acciones críticas sobre tus cuentas
+          desde un único lugar.
+        </p>
+
+        <div class="control-checks">
+          <div class="control-check">
+            <span class="control-icon">✓</span>
+            <div><strong>Control de disciplina</strong><span>Bloqueo automático por límites de riesgo.</span></div>
+          </div>
+          <div class="control-check">
+            <span class="control-icon">✓</span>
+            <div><strong>Break Even</strong><span>Protege posiciones abiertas desde el panel.</span></div>
+          </div>
+          <div class="control-check">
+            <span class="control-icon">✓</span>
+            <div><strong>Cierre de emergencia</strong><span>Actúa sobre todas las posiciones cuando lo necesites.</span></div>
+          </div>
+          <div class="control-check">
+            <span class="control-icon">✓</span>
+            <div><strong>Bloqueo de cuenta</strong><span>Impide nuevas operaciones desde TDMK.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal-right">
+        <img src="control-center.png" alt="Control Center real de TDMK Systems" loading="lazy" decoding="async">
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================================
+       08 — PROGRAMA FUNDADOR
+       ======================================================= -->
+  <section class="founder shape-bottom shape-tilt" id="fundadores" style="--next:#fff;">
+    <div class="wrap founder-card">
+      <div class="reveal-left">
+        <div class="kicker">
+          PROGRAMA FUNDADOR ·
+          <span id="founderLive" hidden><span id="founderRemaining">0</span> PLAZAS DISPONIBLES</span>
+          <span id="founderFallback">100 PLAZAS FUNDADORAS</span>
+        </div>
+
+        <h2>Estar desde el principio tiene recompensa.</h2>
+
+        <p>
+          Los primeros usuarios forman parte del Club Fundador. Cuando se cubran las plazas,
+          se activará el reparto mensual destinado al Club conforme a las condiciones del programa.
+        </p>
+
+        <div class="founder-benefits">
+          <span class="founder-benefit">◆ Certificado verificable</span>
+          <span class="founder-benefit">◆ Club privado</span>
+          <span class="founder-benefit">◆ Reparto mensual</span>
+        </div>
+
+        <div class="founder-reserve">
+          <strong>Reserva tu plaza Founder Trader por 1 €</strong>
+          <p>
+            El euro confirma un interés real y verifica el método de pago.
+            No es el precio del plan ni activa ninguna suscripción.
+          </p>
+
+          <a class="button primary" href="https://app.tdmksystems.com/?origen=landing_fundador_trader&plan=trader">
+            Reservar Trader · 1 €
+          </a>
+        </div>
+      </div>
+
+      <div class="founder-visual reveal-right">
+        <img src="Certificado Fundadores Oficial.png" alt="Certificado del Programa Fundador de TDMK Systems" loading="lazy" decoding="async">
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================================
+       09 — COMPATIBILIDAD + PLANES
+       ======================================================= -->
+  <section class="offer shape-bottom shape-soft" id="planes" style="--next:#07111f;">
+    <div class="wrap">
+
+      <div class="compat reveal">
+        <div>
+          <div class="kicker">COMPATIBILIDAD</div>
+          <h2>Conecta lo que ya utilizas.</h2>
+        </div>
+
+        <div class="platforms-static">
+          <div class="platform-card">
+            <img src="mt4-logo.png" alt="MetaTrader 4">
+            <strong>MetaTrader 4</strong>
+          </div>
+          <div class="platform-card">
+            <img src="mt5-logo.png" alt="MetaTrader 5">
+            <strong>MetaTrader 5</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="plans-head reveal">
+        <div class="kicker">EMPIEZA SIN FRICCIÓN</div>
+        <h2>Primero entiende.<br>Después decide cuánto necesitas.</h2>
+        <p>
+          Empezamos con dos opciones claras. Cuando TDMK evolucione contigo,
+          podremos abrir nuevos niveles según lo que realmente necesite la comunidad.
+        </p>
+      </div>
+
+      <div class="plans-grid">
+        <article class="plan starter reveal-left">
+          <div class="plan-name">Starter</div>
+          <h3>Empieza a ver.</h3>
+          <div class="plan-price">Gratis</div>
+          <div class="plan-line">Entiende qué está pasando.</div>
+          <p>La puerta de entrada para conectar tu operativa y empezar a trabajar con datos reales.</p>
+
+          <ul>
+            <li>1 cuenta de trading conectada</li>
+            <li>Dashboard y curva de balance</li>
+            <li>Métricas esenciales</li>
+            <li>Journal automático</li>
+            <li>Soporte estándar</li>
+          </ul>
+
+          <a class="button primary" href="https://app.tdmksystems.com/?origen=landing_plan_starter">
+            Empezar gratis
+          </a>
+        </article>
+
+        <article class="plan trader reveal-right">
+          <div class="plan-name">Trader</div>
+          <h3>Analiza y controla.</h3>
+          <div class="plan-price">19<span>€/mes</span></div>
+          <div class="plan-line">Da el salto cuando necesites más.</div>
+          <p>Para traders que quieren trabajar con varias cuentas y herramientas de análisis y control.</p>
+
+          <ul>
+            <li>Hasta 5 cuentas activas</li>
+            <li>Visión unificada de tu operativa</li>
+            <li>Acciones de protección de capital</li>
+            <li>Todo el flujo de Starter</li>
+            <li>Soporte prioritario</li>
+          </ul>
+
+          <div class="founder-chip">◆ Precio Fundador · Tiempo limitado</div>
+
+          <a class="button primary" href="https://app.tdmksystems.com/?origen=landing_plan_trader&accion=lista_espera">
+            Reservar plaza Founder
+          </a>
+        </article>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =======================================================
+       10 — CIERRE
+       ======================================================= -->
+  <section class="closing">
+    <div class="wrap reveal">
+      <h2>No se puede cambiar aquello que no se mide.</h2>
+      <p>
+        Conecta una cuenta, deja que TDMK empiece a registrar tu operativa
+        y descubre qué hay realmente detrás de tus resultados.
+      </p>
+      <a class="button primary" href="https://app.tdmksystems.com/?origen=landing_publica">
+        Crear cuenta gratuita
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap footer-inner">
+    <span>© 2026 TDMK Systems</span>
+    <span>Journal · Dashboard · Métricas · Control Center · Programa Fundador</span>
+  </div>
+</footer>
+
+<script>
+  // =========================================================
+  // Reveal
+  // =========================================================
+  const revealObserver = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  },{threshold:.10});
+
+  document.querySelectorAll('.reveal,.reveal-left,.reveal-right')
+    .forEach(el=>revealObserver.observe(el));
+
+  // =========================================================
+  // Backend real: actividad + Founder.
+  // Si falla, no mostramos cifras inventadas.
+  // =========================================================
+  (() => {
+    const fmt = n => new Intl.NumberFormat('es-ES').format(Math.round(n));
+
+    function animate(el,target,prefix=''){
+      const duration=1400;
+      const start=performance.now();
+
+      function tick(now){
+        const p=Math.min(1,(now-start)/duration);
+        const eased=1-Math.pow(1-p,4);
+        el.textContent=prefix+fmt(target*eased);
+
+        if(p<1) requestAnimationFrame(tick);
+        else el.textContent=prefix+fmt(target);
+      }
+
+      requestAnimationFrame(tick);
+    }
+
+    function counter(id,value){
+      const card=document.getElementById(id);
+      if(!card || typeof value!=='number'){
+        if(card) card.style.display='none';
+        return;
+      }
+
+      const number=card.querySelector('strong');
+      if(!number) return;
+
+      const observer=new IntersectionObserver(entries=>{
+        entries.forEach(entry=>{
+          if(entry.isIntersecting){
+            animate(number,value,number.dataset.prefix||'');
+            observer.disconnect();
+          }
+        });
+      },{threshold:.4});
+
+      observer.observe(card);
+    }
+
+    fetch('https://api.tdmksystems.com/api/public/stats')
+      .then(r=>{
+        if(!r.ok) throw new Error('HTTP');
+        return r.json();
+      })
+      .then(data=>{
+        if(!data || data.ok!==true) throw new Error('Respuesta inválida');
+
+        counter('statTrades',data.operations_total);
+        counter('statAccounts',data.accounts_total);
+        counter('statUsers',data.users_total);
+
+        if(typeof data.founder_remaining==='number'){
+          const remaining=document.getElementById('founderRemaining');
+          const live=document.getElementById('founderLive');
+          const fallback=document.getElementById('founderFallback');
+
+          if(remaining && live && fallback){
+            remaining.textContent=fmt(data.founder_remaining);
+            live.hidden=false;
+            fallback.hidden=true;
+          }
+        }
+      })
+      .catch(()=>{
+        ['statTrades','statAccounts','statUsers'].forEach(id=>{
+          const el=document.getElementById(id);
+          if(el) el.style.display='none';
+        });
+      });
+  })();
+</script>
+
+</body>
+</html>

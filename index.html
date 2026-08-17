@@ -3045,6 +3045,124 @@
   }
 }
 
+
+/* =========================================================
+   V44 — HERO MOBILE · márgenes, tipografía y CTA referenciado
+   a la curva inferior. Desktop permanece intacto.
+   ========================================================= */
+@media(max-width:640px){
+
+  /* Margen lateral real para todo el bloque de copy */
+  .hero-copy{
+    left:16px!important;
+    width:calc(49% - 16px)!important;
+    max-width:174px!important;
+  }
+
+  /* +1 punto aprox. en los tres niveles de texto */
+  .hero h1{
+    font-size:27px!important;
+    line-height:1.01!important;
+  }
+
+  .hero h1 .hero-second-line{
+    font-size:.74em!important;
+    line-height:1.08!important;
+  }
+
+  .hero p{
+    font-size:10.5px!important;
+    line-height:1.45!important;
+  }
+
+  /*
+    Referencia fija: la curva blanca.
+    La curva ocupa 44px desde el fondo del hero.
+    Dejamos 18px de aire entre el botón y el inicio de la curva.
+    44 + 18 = 62px.
+    De esta forma la posición depende del borde/curva inferior,
+    no de la altura o posición del teléfono.
+  */
+  .hero-actions-mobile{
+    bottom:62px!important;
+  }
+}
+
+@media(max-width:390px){
+  .hero-copy{
+    left:14px!important;
+    width:calc(48% - 14px)!important;
+    max-width:160px!important;
+  }
+
+  .hero h1{
+    font-size:25px!important;
+  }
+
+  .hero h1 .hero-second-line{
+    font-size:.74em!important;
+  }
+
+  .hero p{
+    font-size:10px!important;
+  }
+
+  /*
+    Mantenemos exactamente la misma referencia respecto
+    a la curva también en pantallas estrechas.
+  */
+  .hero-actions-mobile{
+    bottom:62px!important;
+  }
+}
+
+
+/* =========================================================
+   V45 — HERO MOBILE · TIPOGRAFÍA MÁS GRANDE
+   SOLO MOBILE. Desktop, CTA, móvil y curva permanecen intactos.
+   ========================================================= */
+
+@media (max-width: 640px) {
+
+  /* 1. Mensaje principal */
+  .hero .hero-copy h1 {
+    font-size: 30px !important;
+    line-height: 1.02 !important;
+    letter-spacing: -0.045em !important;
+  }
+
+  /* 2. Mensaje azul */
+  .hero .hero-copy h1 .hero-second-line {
+    display: block !important;
+    margin-top: 12px !important;
+    font-size: 0.77em !important;
+    line-height: 1.08 !important;
+  }
+
+  /* 3. Párrafo explicativo */
+  .hero .hero-copy > p {
+    font-size: 12.5px !important;
+    line-height: 1.45 !important;
+    margin-top: 16px !important;
+  }
+}
+
+@media (max-width: 390px) {
+
+  .hero .hero-copy h1 {
+    font-size: 28px !important;
+  }
+
+  .hero .hero-copy h1 .hero-second-line {
+    font-size: 0.77em !important;
+  }
+
+  .hero .hero-copy > p {
+    font-size: 11.5px !important;
+    line-height: 1.45 !important;
+  }
+}
+
 </style>
 </head>
 

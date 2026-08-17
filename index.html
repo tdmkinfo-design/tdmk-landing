@@ -2696,6 +2696,188 @@
   }
 }
 
+
+/* =========================================================
+   V40 — HERO MOBILE · composición final por zonas
+   PC permanece intacto
+   ========================================================= */
+
+@media(max-width:640px){
+
+  /*
+    Estructura móvil:
+    - contenido principal centrado verticalmente en la zona superior
+    - CTA anclado abajo, separado de la barra del navegador
+  */
+  .hero{
+    position:relative!important;
+    min-height:100svh!important;
+    height:100svh!important;
+    padding:0!important;
+    overflow:hidden!important;
+  }
+
+  .hero-grid{
+    position:relative!important;
+    width:100%!important;
+    min-height:100svh!important;
+    height:100svh!important;
+    padding:0!important;
+  }
+
+  /*
+    Añadimos padding superior real al conjunto visual.
+    Texto y teléfono comienzan exactamente a la misma altura.
+  */
+  .hero-copy{
+    position:absolute!important;
+    z-index:6!important;
+    top:64px!important;
+    left:0!important;
+    width:49%!important;
+    max-width:174px!important;
+    height:auto!important;
+    padding:0!important;
+    margin:0!important;
+  }
+
+  .hero-brand{
+    margin:0 0 10px!important;
+    font-size:7px!important;
+    letter-spacing:.17em!important;
+  }
+
+  .hero h1{
+    width:100%!important;
+    margin:0!important;
+    font-size:23px!important;
+    line-height:1.02!important;
+    letter-spacing:-.045em!important;
+  }
+
+  .hero h1 .hero-second-line{
+    display:block!important;
+    width:100%!important;
+    margin-top:12px!important;
+    font-size:.67em!important;
+    line-height:1.10!important;
+  }
+
+  .hero p{
+    display:block!important;
+    width:100%!important;
+    margin:15px 0 0!important;
+    color:#98a8bd!important;
+    font-size:8.9px!important;
+    line-height:1.46!important;
+  }
+
+  .hero-device{
+    position:absolute!important;
+    inset:0!important;
+    z-index:2!important;
+    width:100%!important;
+    height:100svh!important;
+    pointer-events:none!important;
+  }
+
+  .hero-device img{
+    position:absolute!important;
+    top:64px!important;
+    right:-166px!important;
+    width:420px!important;
+    max-width:none!important;
+    max-height:none!important;
+    object-fit:contain!important;
+  }
+
+  .hero-device::before{
+    top:90px!important;
+    right:-110px!important;
+  }
+
+  /*
+    CTA: parte inferior del Hero.
+    No pertenece al bloque de texto.
+    Ocupa todo el ancho útil y queda justo por encima de la curva.
+  */
+  .hero-actions{
+    position:absolute!important;
+    z-index:20!important;
+    left:0!important;
+    right:0!important;
+    top:auto!important;
+    bottom:58px!important;
+    width:100%!important;
+    margin:0!important;
+    padding:0!important;
+    transform:none!important;
+    display:block!important;
+    pointer-events:auto!important;
+  }
+
+  .hero-cta{
+    width:100%!important;
+    min-width:0!important;
+    min-height:52px!important;
+    margin:0!important;
+    padding:0 18px!important;
+    border-radius:14px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:6px!important;
+    font-size:12px!important;
+    white-space:nowrap!important;
+  }
+
+  .hero-device::after{
+    content:none!important;
+    display:none!important;
+  }
+
+  .hero.shape-wave::after{
+    height:44px!important;
+    z-index:4!important;
+  }
+}
+
+/* iPhone / pantallas especialmente estrechas */
+@media(max-width:390px){
+  .hero-copy{
+    top:58px!important;
+    width:48%!important;
+    max-width:160px!important;
+  }
+
+  .hero h1{
+    font-size:21px!important;
+  }
+
+  .hero p{
+    font-size:8.3px!important;
+  }
+
+  .hero-device img{
+    top:58px!important;
+    right:-174px!important;
+    width:410px!important;
+  }
+
+  .hero-device::before{
+    top:84px!important;
+  }
+
+  .hero-actions{
+    bottom:56px!important;
+  }
+
+  .hero-cta{
+    min-height:50px!important;
+    font-size:11.5px!important;
+  }
+}
+
 </style>
 </head>
 

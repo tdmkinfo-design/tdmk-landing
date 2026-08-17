@@ -3911,6 +3911,90 @@
   }
 }
 
+
+/* =========================================================
+   V55 — STATS + CURVA DASHBOARD→MÉTRICAS + PLANES CENTRADOS
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   DASHBOARD → MÉTRICAS
+   Eliminamos la transición geométrica tipo sierra/corte.
+   --------------------------------------------------------- */
+.dashboard.shape-cut::after{
+  content:""!important;
+  display:block!important;
+  position:absolute!important;
+  z-index:4!important;
+
+  left:-8%!important;
+  right:auto!important;
+  width:116%!important;
+  height:104px!important;
+  bottom:-48px!important;
+
+  background:#07111f!important;
+
+  clip-path:none!important;
+  transform:rotate(-1.8deg)!important;
+  transform-origin:center!important;
+
+  border-radius:52% 48% 0 0 / 100% 82% 0 0!important;
+  box-shadow:none!important;
+  pointer-events:none!important;
+}
+
+/*
+  La sección de Métricas empieza con el mismo tono oscuro
+  para que la curva quede integrada y no aparezca una línea recta.
+*/
+.metrics{
+  margin-top:-1px!important;
+}
+
+/* ---------------------------------------------------------
+   PLANES
+   Centramos Starter y Trader y dejamos margen lateral.
+   --------------------------------------------------------- */
+.plans-grid{
+  width:min(100%,1080px)!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+
+.plan{
+  width:100%!important;
+}
+
+/* MOBILE */
+@media(max-width:640px){
+
+  .dashboard.shape-cut::after{
+    height:66px!important;
+    bottom:-31px!important;
+    left:-12%!important;
+    width:124%!important;
+    transform:rotate(-2.2deg)!important;
+    border-radius:54% 46% 0 0 / 100% 82% 0 0!important;
+  }
+
+  /*
+    Las tarjetas ya no tocan los bordes del ancho disponible.
+    Quedan centradas con margen visible a ambos lados.
+  */
+  .plans-grid{
+    width:calc(100% - 24px)!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+    gap:14px!important;
+  }
+}
+
+@media(max-width:390px){
+  .plans-grid{
+    width:calc(100% - 20px)!important;
+  }
+}
+
 </style>
 </head>
 
@@ -4335,7 +4419,7 @@
         return;
       }
 
-      const number=card.querySelector('strong');
+      const number=card.querySelector('b, strong');
       if(!number) return;
 
       const observer=new IntersectionObserver(entries=>{

@@ -4044,6 +4044,125 @@
   }
 }
 
+
+/* =========================================================
+   V58 — PLAZAS FUNDADORAS + TRANSICIONES SIN CORTES
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   CONTADOR FUNDADOR EN TRADER
+   --------------------------------------------------------- */
+.plan.trader .founder-remaining-chip{
+  display:block!important;
+  width:max-content!important;
+  max-width:100%!important;
+  margin:16px auto 14px!important;
+  padding:8px 12px!important;
+  border-radius:999px!important;
+  color:#ffd369!important;
+  background:rgba(255,191,47,.08)!important;
+  border:1px solid rgba(255,191,47,.28)!important;
+  text-align:center!important;
+  font-size:9px!important;
+  font-weight:900!important;
+  letter-spacing:.01em!important;
+}
+
+/* ---------------------------------------------------------
+   CONTROL CENTER -> PLANES
+   Elimina picos/diagonales heredados.
+   --------------------------------------------------------- */
+.control.shape-bottom::after{
+  content:""!important;
+  display:block!important;
+  position:absolute!important;
+  z-index:4!important;
+  left:-10%!important;
+  right:auto!important;
+  width:120%!important;
+  height:110px!important;
+  bottom:-52px!important;
+
+  clip-path:none!important;
+  transform:rotate(-1.3deg)!important;
+  transform-origin:center!important;
+
+  border-radius:52% 48% 0 0 / 100% 84% 0 0!important;
+  background:#ffffff!important;
+  box-shadow:none!important;
+  pointer-events:none!important;
+}
+
+/* Planes arranca exactamente en blanco para que la curva se funda */
+.offer{
+  margin-top:-1px!important;
+  background:#ffffff!important;
+}
+
+/* ---------------------------------------------------------
+   PLANES -> CIERRE
+   Eliminamos cualquier pico/corte blanco y hacemos una transición
+   continua de blanco a navy.
+   --------------------------------------------------------- */
+.offer.shape-soft::after{
+  display:none!important;
+  content:none!important;
+}
+
+.offer-closing-transition{
+  position:relative;
+  z-index:5;
+  width:100%;
+  height:148px;
+  margin-top:-1px;
+  margin-bottom:-1px;
+  overflow:hidden;
+  background:#ffffff;
+  pointer-events:none;
+}
+
+.offer-closing-transition svg{
+  display:block;
+  width:100%;
+  height:100%;
+}
+
+.offer-closing-fill{
+  fill:url(#offerClosingGradient)!important;
+}
+
+/* El cierre empieza con el mismo navy exacto del final del gradiente */
+.closing{
+  margin-top:-2px!important;
+  background:
+    radial-gradient(circle at 50% 0%,rgba(30,105,255,.20),transparent 30%),
+    linear-gradient(180deg,#07111f 0%,#050a12 100%)!important;
+  border-top:none!important;
+  box-shadow:none!important;
+}
+
+/* MOBILE */
+@media(max-width:640px){
+
+  .control.shape-bottom::after{
+    height:70px!important;
+    bottom:-34px!important;
+    left:-14%!important;
+    width:128%!important;
+    transform:rotate(-1.6deg)!important;
+    border-radius:54% 46% 0 0 / 100% 84% 0 0!important;
+  }
+
+  .offer-closing-transition{
+    height:104px!important;
+  }
+
+  .plan.trader .founder-remaining-chip{
+    font-size:9.5px!important;
+    padding:8px 11px!important;
+  }
+}
+
 </style>
 </head>
 
@@ -4387,7 +4506,9 @@
             <li>Soporte prioritario</li>
           </ul>
 
-          <div class="founder-chip">◆ Precio Fundador · Tiempo limitado</div>
+          <div class="founder-chip founder-remaining-chip" id="traderFounderChip">
+            ◆ <span id="traderFounderRemaining">95</span> plazas fundadoras disponibles
+          </div>
 
           <a class="button primary" href="https://app.tdmksystems.com/?origen=landing_plan_trader&accion=lista_espera">
             Apúntate a la lista de espera
@@ -4397,6 +4518,33 @@
 
     </div>
   </section>
+
+  <!-- Transición Planes → Cierre -->
+  <div class="offer-closing-transition" aria-hidden="true">
+    <svg viewBox="0 0 1440 160" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="offerClosingGradient" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#ffffff"/>
+          <stop offset="34%" stop-color="#f5f8fc"/>
+          <stop offset="68%" stop-color="#dfe8f5"/>
+          <stop offset="88%" stop-color="#526a8a"/>
+          <stop offset="100%" stop-color="#07111f"/>
+        </linearGradient>
+      </defs>
+      <path
+        class="offer-closing-fill"
+        d="
+          M0,34
+          C230,18 430,20 650,40
+          C870,60 1090,62 1440,30
+          L1440,160
+          L0,160
+          Z
+        "
+      />
+    </svg>
+  </div>
+
 
   <!-- =======================================================
        08 — CIERRE
@@ -4505,6 +4653,11 @@
             remaining.textContent=fmt(data.founder_remaining);
             live.hidden=false;
             fallback.hidden=true;
+          }
+
+          const traderRemaining = document.getElementById('traderFounderRemaining');
+          if(traderRemaining){
+            traderRemaining.textContent = fmt(data.founder_remaining);
           }
         }
       })

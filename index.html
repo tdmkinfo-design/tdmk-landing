@@ -2336,6 +2336,170 @@
   }
 }
 
+
+/* =========================================================
+   V38 — HERO MOBILE · texto equilibrado + un solo CTA
+   PC permanece intacto
+   ========================================================= */
+
+@media(max-width:640px){
+
+  /* Eliminamos definitivamente el botón falso creado con ::after */
+  .hero-device::after{
+    content:none!important;
+    display:none!important;
+  }
+
+  .hero-grid{
+    position:relative!important;
+    min-height:100svh!important;
+    height:100svh!important;
+    padding:22px 0 104px!important;
+  }
+
+  /*
+    El bloque de texto ocupa visualmente una altura similar al teléfono.
+    Así no queda como un pequeño bloque flotando arriba.
+  */
+  .hero-copy{
+    position:absolute!important;
+    z-index:6!important;
+    top:22px!important;
+    left:0!important;
+    width:49%!important;
+    max-width:178px!important;
+    height:430px!important;
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:flex-start!important;
+    padding:0!important;
+  }
+
+  .hero-brand{
+    flex:0 0 auto!important;
+    margin:0 0 12px!important;
+    font-size:7px!important;
+    letter-spacing:.17em!important;
+  }
+
+  .hero h1{
+    flex:0 0 auto!important;
+    width:100%!important;
+    max-width:none!important;
+    margin:0!important;
+    font-size:24px!important;
+    line-height:1.015!important;
+    letter-spacing:-.047em!important;
+  }
+
+  .hero h1 .hero-second-line{
+    display:block!important;
+    width:100%!important;
+    max-width:none!important;
+    margin-top:13px!important;
+    font-size:.67em!important;
+    line-height:1.10!important;
+    letter-spacing:-.034em!important;
+  }
+
+  .hero p{
+    display:block!important;
+    flex:0 0 auto!important;
+    width:100%!important;
+    max-width:none!important;
+    margin:15px 0 0!important;
+    color:#98a8bd!important;
+    font-size:9.2px!important;
+    line-height:1.47!important;
+  }
+
+  /* Teléfono: misma presencia, a la derecha */
+  .hero-device{
+    position:absolute!important;
+    inset:0!important;
+    z-index:2!important;
+    display:block!important;
+    min-height:100svh!important;
+    height:100svh!important;
+    pointer-events:none!important;
+  }
+
+  .hero-device img{
+    position:absolute!important;
+    top:105px!important;
+    right:-167px!important;
+    width:420px!important;
+    max-width:none!important;
+    max-height:none!important;
+    object-fit:contain!important;
+  }
+
+  /*
+    ÚNICO CTA.
+    Es el mismo botón real de PC y conserva exactamente el mismo copy.
+  */
+  .hero-actions{
+    position:absolute!important;
+    z-index:10!important;
+    left:50%!important;
+    right:auto!important;
+    bottom:max(90px, calc(env(safe-area-inset-bottom) + 76px))!important;
+    transform:translateX(-50%)!important;
+    width:auto!important;
+    display:block!important;
+    margin:0!important;
+    pointer-events:auto!important;
+  }
+
+  .hero-cta{
+    min-width:244px!important;
+    min-height:50px!important;
+    padding:0 21px!important;
+    display:inline-flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:8px!important;
+    font-size:12px!important;
+    white-space:nowrap!important;
+  }
+
+  .hero-cta-free{
+    color:#fff!important;
+  }
+
+  .hero-cta .hero-cta-arrow{
+    flex:0 0 24px!important;
+    width:24px!important;
+    height:24px!important;
+  }
+}
+
+@media(max-width:390px){
+  .hero-copy{
+    width:48%!important;
+    max-width:164px!important;
+    height:420px!important;
+  }
+
+  .hero h1{
+    font-size:22px!important;
+  }
+
+  .hero p{
+    font-size:8.6px!important;
+  }
+
+  .hero-device img{
+    right:-174px!important;
+    width:410px!important;
+  }
+
+  .hero-cta{
+    min-width:232px!important;
+    font-size:11.5px!important;
+  }
+}
+
 </style>
 </head>
 

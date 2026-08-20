@@ -4227,6 +4227,60 @@
   }
 }
 
+
+/* =========================================================
+   V60 — PRODUCCIÓN · SANEADO ESTRUCTURAL
+   ========================================================= */
+
+/* Journal activity: ahora vive dentro del mismo wrap real que el contenido */
+.journal-activity-wrap{
+  margin-top:38px;
+}
+
+.journal-activity-wrap .journal-activity{
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+}
+
+/* Planes: toda la cabecera y tarjetas quedan dentro del mismo wrap */
+.offer > .wrap{
+  width:min(calc(100% - 40px),var(--max));
+  margin-inline:auto;
+}
+
+/* Evita cualquier salto visual por el estado live/fallback */
+#founderLive[hidden],
+#traderFounderLive[hidden],
+#traderFounderFallback[hidden]{
+  display:none!important;
+}
+
+@media(max-width:640px){
+  .journal-activity-wrap{
+    width:calc(100% - (var(--safe) * 2))!important;
+    margin:26px auto 0!important;
+  }
+
+  .journal-activity-wrap .journal-activity{
+    width:100%!important;
+    margin:0!important;
+    padding:16px 15px!important;
+    border-radius:15px!important;
+  }
+
+  .offer > .wrap{
+    width:calc(100% - (var(--safe) * 2))!important;
+    margin-inline:auto!important;
+  }
+}
+
+@media(max-width:390px){
+  .journal-activity-wrap{
+    width:calc(100% - 28px)!important;
+  }
+}
+
 </style>
 </head>
 
@@ -4324,6 +4378,8 @@
     </div>
 
   </div>
+  <div class="wrap journal-activity-wrap">
+
 
     <div class="journal-activity reveal" aria-label="Actividad real dentro de TDMK">
       <div class="journal-activity-copy">
@@ -4347,6 +4403,8 @@
           <small>Usuarios activos</small>
         </div>
       </div>
+  </div>
+
     </div>
 </section>
 
@@ -4389,7 +4447,7 @@
         <div class="kicker">
           PROGRAMA FUNDADOR ·
           <span id="founderLive" hidden><span id="founderRemaining">0</span> PLAZAS DISPONIBLES</span>
-          <span id="founderFallback">100 PLAZAS FUNDADORAS</span>
+          <span id="founderFallback">PLAZAS FUNDADORAS LIMITADAS</span>
         </div>
 
         <h2>Estar desde el principio tiene recompensa.</h2>
@@ -4522,7 +4580,6 @@
        ======================================================= -->
 <section class="offer shape-bottom shape-soft" id="planes" style="--next:#07111f;">
     <div class="wrap">
-</div>
 
       <div class="plans-head reveal">
         <div class="kicker">EMPIEZA SIN FRICCIÓN</div>
@@ -4571,7 +4628,11 @@
           </ul>
 
           <div class="founder-chip founder-remaining-chip" id="traderFounderChip">
-            ◆ <span id="traderFounderRemaining">95</span> plazas fundadoras disponibles
+            ◆
+            <span id="traderFounderLive" hidden>
+              <span id="traderFounderRemaining"></span> plazas fundadoras disponibles
+            </span>
+            <span id="traderFounderFallback">Plazas fundadoras disponibles</span>
           </div>
 
           <a class="button primary" href="https://app.tdmksystems.com/?origen=web">
@@ -4721,8 +4782,13 @@
           }
 
           const traderRemaining = document.getElementById('traderFounderRemaining');
-          if(traderRemaining){
+          const traderLive = document.getElementById('traderFounderLive');
+          const traderFallback = document.getElementById('traderFounderFallback');
+
+          if(traderRemaining && traderLive && traderFallback){
             traderRemaining.textContent = fmt(data.founder_remaining);
+            traderLive.hidden = false;
+            traderFallback.hidden = true;
           }
         }
       })

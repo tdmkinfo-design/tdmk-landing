@@ -4281,6 +4281,138 @@
   }
 }
 
+
+/* =========================================================
+   V61 — PULIDO PRODUCCIÓN
+   ========================================================= */
+
+/* 1. Actividad TDMK: mismo orden visual y márgenes que el Journal */
+.journal-activity-wrap{
+  width:min(calc(100% - 40px),var(--max))!important;
+  margin:38px auto 0!important;
+  padding-left:0!important;
+  padding-right:0!important;
+  box-sizing:border-box!important;
+}
+
+.journal-activity-wrap .journal-activity{
+  width:100%!important;
+  margin:0!important;
+  box-sizing:border-box!important;
+}
+
+/* 2. Dashboard → Métricas: sustituimos el pseudo-elemento antiguo
+      por una curva independiente, como las transiciones superiores. */
+.dashboard.shape-cut::after{
+  display:none!important;
+  content:none!important;
+}
+
+.dashboard{
+  padding-bottom:92px!important;
+}
+
+.dashboard-metrics-transition{
+  position:relative!important;
+  z-index:6!important;
+  width:100%!important;
+  height:118px!important;
+  margin-top:-74px!important;
+  margin-bottom:-2px!important;
+  overflow:hidden!important;
+  background:transparent!important;
+  pointer-events:none!important;
+}
+
+.dashboard-metrics-transition svg{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+}
+
+.metrics{
+  margin-top:-2px!important;
+  padding-top:118px!important;
+  background:#07111f!important;
+}
+
+/* 3. Planes: un poco más de aire vertical al haber mejorado el copy */
+.plan ul{
+  margin-bottom:24px!important;
+}
+
+@media(max-width:640px){
+  .journal-activity-wrap{
+    width:calc(100% - (var(--safe) * 2))!important;
+    margin:26px auto 0!important;
+  }
+
+  .dashboard{
+    padding-bottom:62px!important;
+  }
+
+  .dashboard-metrics-transition{
+    height:82px!important;
+    margin-top:-48px!important;
+  }
+
+  .metrics{
+    padding-top:92px!important;
+  }
+}
+
+@media(max-width:390px){
+  .journal-activity-wrap{
+    width:calc(100% - 28px)!important;
+  }
+}
+
+
+/* =========================================================
+   V62 — PROGRAMA FUNDADOR · ESPACIADO + CTA
+   ========================================================= */
+
+/* Separamos claramente beneficios y bloque de reserva */
+.founder-benefits{
+  margin-bottom:20px!important;
+}
+
+/*
+  Conservamos el auto para seguir alineando la zona inferior
+  con el certificado en desktop, pero añadimos aire real.
+*/
+.founder-reserve{
+  margin-top:auto!important;
+}
+
+/* CTA con más presencia sin romper el lenguaje visual */
+.founder-reserve .button{
+  min-height:58px!important;
+  margin-top:16px!important;
+  font-size:14px!important;
+  font-weight:950!important;
+  letter-spacing:-.01em!important;
+  box-shadow:
+    0 18px 38px rgba(23,105,255,.27),
+    0 0 0 1px rgba(255,255,255,.06) inset!important;
+}
+
+/* Mobile: el bloque deja de depender del auto y mantiene separación clara */
+@media(max-width:640px){
+  .founder-benefits{
+    margin-bottom:16px!important;
+  }
+
+  .founder-reserve{
+    margin-top:0!important;
+  }
+
+  .founder-reserve .button{
+    min-height:54px!important;
+    font-size:13.5px!important;
+  }
+}
+
 </style>
 </head>
 
@@ -4464,14 +4596,14 @@
         </div>
 
         <div class="founder-reserve">
-          <strong>Reserva tu plaza Founder Trader por 1 €</strong>
+          <strong>Reserva tu plaza como Fundador Trader por 1 €</strong>
           <p>
             El euro confirma un interés real y verifica el método de pago.
             No es el precio del plan ni activa ninguna suscripción.
           </p>
 
           <a class="button primary" href="https://app.tdmksystems.com/?origen=web&plan=trader">
-            Reservar Trader · 1 €
+            Quiero ser Fundador · 1 €
           </a>
         </div>
       </div>
@@ -4504,6 +4636,16 @@
       </div>
     </div>
   </section>
+
+  <!-- Transición Dashboard → Métricas · curva continua -->
+  <div class="dashboard-metrics-transition" aria-hidden="true">
+    <svg viewBox="0 0 1440 150" preserveAspectRatio="none">
+      <path
+        d="M0,58 C250,18 520,26 735,50 C980,78 1190,70 1440,34 L1440,150 L0,150 Z"
+        fill="#07111f"
+      />
+    </svg>
+  </div>
 
   <!-- =======================================================
        05 — MÉTRICAS AVANZADAS
@@ -4595,14 +4737,15 @@
           <div class="plan-name">Starter</div>
           <h3>Empieza a ver.</h3>
           <div class="plan-price">Gratis</div>
-          <div class="plan-line">Entiende qué está pasando.</div>
-          <p>La puerta de entrada para conectar tu operativa y empezar a trabajar con datos reales.</p>
+          <div class="plan-line">Deja de operar a ciegas.</div>
+          <p>Conecta una cuenta y empieza a entender tu operativa con datos reales, sin cambiar tu forma de operar.</p>
 
           <ul>
             <li>1 cuenta de trading conectada</li>
-            <li>Dashboard y curva de balance</li>
-            <li>Métricas esenciales</li>
-            <li>Journal automático</li>
+            <li>Dashboard, patrimonio y curva de balance</li>
+            <li>Win Rate, R/R y Esperanza Matemática</li>
+            <li>Journal automático de todas tus operaciones</li>
+            <li>Gestor de Coberturas en capital real</li>
             <li>Soporte estándar</li>
           </ul>
 
@@ -4615,16 +4758,16 @@
           <div class="plan-name">Trader</div>
           <h3>Analiza y controla.</h3>
           <div class="plan-price">19<span>€/mes</span></div>
-          <div class="plan-line">Da el salto cuando necesites más.</div>
-          <p>Para traders que quieren trabajar con varias cuentas y herramientas de análisis y control.</p>
+          <div class="plan-line">Cuando una cuenta ya no es suficiente.</div>
+          <p>Centraliza varias cuentas, profundiza en tus métricas y toma el control de la operativa desde un único lugar.</p>
 
           <ul>
-            <li>Hasta 5 cuentas activas</li>
-            <li>Visión unificada de tu operativa</li>
-            <li>Acciones de protección de capital</li>
-            <li>Todo el flujo de Starter</li>
-            <li>Copiador de CFDs entre cuentas</li>
-            <li>Soporte prioritario</li>
+            <li>Hasta 5 cuentas activas simultáneamente</li>
+            <li>Dashboard con visión unificada de tu operativa</li>
+            <li>Métricas avanzadas y análisis temporal</li>
+            <li>Control Center y protección de capital</li>
+            <li>Copiador profesional de CFDs entre cuentas</li>
+            <li>Alertas por Telegram y soporte prioritario</li>
           </ul>
 
           <div class="founder-chip founder-remaining-chip" id="traderFounderChip">

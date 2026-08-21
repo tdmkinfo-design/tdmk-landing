@@ -4882,6 +4882,93 @@
   }
 }
 
+
+/* =========================================================
+   V69 — CTA TRADER · BOTÓN CLARO EN REPOSO / ACTIVO EN HOVER
+   ========================================================= */
+
+.plan.trader .button.primary{
+  position:relative;
+  overflow:hidden;
+
+  color:#0b326f!important;
+  background:linear-gradient(180deg,#f5f8fd 0%,#eaf1fa 100%)!important;
+  border:1px solid rgba(105,168,255,.48)!important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.95),
+    0 8px 22px rgba(0,0,0,.12)!important;
+
+  transition:
+    transform .22s ease,
+    background .22s ease,
+    border-color .22s ease,
+    color .22s ease,
+    box-shadow .22s ease!important;
+}
+
+.plan.trader .button.primary::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  opacity:0;
+  background:linear-gradient(
+    110deg,
+    transparent 18%,
+    rgba(105,168,255,.16) 48%,
+    transparent 78%
+  );
+  transition:opacity .22s ease;
+}
+
+.plan.trader .button.primary:hover{
+  color:#082a61!important;
+  background:#ffffff!important;
+  border-color:#69a8ff!important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,1),
+    0 0 0 1px rgba(105,168,255,.18),
+    0 0 26px rgba(23,105,255,.34),
+    0 14px 30px rgba(0,0,0,.16)!important;
+
+  transform:translateY(-2px);
+}
+
+.plan.trader .button.primary:hover::before{
+  opacity:1;
+}
+
+.plan.trader .button.primary:active{
+  transform:translateY(0);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,1),
+    0 0 0 1px rgba(105,168,255,.18),
+    0 0 18px rgba(23,105,255,.24)!important;
+}
+
+.plan.trader .button.primary:focus-visible{
+  outline:3px solid rgba(105,168,255,.42);
+  outline-offset:3px;
+}
+
+/* Transición Compatibilidad → Fundador */
+.compat-founder-transition{
+  background:#07111f!important;
+}
+
+/* En móvil no dependemos del hover para que parezca un botón */
+@media(max-width:640px){
+  .plan.trader .button.primary{
+    background:#ffffff!important;
+    border-color:rgba(105,168,255,.62)!important;
+    box-shadow:
+      0 0 0 1px rgba(105,168,255,.10),
+      0 10px 24px rgba(0,0,0,.14)!important;
+  }
+}
+
 </style>
 </head>
 
@@ -5008,82 +5095,7 @@
 
     </div>
 </section>
-
-  <!-- Transición Journal → Programa Fundador -->
-  <div class="journal-founder-transition" aria-hidden="true">
-    <svg viewBox="0 0 1440 150" preserveAspectRatio="none">
-      <defs>
-        <linearGradient id="journalFounderSoftGradient" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#ffffff"/>
-          <stop offset="38%" stop-color="#f4f9ff"/>
-          <stop offset="72%" stop-color="#dfedff"/>
-          <stop offset="100%" stop-color="#cfe6ff"/>
-        </linearGradient>
-      </defs>
-      <path
-        class="journal-founder-accent"
-        d="M0,44
-           C220,12 430,18 650,42
-           C870,66 1080,64 1440,24"
-      />
-      <path
-        class="journal-founder-fill"
-        d="M0,42
-           C210,20 420,26 640,50
-           C860,74 1090,78 1440,38
-           L1440,150
-           L0,150
-           Z"
-      />
-    </svg>
-  </div>
-
-
-  <!-- =======================================================
-       03 — PROGRAMA FUNDADOR
-       ======================================================= -->
-<section class="founder shape-bottom shape-tilt" id="fundadores" style="--next:#fff;">
-    <div class="wrap founder-card">
-      <div class="reveal-left">
-        <div class="kicker">
-          PROGRAMA FUNDADOR ·
-          <span id="founderLive" hidden><span id="founderRemaining">0</span> PLAZAS DISPONIBLES</span>
-          <span id="founderFallback">PLAZAS FUNDADORAS LIMITADAS</span>
-        </div>
-
-        <h2>Si entras ahora, puedes ser Fundador.</h2>
-
-        <p>
-          Mientras queden plazas fundadoras, cada nuevo usuario que contrate Trader
-          recibirá automáticamente su número de Fundador y las ventajas asociadas al programa.
-        </p>
-
-        <div class="founder-benefits">
-          <span class="founder-benefit">◆ Número de Fundador verificable</span>
-          <span class="founder-benefit">◆ Acceso al Club Fundador</span>
-          <span class="founder-benefit">◆ Reparto mensual</span>
-        </div>
-
-        <div class="founder-reserve">
-          <strong>Contrata Trader mientras queden plazas fundadoras</strong>
-          <p>
-            Si aún hay plazas disponibles al completar el alta, tu número de Fundador
-            se asignará automáticamente. No necesitas realizar ninguna reserva adicional.
-          </p>
-
-          <a class="button primary" href="https://app.tdmksystems.com/?origen=web&plan=trader">
-            Empezar con Trader · 19 €/mes
-          </a>
-        </div>
-      </div>
-
-      <div class="founder-visual reveal-right">
-        <img src="Certificado Fundadores Oficial.png" alt="Certificado del Programa Fundador de TDMK Systems" loading="lazy" decoding="async">
-      </div>
-    </div>
-  </section>
-
-  <!-- =======================================================
+<!-- =======================================================
        04 — DASHBOARD
        ======================================================= -->
 <section class="dashboard shape-bottom shape-cut" id="dashboard" style="--next:#07111f;">
@@ -5371,11 +5383,66 @@
     </div>
   </section>
 
-  <div class="compat-offer-transition" aria-hidden="true">
+  <div class="compat-offer-transition compat-founder-transition" aria-hidden="true">
     <svg viewBox="0 0 1440 150" preserveAspectRatio="none">
-      <path d="M0,50 C240,24 470,30 720,54 C980,78 1190,70 1440,38 L1440,150 L0,150 Z" fill="#ffffff"/>
+      <defs>
+        <linearGradient id="compatFounderGradient" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#07111f"/>
+          <stop offset="34%" stop-color="#18385c"/>
+          <stop offset="68%" stop-color="#9bc8ee"/>
+          <stop offset="100%" stop-color="#e8f6ff"/>
+        </linearGradient>
+      </defs>
+      <path
+        d="M0,44 C230,18 470,24 720,50 C970,76 1190,70 1440,34 L1440,150 L0,150 Z"
+        fill="url(#compatFounderGradient)"
+      />
     </svg>
   </div>
+
+  <!-- =======================================================
+       08 — PROGRAMA FUNDADOR · después de mostrar el producto
+       ======================================================= -->
+<section class="founder shape-bottom shape-tilt" id="fundadores" style="--next:#fff;">
+    <div class="wrap founder-card">
+      <div class="reveal-left">
+        <div class="kicker">
+          PROGRAMA FUNDADOR ·
+          <span id="founderLive" hidden><span id="founderRemaining">0</span> PLAZAS DISPONIBLES</span>
+          <span id="founderFallback">PLAZAS FUNDADORAS LIMITADAS</span>
+        </div>
+
+        <h2>Si entras ahora, puedes ser Fundador.</h2>
+
+        <p>
+          Mientras queden plazas fundadoras, cada nuevo usuario que contrate Trader
+          recibirá automáticamente su número de Fundador y las ventajas asociadas al programa.
+        </p>
+
+        <div class="founder-benefits">
+          <span class="founder-benefit">◆ Número de Fundador verificable</span>
+          <span class="founder-benefit">◆ Acceso al Club Fundador</span>
+          <span class="founder-benefit">◆ Reparto mensual</span>
+        </div>
+
+        <div class="founder-reserve">
+          <strong>Contrata Trader mientras queden plazas fundadoras</strong>
+          <p>
+            Si aún hay plazas disponibles al completar el alta, tu número de Fundador
+            se asignará automáticamente. No necesitas realizar ninguna reserva adicional.
+          </p>
+
+          <a class="button primary" href="https://app.tdmksystems.com/?origen=web&plan=trader">
+            Empezar con Trader · 19 €/mes
+          </a>
+        </div>
+      </div>
+
+      <div class="founder-visual reveal-right">
+        <img src="Certificado Fundadores Oficial.png" alt="Certificado del Programa Fundador de TDMK Systems" loading="lazy" decoding="async">
+      </div>
+    </div>
+  </section>
 
   <!-- =======================================================
        09 — PLANES · STARTER + TRADER

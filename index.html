@@ -4545,6 +4545,132 @@
   }
 }
 
+
+/* =========================================================
+   V66 — COMPATIBILIDAD MT4 / MT5 / FONDEO / CAPITAL REAL
+   ========================================================= */
+.compat-v66{
+  position:relative;overflow:hidden;padding:112px 0 118px;color:#fff;
+  background:
+    radial-gradient(circle at 82% 14%,rgba(47,124,255,.16),transparent 30%),
+    linear-gradient(145deg,#06101e 0%,#07111f 55%,#0a1b32 100%);
+}
+.compat-v66-inner{position:relative;z-index:1}
+.compat-v66-head{max-width:900px;margin-bottom:42px}
+.compat-v66-head h2{
+  margin:0;font-size:clamp(48px,5.5vw,78px);line-height:.93;letter-spacing:-.06em;
+}
+.compat-v66-head h2 span{color:#69a8ff}
+.compat-v66-head p{
+  max-width:700px;margin:22px 0 0;color:#95a5ba;font-size:15.5px;line-height:1.55;
+}
+.compat-v66-head p strong{color:#e5efff}
+
+.compat-v66-platforms{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.compat-v66-platform{
+  min-height:118px;display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;
+  padding:20px 22px;border-radius:20px;border:1px solid rgba(96,165,250,.16);
+  background:rgba(10,26,48,.74);
+}
+.compat-v66-logo{
+  width:66px;height:66px;display:flex;align-items:center;justify-content:center;border-radius:16px;
+  background:rgba(255,255,255,.035);border:1px solid rgba(96,165,250,.15);
+}
+.compat-v66-logo img{width:48px;max-height:48px;object-fit:contain}
+.compat-v66-logo-fallback{
+  width:100%;height:100%;align-items:center;justify-content:center;color:#69a8ff;font-size:18px;font-weight:950;
+}
+.compat-v66-platform-copy small{display:block;color:#607087;font-size:8px;font-weight:900;letter-spacing:.12em}
+.compat-v66-platform-copy strong{display:block;margin-top:4px;color:#fff;font-size:18px}
+.compat-v66-platform-copy span{display:block;margin-top:3px;color:#7f91aa;font-size:10px}
+.compat-v66-status{
+  display:flex;align-items:center;gap:6px;padding:6px 9px;border-radius:999px;color:#4ade80;
+  background:rgba(34,197,94,.06);border:1px solid rgba(74,222,128,.18);font-size:8px;font-weight:900;letter-spacing:.08em;
+}
+.compat-v66-status i{width:6px;height:6px;border-radius:50%;background:#4ade80;box-shadow:0 0 10px rgba(74,222,128,.70)}
+
+.compat-v66-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}
+.compat-v66-card{
+  position:relative;min-height:285px;padding:28px;overflow:hidden;border-radius:20px;
+  border:1px solid rgba(96,165,250,.13);
+  background:radial-gradient(circle at 90% 10%,rgba(37,99,235,.10),transparent 34%),rgba(8,16,29,.72);
+}
+.compat-v66-card-number{
+  position:absolute;top:20px;right:24px;color:rgba(96,165,250,.18);font-size:52px;line-height:1;font-weight:950;letter-spacing:-.06em;
+}
+.compat-v66-card>small{color:#69a8ff;font-size:9px;font-weight:900;letter-spacing:.12em}
+.compat-v66-card h3{
+  margin:16px 0 14px;max-width:500px;color:#fff;font-size:clamp(29px,3vw,42px);line-height:1;letter-spacing:-.045em;
+}
+.compat-v66-card p{max-width:500px;margin:0;color:#7f8da1;font-size:13px;line-height:1.5}
+.compat-v66-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:26px}
+.compat-v66-tags span{
+  padding:8px 12px;border-radius:999px;color:#a9b8ca;background:rgba(15,30,52,.65);
+  border:1px solid rgba(96,165,250,.12);font-size:9px;font-weight:800;
+}
+
+.compat-v66-ip{
+  display:grid;grid-template-columns:auto 1fr auto;gap:24px;align-items:center;margin-top:12px;padding:26px 30px;
+  border-radius:20px;border:1px solid rgba(47,124,255,.30);
+  background:radial-gradient(circle at 85% 50%,rgba(47,124,255,.17),transparent 32%),linear-gradient(100deg,rgba(15,37,69,.82),rgba(7,16,29,.92));
+}
+.compat-v66-ip-orbit{
+  position:relative;width:64px;height:64px;display:flex;align-items:center;justify-content:center;
+  border-radius:50%;background:rgba(37,99,235,.08);border:1px solid rgba(96,165,250,.20);
+}
+.compat-v66-ip-orbit span{position:absolute;border-radius:50%;border:1px solid rgba(96,165,250,.40)}
+.compat-v66-ip-orbit span:nth-child(1){width:12px;height:12px;background:#60a5fa;box-shadow:0 0 18px rgba(96,165,250,.8)}
+.compat-v66-ip-orbit span:nth-child(2){width:32px;height:32px}
+.compat-v66-ip-orbit span:nth-child(3){width:52px;height:52px;border-color:rgba(96,165,250,.14)}
+.compat-v66-ip-copy small{color:#69a8ff;font-size:8px;font-weight:900;letter-spacing:.12em}
+.compat-v66-ip-copy h3{margin:5px 0 5px;color:#fff;font-size:clamp(24px,3vw,36px);letter-spacing:-.04em}
+.compat-v66-ip-copy h3 strong{color:#69a8ff}
+.compat-v66-ip-copy p{margin:0;color:#7f8da1;font-size:12.5px}
+.compat-v66-ip-badge{
+  display:flex;align-items:center;gap:10px;min-width:165px;padding:12px 14px;border-radius:14px;
+  background:rgba(7,18,34,.68);border:1px solid rgba(96,165,250,.20);
+}
+.compat-v66-ip-badge>span{
+  width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:50%;
+  color:#69a8ff;background:rgba(37,99,235,.15);font-weight:900;
+}
+.compat-v66-ip-badge small{display:block;color:#526277;font-size:7px;font-weight:900;letter-spacing:.08em}
+.compat-v66-ip-badge strong{display:block;margin-top:2px;color:#dbeafe;font-size:9px}
+
+.compat-offer-transition{
+  position:relative;z-index:6;width:100%;height:110px;margin-top:-50px;margin-bottom:-2px;overflow:hidden;background:#07111f;pointer-events:none;
+}
+.compat-offer-transition svg{display:block;width:100%;height:100%}
+.offer{padding-top:82px!important}
+
+@media(max-width:980px){
+  .compat-v66-platforms,.compat-v66-grid{grid-template-columns:1fr}
+}
+@media(max-width:640px){
+  .compat-v66{padding:76px 0 86px}
+  .compat-v66-head{margin-bottom:30px}
+  .compat-v66-head h2{font-size:41px}
+  .compat-v66-head p{font-size:13px}
+  .compat-v66-platform{min-height:96px;grid-template-columns:52px 1fr auto;gap:12px;padding:15px;border-radius:16px}
+  .compat-v66-logo{width:52px;height:52px;border-radius:12px}
+  .compat-v66-logo img{width:36px;max-height:36px}
+  .compat-v66-platform-copy strong{font-size:15px}
+  .compat-v66-status{padding:5px 7px;font-size:7px}
+  .compat-v66-card{min-height:245px;padding:22px;border-radius:17px}
+  .compat-v66-card-number{font-size:43px}
+  .compat-v66-card h3{font-size:30px}
+  .compat-v66-card p{font-size:11.5px}
+  .compat-v66-ip{grid-template-columns:52px 1fr;gap:14px;padding:20px;border-radius:17px}
+  .compat-v66-ip-orbit{width:52px;height:52px}
+  .compat-v66-ip-orbit span:nth-child(2){width:28px;height:28px}
+  .compat-v66-ip-orbit span:nth-child(3){width:44px;height:44px}
+  .compat-v66-ip-copy h3{font-size:24px}
+  .compat-v66-ip-copy p{font-size:11px;line-height:1.45}
+  .compat-v66-ip-badge{grid-column:1 / -1;width:100%;min-width:0}
+  .compat-offer-transition{height:78px;margin-top:-34px}
+  .offer{padding-top:68px!important}
+}
+
 </style>
 </head>
 
@@ -4902,8 +5028,122 @@
     </svg>
   </div>
 
+
   <!-- =======================================================
-       08 — PLANES · STARTER + TRADER
+       08 — COMPATIBILIDAD
+       ======================================================= -->
+  <section class="compat-v66" id="compatibilidad">
+    <div class="wrap compat-v66-inner">
+
+      <div class="compat-v66-head reveal">
+        <div class="kicker light">COMPATIBILIDAD</div>
+
+        <h2>
+          Tu infraestructura.<br>
+          <span>Sin cambiar tu forma de operar.</span>
+        </h2>
+
+        <p>
+          Compatible con <strong>MetaTrader 4</strong> y <strong>MetaTrader 5</strong>,
+          tanto para cuentas de capital real como para empresas de fondeo.
+        </p>
+      </div>
+
+      <div class="compat-v66-platforms reveal">
+        <div class="compat-v66-platform">
+          <div class="compat-v66-logo">
+            <img src="mt4-logo.png" alt="MetaTrader 4" loading="lazy" decoding="async"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <span class="compat-v66-logo-fallback" style="display:none;">MT4</span>
+          </div>
+          <div class="compat-v66-platform-copy">
+            <small>PLATAFORMA</small>
+            <strong>MetaTrader 4</strong>
+            <span>Compatible</span>
+          </div>
+          <div class="compat-v66-status"><i></i>ACTIVO</div>
+        </div>
+
+        <div class="compat-v66-platform">
+          <div class="compat-v66-logo">
+            <img src="logo_metatrader5.png" alt="MetaTrader 5" loading="lazy" decoding="async"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <span class="compat-v66-logo-fallback" style="display:none;">MT5</span>
+          </div>
+          <div class="compat-v66-platform-copy">
+            <small>PLATAFORMA</small>
+            <strong>MetaTrader 5</strong>
+            <span>Compatible</span>
+          </div>
+          <div class="compat-v66-status"><i></i>ACTIVO</div>
+        </div>
+      </div>
+
+      <div class="compat-v66-grid reveal">
+        <article class="compat-v66-card">
+          <div class="compat-v66-card-number">01</div>
+          <small>EMPRESAS DE FONDEO</small>
+          <h3>Opera también<br>tus cuentas de fondeo.</h3>
+          <p>
+            Integra tus cuentas de prop firms en TDMK y mantén el mismo entorno
+            de análisis, control y seguimiento.
+          </p>
+          <div class="compat-v66-tags">
+            <span>Prop firms</span>
+            <span>Multi-cuenta</span>
+            <span>MT4 / MT5</span>
+          </div>
+        </article>
+
+        <article class="compat-v66-card">
+          <div class="compat-v66-card-number">02</div>
+          <small>CAPITAL REAL</small>
+          <h3>Tu propio capital.<br>La misma infraestructura.</h3>
+          <p>
+            Utiliza TDMK también con cuentas de brokers de capital real,
+            manteniendo la misma experiencia de gestión.
+          </p>
+          <div class="compat-v66-tags">
+            <span>Brokers reales</span>
+            <span>Capital propio</span>
+            <span>MT4 / MT5</span>
+          </div>
+        </article>
+      </div>
+
+      <div class="compat-v66-ip reveal">
+        <div class="compat-v66-ip-orbit" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+
+        <div class="compat-v66-ip-copy">
+          <small>ARQUITECTURA TDMK</small>
+          <h3>TDMK <strong>NO LEVANTA IP</strong></h3>
+          <p>
+            Conecta tus cuentas sin sustituir la infraestructura desde la que opera tu MetaTrader.
+          </p>
+        </div>
+
+        <div class="compat-v66-ip-badge">
+          <span>✓</span>
+          <div>
+            <small>CONEXIÓN</small>
+            <strong>TRANSPARENTE</strong>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="compat-offer-transition" aria-hidden="true">
+    <svg viewBox="0 0 1440 150" preserveAspectRatio="none">
+      <path d="M0,50 C240,24 470,30 720,54 C980,78 1190,70 1440,38 L1440,150 L0,150 Z" fill="#ffffff"/>
+    </svg>
+  </div>
+
+  <!-- =======================================================
+       09 — PLANES · STARTER + TRADER
        ======================================================= -->
 <section class="offer shape-bottom shape-soft" id="planes" style="--next:#07111f;">
     <div class="wrap">
@@ -5003,7 +5243,7 @@
   </div>
 
 <!-- =======================================================
-       09 — CIERRE
+       10 — CIERRE
        ======================================================= -->
 <section class="closing">
     <div class="wrap reveal">

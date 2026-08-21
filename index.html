@@ -4771,6 +4771,117 @@
   }
 }
 
+
+/* =========================================================
+   V68 — ICONOS MT4 / MT5 GRANDES · ESTILO APP
+   ========================================================= */
+.compat-v66-platform{
+  min-height:168px!important;
+  grid-template-columns:126px 1fr auto!important;
+  gap:28px!important;
+  padding:22px 28px!important;
+}
+
+.compat-v66-logo{
+  width:126px!important;
+  height:126px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:28px!important;
+  background:transparent!important;
+  overflow:hidden!important;
+  box-shadow:
+    0 18px 36px rgba(0,0,0,.22),
+    0 0 24px rgba(47,124,255,.12)!important;
+}
+
+.compat-v66-logo img{
+  width:126px!important;
+  height:126px!important;
+  max-width:none!important;
+  max-height:none!important;
+  object-fit:cover!important;
+  border-radius:28px!important;
+  transform:scale(1.03);
+  transition:transform .25s ease,filter .25s ease;
+}
+
+.compat-v66-platform:hover .compat-v66-logo img{
+  transform:scale(1.08);
+  filter:brightness(1.06) saturate(1.06);
+}
+
+.compat-v66-platform-copy strong{
+  font-size:22px!important;
+}
+
+.compat-v66-platform-copy span{
+  font-size:12px!important;
+}
+
+.compat-v66-status{
+  padding:8px 12px!important;
+  font-size:9px!important;
+}
+
+@media(max-width:980px){
+  .compat-v66-platform{
+    grid-template-columns:112px 1fr auto!important;
+  }
+  .compat-v66-logo,
+  .compat-v66-logo img{
+    width:112px!important;
+    height:112px!important;
+    border-radius:25px!important;
+  }
+}
+
+@media(max-width:640px){
+  .compat-v66-platform{
+    min-height:126px!important;
+    grid-template-columns:88px 1fr auto!important;
+    gap:14px!important;
+    padding:16px!important;
+  }
+  .compat-v66-logo,
+  .compat-v66-logo img{
+    width:88px!important;
+    height:88px!important;
+    border-radius:21px!important;
+  }
+  .compat-v66-platform-copy strong{
+    font-size:16px!important;
+  }
+  .compat-v66-platform-copy span{
+    font-size:10px!important;
+  }
+  .compat-v66-status{
+    padding:6px 8px!important;
+    font-size:7px!important;
+  }
+}
+
+@media(max-width:390px){
+  .compat-v66-platform{
+    grid-template-columns:82px 1fr!important;
+    gap:13px!important;
+  }
+  .compat-v66-logo,
+  .compat-v66-logo img{
+    width:82px!important;
+    height:82px!important;
+    border-radius:20px!important;
+  }
+  .compat-v66-status{
+    grid-column:2!important;
+    width:max-content!important;
+    margin-top:-6px!important;
+  }
+}
+
 </style>
 </head>
 
@@ -5152,7 +5263,7 @@
       <div class="compat-v66-platforms reveal">
         <div class="compat-v66-platform">
           <div class="compat-v66-logo">
-            <img src="mt4-logo.png" alt="MetaTrader 4" loading="lazy" decoding="async"
+            <img src="mt4-app.png" alt="MetaTrader 4" loading="lazy" decoding="async"
               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
             <span class="compat-v66-logo-fallback" style="display:none;">MT4</span>
           </div>
@@ -5166,7 +5277,7 @@
 
         <div class="compat-v66-platform">
           <div class="compat-v66-logo">
-            <img src="logo_metatrader5.png" alt="MetaTrader 5" loading="lazy" decoding="async"
+            <img src="mt5-app.png" alt="MetaTrader 5" loading="lazy" decoding="async"
               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
             <span class="compat-v66-logo-fallback" style="display:none;">MT5</span>
           </div>

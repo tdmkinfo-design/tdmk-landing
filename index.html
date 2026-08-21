@@ -4671,6 +4671,106 @@
   .offer{padding-top:68px!important}
 }
 
+
+/* =========================================================
+   V67 — CARRUSELES FONDEO / CAPITAL REAL
+   ========================================================= */
+
+.compat-v66-card{
+  display:flex!important;
+  flex-direction:column!important;
+}
+
+/* Los nombres viven en la parte inferior de cada tarjeta */
+.compat-v66-marquee{
+  width:calc(100% + 56px);
+  margin-left:-28px;
+  margin-top:auto;
+  padding-top:30px;
+  overflow:hidden;
+
+  -webkit-mask-image:
+    linear-gradient(90deg,transparent 0%,#000 9%,#000 91%,transparent 100%);
+  mask-image:
+    linear-gradient(90deg,transparent 0%,#000 9%,#000 91%,transparent 100%);
+}
+
+.compat-v66-track{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  width:max-content;
+  animation:compatV67Scroll 24s linear infinite;
+  will-change:transform;
+}
+
+.compat-v66-track-reverse{
+  animation-direction:reverse;
+  animation-duration:28s;
+}
+
+.compat-v66-track span{
+  flex:0 0 auto;
+  min-width:max-content;
+  padding:9px 15px;
+  border-radius:999px;
+
+  color:#c3d0df;
+  background:rgba(15,30,52,.68);
+  border:1px solid rgba(96,165,250,.15);
+
+  font-size:10px;
+  font-weight:850;
+  letter-spacing:.01em;
+}
+
+@keyframes compatV67Scroll{
+  from{transform:translateX(0)}
+  to{transform:translateX(-50%)}
+}
+
+/* Pausa elegante al pasar el ratón */
+.compat-v66-marquee:hover .compat-v66-track{
+  animation-play-state:paused;
+}
+
+@media(max-width:640px){
+  .compat-v66-marquee{
+    width:calc(100% + 44px);
+    margin-left:-22px;
+    padding-top:24px;
+  }
+
+  .compat-v66-track{
+    gap:6px;
+    animation-duration:22s;
+  }
+
+  .compat-v66-track-reverse{
+    animation-duration:25s;
+  }
+
+  .compat-v66-track span{
+    padding:8px 12px;
+    font-size:9px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .compat-v66-track,
+  .compat-v66-track-reverse{
+    animation:none!important;
+    flex-wrap:wrap;
+    width:auto;
+    padding:0 28px;
+  }
+
+  .compat-v66-marquee{
+    -webkit-mask-image:none;
+    mask-image:none;
+  }
+}
+
 </style>
 </head>
 
@@ -5088,10 +5188,22 @@
             Integra tus cuentas de prop firms en TDMK y mantén el mismo entorno
             de análisis, control y seguimiento.
           </p>
-          <div class="compat-v66-tags">
-            <span>Prop firms</span>
-            <span>Multi-cuenta</span>
-            <span>MT4 / MT5</span>
+          <div class="compat-v66-marquee compat-v66-marquee-funding" aria-label="Empresas de fondeo">
+            <div class="compat-v66-track">
+              <span>FTMO</span>
+              <span>WSF</span>
+              <span>Orion</span>
+              <span>The5ers</span>
+              <span>FundedNext</span>
+              <span>FundingPips</span>
+
+              <span aria-hidden="true">FTMO</span>
+              <span aria-hidden="true">WSF</span>
+              <span aria-hidden="true">Orion</span>
+              <span aria-hidden="true">The5ers</span>
+              <span aria-hidden="true">FundedNext</span>
+              <span aria-hidden="true">FundingPips</span>
+            </div>
           </div>
         </article>
 
@@ -5103,10 +5215,22 @@
             Utiliza TDMK también con cuentas de brokers de capital real,
             manteniendo la misma experiencia de gestión.
           </p>
-          <div class="compat-v66-tags">
-            <span>Brokers reales</span>
-            <span>Capital propio</span>
-            <span>MT4 / MT5</span>
+          <div class="compat-v66-marquee compat-v66-marquee-real" aria-label="Brokers de capital real">
+            <div class="compat-v66-track compat-v66-track-reverse">
+              <span>VT Markets</span>
+              <span>IC Markets</span>
+              <span>Pepperstone</span>
+              <span>FP Markets</span>
+              <span>Vantage</span>
+              <span>Axi</span>
+
+              <span aria-hidden="true">VT Markets</span>
+              <span aria-hidden="true">IC Markets</span>
+              <span aria-hidden="true">Pepperstone</span>
+              <span aria-hidden="true">FP Markets</span>
+              <span aria-hidden="true">Vantage</span>
+              <span aria-hidden="true">Axi</span>
+            </div>
           </div>
         </article>
       </div>

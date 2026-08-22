@@ -5104,7 +5104,13 @@
         </p>
 
         <div class="hero-actions">
-          <a class="button primary hero-cta" href="https://app.tdmksystems.com/?origen=web">
+          <a
+            class="button primary hero-cta"
+            href="https://app.tdmksystems.com/?origen=web"
+            data-ga-event="click_plan_starter"
+            data-ga-plan="starter"
+            data-ga-location="hero_desktop"
+          >
             Analizar mi trading <strong class="hero-cta-free">GRATIS</strong>
             
           </a>
@@ -5122,7 +5128,13 @@
 
       <!-- CTA exclusivo para mobile. Desktop conserva su CTA original. -->
       <div class="hero-actions-mobile">
-        <a class="button primary hero-cta" href="https://app.tdmksystems.com/?origen=web">
+        <a
+          class="button primary hero-cta"
+          href="https://app.tdmksystems.com/?origen=web"
+          data-ga-event="click_plan_starter"
+          data-ga-plan="starter"
+          data-ga-location="hero_mobile"
+        >
           Analizar mi trading <strong class="hero-cta-free">GRATIS</strong>
         </a>
       </div>
@@ -5541,7 +5553,13 @@
             se asignará automáticamente. No necesitas realizar ninguna reserva adicional.
           </p>
 
-          <a class="button primary" href="https://app.tdmksystems.com/?origen=web&plan=trader">
+          <a
+            class="button primary"
+            href="https://app.tdmksystems.com/?origen=web&plan=trader"
+            data-ga-event="click_plan_trader"
+            data-ga-plan="trader"
+            data-ga-location="founder"
+          >
             Empezar con Trader · 19 €/mes
           </a>
         </div>
@@ -5585,7 +5603,13 @@
             <li>Soporte estándar</li>
           </ul>
 
-          <a class="button primary" href="https://app.tdmksystems.com/?origen=web">
+          <a
+            class="button primary"
+            href="https://app.tdmksystems.com/?origen=web"
+            data-ga-event="click_plan_starter"
+            data-ga-plan="starter"
+            data-ga-location="plans_starter"
+          >
             Probar TDMK GRATIS
           </a>
         </article>
@@ -5616,7 +5640,13 @@
             <span id="traderFounderFallback">Plazas fundadoras disponibles</span>
           </div>
 
-          <a class="button primary" href="https://app.tdmksystems.com/?origen=web&plan=trader">
+          <a
+            class="button primary"
+            href="https://app.tdmksystems.com/?origen=web&plan=trader"
+            data-ga-event="click_plan_trader"
+            data-ga-plan="trader"
+            data-ga-location="plans_trader"
+          >
             Empezar con Trader · 19 €/mes
           </a>
         </article>
@@ -5663,7 +5693,13 @@
         Conecta una cuenta, deja que TDMK empiece a registrar tu operativa
         y descubre qué hay realmente detrás de tus resultados.
       </p>
-      <a class="button primary" href="https://app.tdmksystems.com/?origen=web">
+      <a
+        class="button primary"
+        href="https://app.tdmksystems.com/?origen=web"
+        data-ga-event="click_plan_starter"
+        data-ga-plan="starter"
+        data-ga-location="closing"
+      >
         Crear cuenta gratuita
       </a>
     </div>
@@ -5780,6 +5816,72 @@
         });
       });
   })();
+
+  // =========================================================
+  // Google Analytics 4 · CTAs comerciales
+  // =========================================================
+  (() => {
+    const trackedLinks = document.querySelectorAll('a[data-ga-event]');
+
+    trackedLinks.forEach(link => {
+      link.addEventListener('click', event => {
+        const eventName = link.dataset.gaEvent;
+        const plan = link.dataset.gaPlan || 'unknown';
+        const ctaLocation = link.dataset.gaLocation || 'unknown';
+        const destination = link.href;
+        const ctaText = link.textContent.replace(/\s+/g, ' ').trim();
+
+        // Si GA no está disponible, la navegación continúa con normalidad.
+        if (typeof window.gtag !== 'function') return;
+
+        // Conserva Ctrl/Cmd/Shift/Alt + click y click con botón central.
+        const modifiedClick =
+          event.metaKey ||
+          event.ctrlKey ||
+          event.shiftKey ||
+          event.altKey ||
+          event.button !== 0;
+
+        if (modifiedClick) {
+          window.gtag('event', eventName, {
+            plan,
+            cta_location: ctaLocation,
+            cta_text: ctaText,
+            link_url: destination,
+            transport_type: 'beacon'
+          });
+          return;
+        }
+
+        event.preventDefault();
+
+        let navigated = false;
+        const go = () => {
+          if (navigated) return;
+          navigated = true;
+          window.location.href = destination;
+        };
+
+        window.gtag('event', eventName, {
+          plan,
+          cta_location: ctaLocation,
+          cta_text: ctaText,
+          link_url: destination,
+          transport_type: 'beacon',
+          event_callback: go
+        });
+
+        // Fallback: nunca bloquea la navegación si Analytics tarda o falla.
+        window.setTimeout(go, 700);
+      });
+    });
+  })();
+
+  // NOTA:
+  // Los eventos sign_up, begin_checkout y purchase NO deben dispararse desde
+  // la landing. Deben enviarse desde app.tdmksystems.com cuando la app/backend
+  // confirme respectivamente: alta completada, inicio de checkout y cobro real.
+
 </script>
 
 </body>
